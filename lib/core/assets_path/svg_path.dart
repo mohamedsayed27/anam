@@ -1,0 +1,73 @@
+class SvgPath {
+  static const chat = "assets/svg/chat.svg";
+  static const anaanLogo = "assets/svg/anaanLogo.svg";
+  static const filterIcon = "assets/svg/filterIcon.svg";
+  static const home = "assets/svg/home.svg";
+  static const arrowDown = "assets/svg/arrowDown.svg";
+  static const like = "assets/svg/like.svg";
+  static const redLike = "assets/svg/redLike.svg";
+  static const cancel = "assets/svg/cancel.svg";
+  static const openMapIcon = "assets/svg/openMapIcon.svg";
+  static const orders = "assets/svg/orders.svg";
+  static const profile = "assets/svg/profile.svg";
+  static const searchIcon = "assets/svg/searchIcon.svg";
+  static const fav = "assets/svg/fav.svg";
+  static const camel = "assets/svg/camel.svg";
+  static const camelFace = "assets/svg/camelFace.svg";
+  static const calender = "assets/svg/calendar.svg";
+  static const profileIcon = "assets/svg/profileIcon.svg";
+
+  static const appleLogo = "assets/svg/appleLogo.svg";
+  static const caravan = "assets/svg/caravan.svg";
+  static const chicken = "assets/svg/chicken.svg";
+  static const choices = "assets/svg/choices.svg";
+  static const cow = "assets/svg/cow.svg";
+  static const email = "assets/svg/email.svg";
+  static const facebook = "assets/svg/facebook.svg";
+  static const google = "assets/svg/google.svg";
+  static const horse = "assets/svg/horse.svg";
+  static const planting = "assets/svg/planting.svg";
+  static const settings = "assets/svg/settingsIcon.svg";
+  static const person = "assets/svg/person.svg";
+  static const logout = "assets/svg/logout.svg";
+  static const sheep = "assets/svg/sheep.svg";
+  static const technician = "assets/svg/technician.svg";
+  static const tent = "assets/svg/tent.svg";
+  static const truck = "assets/svg/truck.svg";
+  static const help = "assets/svg/help.svg";
+  static const sendMessage = "assets/svg/sendMessage.svg";
+  static const showMenu = "assets/svg/showMenu.svg";
+  static const chatNavIcon = "assets/svg/chatNavIcon.svg";
+  static const favoriteNavIcon = "assets/svg/favoriteNavIcon.svg";
+  static const homeNavIcon = "assets/svg/homeNavIcon.svg";
+  static const ordersNavIcon = "assets/svg/ordersNavIcon.svg";
+  static const profileNavIcon = "assets/svg/profileNavIcon.svg";
+  static const chatFillNavIcon = "assets/svg/chatFillNavIcon.svg";
+  static const favoriteFillNavIcon = "assets/svg/favoriteFillNavIcon.svg";
+  static const homeFillNavIcon = "assets/svg/homeFillNavIcon.svg";
+  static const ordersFillNavIcon = "assets/svg/ordersFillNavIcon.svg";
+  static const profileFillNavIcon = "assets/svg/profileFillNavIcon.svg";
+  static const followersList = "assets/svg/followersList.svg";
+  static const notification = "assets/svg/notification.svg";
+  static const oldOrders = "assets/svg/oldOrders.svg";
+  static const van = "assets/svg/van.svg";
+  static const medicine = "assets/svg/medicine.svg";
+  static const location = "assets/svg/location.svg";
+  static const bag = "assets/svg/bag.svg";
+  static const message = "assets/svg/message.svg";
+  static const personFill = "assets/svg/personFill.svg";
+  static const phone = "assets/svg/phone.svg";
+  static const accepted = "assets/svg/accepted.svg";
+  static const canceled = "assets/svg/canceled.svg";
+  static const editIcon = "assets/svg/editIcon.svg";
+  static const notConfirmed = "assets/svg/notConfirmed.svg";
+  static const trash = "assets/svg/trash.svg";
+  static const masterCard = "assets/svg/masterCard.svg";
+  static const visa = "assets/svg/visa.svg";
+  static const controllSetting = "assets/svg/controllSetting.svg";
+  static const nationality = "assets/svg/nationality.svg";
+
+  SvgPath._();
+
+
+}
