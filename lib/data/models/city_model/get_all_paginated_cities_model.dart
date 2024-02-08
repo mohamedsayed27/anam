@@ -2,18 +2,18 @@ import 'package:anam/data/models/base_model.dart';
 import 'package:anam/data/models/city_model/city_model.dart';
 import 'package:anam/data/models/pagination_model.dart';
 
-class GetAllCitiesModel extends BaseResponseModel {
+class GetAllPaginatedCitiesModel extends BaseResponseModel {
   final CitiesPaginatedModel? citiesPaginatedModel;
 
-  const GetAllCitiesModel({
+  const GetAllPaginatedCitiesModel({
     required super.success,
     required super.code,
     required super.message,
     this.citiesPaginatedModel,
   });
 
-  factory GetAllCitiesModel.fromJson(Map<String, dynamic> json) {
-    return GetAllCitiesModel(
+  factory GetAllPaginatedCitiesModel.fromJson(Map<String, dynamic> json) {
+    return GetAllPaginatedCitiesModel(
       success: json['success'],
       code: json['code'],
       message: json['message'],

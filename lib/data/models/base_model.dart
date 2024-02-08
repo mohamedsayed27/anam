@@ -1,10 +1,13 @@
-import '../../domain/entities/base.dart';
+import 'package:equatable/equatable.dart';
 
-class BaseResponseModel extends BaseResponseEntity {
+class BaseResponseModel extends Equatable{
+  final String? message;
+  final int? code;
+  final bool? success;
   const BaseResponseModel({
-    required super.success,
-    required super.code,
-    required super.message,
+    required this.success,
+    required this.code,
+    required this.message,
   });
 
   factory BaseResponseModel.fromJson(Map<String, dynamic> json) {
@@ -14,4 +17,12 @@ class BaseResponseModel extends BaseResponseEntity {
       message: json["message"],
     );
   }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+    success,
+    code,
+    message,
+  ];
 }

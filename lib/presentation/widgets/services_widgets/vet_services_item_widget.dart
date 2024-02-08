@@ -6,15 +6,19 @@ import 'package:anam/presentation/widgets/shared_widget/custom_elevated_button.d
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../core/app_router/screens_name.dart';
 import '../../../core/app_theme/custom_themes.dart';
 import '../../../core/constants/constants.dart';
+import '../../../domain/controllers/services_cubit/services_cubit.dart';
+import '../../../domain/controllers/services_cubit/services_state.dart';
 
 class VetServicesWidget extends StatelessWidget {
   final VetModel vetModel;
+
   const VetServicesWidget({super.key, required this.vetModel});
 
   @override
@@ -32,7 +36,7 @@ class VetServicesWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20.r),
               ),
               child: CachedNetworkImage(
-                imageUrl:vetModel.image!,
+                imageUrl: vetModel.image!,
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Shimmer.fromColors(
                   baseColor: AppColors.shimmerFirstColor,
@@ -54,10 +58,13 @@ class VetServicesWidget extends StatelessWidget {
               bottom: 18.h,
               child: InkWell(
                 onTap: () {
-                  ProfileCubit.get(context).showVendorProfile(id: vetModel.vendor!.id!).then((value) {
-                    Navigator.pushNamed(context, ScreenName.vendorDetailsScreen,arguments:ProfileCubit.get(context).vendorProfileModel );
+                  ProfileCubit.get(context)
+                      .showVendorProfile(id: vetModel.vendor!.id!)
+                      .then((value) {
+                    Navigator.pushNamed(context, ScreenName.vendorDetailsScreen,
+                        arguments:
+                            ProfileCubit.get(context).vendorProfileModel);
                   });
-
                 },
                 child: Container(
                   height: 48.h,
@@ -67,7 +74,7 @@ class VetServicesWidget extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: CachedNetworkImage(
-                    imageUrl:vetModel.vendor!.image!,
+                    imageUrl: vetModel.vendor!.image!,
                     fit: BoxFit.cover,
                     placeholder: (context, url) => Shimmer.fromColors(
                       baseColor: AppColors.shimmerFirstColor,
@@ -81,19 +88,22 @@ class VetServicesWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
                 ),
               ),
             ),
           ],
         ),
-        const CustomSizedBox(height: 16,),
+        const CustomSizedBox(
+          height: 16,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              vetModel.vendor!.name??"dummy",
+              vetModel.vendor!.name ?? "dummy",
               style: CustomThemes.greyColor34TextTheme(context).copyWith(
                 fontSize: 14.sp,
                 height: 1,
@@ -102,21 +112,34 @@ class VetServicesWidget extends StatelessWidget {
             ),
             Row(
               children: [
-                if(vetModel.vendor!.id.toString() == userId)CustomElevatedButton(
-                  title: "تعديل",
-                  padding: EdgeInsets.zero,
-                  onPressed: () {},
-                  buttonSize: Size(120.w, 40.h),
-                ),
+                if (vetModel.vendor!.id.toString() == userId)
+                  CustomElevatedButton(
+                    title: "تعديل",
+                    padding: EdgeInsets.zero,
+                    onPressed: () {},
+                    buttonSize: Size(120.w, 40.h),
+                  ),
                 const CustomSizedBox(
                   width: 8,
                 ),
-                if(userType==UserTypeEnum.user.name)CustomElevatedButton(
-                  title: vetModel.vendor!.isFollowed!!=true?"متابعة":"الغاء المتابعة",
-                  onPressed: () {},
-                  padding: EdgeInsets.zero,
-                  buttonSize: Size(120.w, 40.h),
-                ),
+                if (userType == UserTypeEnum.user.name)
+                  BlocConsumer<ServicesCubit, ServicesState>(
+                    listener: (context, state) {
+                      // TODO: implement listener
+                    },
+                    builder: (context, state) {
+                      var cubit = ServicesCubit.get(context);
+                      return CustomElevatedButton(
+                        title: cubit.followedVendors[
+                                vetModel.vendor!.id!.toString()]
+                            ? "الغاء المتابعة"
+                            : "متابعة",
+                        onPressed: () {},
+                        padding: EdgeInsets.zero,
+                        buttonSize: Size(120.w, 40.h),
+                      );
+                    },
+                  ),
               ],
             ),
           ],

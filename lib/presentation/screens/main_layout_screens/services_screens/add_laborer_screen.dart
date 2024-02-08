@@ -1,53 +1,73 @@
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
-import 'package:anam/core/parameters/upload_product_parameters.dart';
-import 'package:anam/data/models/categories/categories_model.dart';
-import 'package:anam/data/models/categories/sub_categories_model.dart';
+import 'package:anam/core/parameters/laborer_parameters.dart';
+import 'package:anam/domain/controllers/services_cubit/services_state.dart';
 import 'package:anam/presentation/screens/map_screen.dart';
-import 'package:anam/translations/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/app_theme/app_colors.dart';
-import '../../../../domain/controllers/products_cubit/products_cubit.dart';
-import '../../../../domain/controllers/products_cubit/products_state.dart';
-import '../../../widgets/auth_widgets/custom_drop_down_button.dart';
+import '../../../../domain/controllers/services_cubit/services_cubit.dart';
 import '../../../widgets/auth_widgets/custom_text_field.dart';
 import '../../../widgets/shared_widget/custom_divider.dart';
 import '../../../widgets/shared_widget/custom_elevated_button.dart';
 import '../../../widgets/shared_widget/custom_sized_box.dart';
 
-class AddProductScreen extends StatefulWidget {
-  const AddProductScreen({super.key});
+class AddLaborerScreen extends StatefulWidget {
+  const AddLaborerScreen({super.key});
 
   @override
-  State<AddProductScreen> createState() => _AddProductScreenState();
+  State<AddLaborerScreen> createState() => _AddLaborerScreenState();
 }
 
-class _AddProductScreenState extends State<AddProductScreen> {
+class _AddLaborerScreenState extends State<AddLaborerScreen> {
   final formKey = GlobalKey<FormState>();
+
+
+  @override
+  void dispose() {
+    ServicesCubit cubit = ServicesCubit.get(context);
+    cubit.laborerImage = null;
+    cubit.laborerNameAr.clear();
+    cubit.laborerNameEn.clear();
+    cubit.laborerPhone.clear();
+    cubit.laborerAddressAr.clear();
+    cubit.laborerAddressEn.clear();
+    cubit.professionAr.clear();
+    cubit.professionEn.clear();
+    cubit.mapCoordinates = null;
+    cubit.mapLocation = null;
+    cubit.laborerEmail.clear();
+    cubit.nationalityEn.clear();
+    cubit.nationalityAr.clear();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocConsumer<ProductsCubit, ProductsState>(
+        child: BlocConsumer<ServicesCubit, ServicesState>(
           listener: (context, state) {
-            if(state is UploadProductLoadingState){
+            ServicesCubit cubit = ServicesCubit.get(context);
+            if (state is UploadLaborerLoadingState) {
               showProgressIndicator(context);
             }
-            if(state is UploadProductSuccessState){
+            if (state is UploadLaborerSuccessState) {
               Navigator.pop(context);
               Navigator.pop(context);
-            } if(state is UploadProductErrorState){
+            }
+            if (state is UploadLaborerErrorState) {
               Navigator.pop(context);
               showToast(errorType: 1, message: state.error);
             }
+            if (state is GetPickedImageSuccessState) {
+              cubit.laborerImage = state.pickedImage;
+            }
           },
           builder: (context, state) {
-            ProductsCubit cubit = ProductsCubit.get(context);
+            ServicesCubit cubit = ServicesCubit.get(context);
             return Form(
               key: formKey,
               child: SingleChildScrollView(
@@ -55,76 +75,84 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      LocaleKeys.addProduct.tr(),
+                      "اضافة ايدي عاملة",
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!
                           .copyWith(fontSize: 20.sp),
                     ),
                     const CustomSizedBox(
-                      height: 10,
+                      height: 11,
                     ),
                     const CustomDivider(),
                     const CustomSizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "عرض 001",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(fontSize: 16.sp),
-                    ),
-                    const CustomSizedBox(
-                      height: 17,
-                    ),
-                    cubit.getAllCategoriesLoading
-                        ? const Center(
-                            child: CircularProgressIndicator.adaptive(),
-                          )
-                        : CustomDropDownButton<CategoriesModel>(
-                            height: 45,
-                            onChanged: cubit.chooseCategory,
-                            hint: LocaleKeys.mainClassification.tr(),
-                            items: cubit.categoriesList
-                                .map((e) => DropdownMenuItem(
-                                      value: e,
-                                      child: Text(e.name!,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineSmall!
-                                              .copyWith(fontSize: 14.sp)),
-                                    ))
-                                .toList(),
-                            value: cubit.productCategory,
-                          ),
-                    const CustomSizedBox(
                       height: 11,
                     ),
-                    cubit.showCategoryModel == null
-                        ? const SizedBox.shrink()
-                        : cubit.getCategory
-                            ? const Center(
-                                child: CircularProgressIndicator.adaptive(),
-                              )
-                            : CustomDropDownButton<SubCategoriesModel>(
-                                height: 45,
-                                onChanged: cubit.chooseSubCategory,
-                                hint: LocaleKeys.subCategory.tr(),
-                                items: cubit.showCategoryModel!.subCategories!
-                                    .map((e) => DropdownMenuItem(
-                                          value: e,
-                                          child: Text(e.name!),
-                                        ))
-                                    .toList(),
-                                value: cubit.productSubCategory,
+                    Center(
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 132.h,
+                            width: 132.w,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            decoration:
+                                const BoxDecoration(shape: BoxShape.circle),
+                            child: cubit.laborerImage == null
+                                ? null
+                                : Image.file(
+                                    cubit.laborerImage!,
+                                    fit: BoxFit.cover,
+                                  ),
+                            //CachedNetworkImage(
+                            //                               imageUrl: cubit.laborerModel!.image!,
+                            //                               fit: BoxFit.cover,
+                            //                               placeholder: (context, url) {
+                            //                                 return Shimmer.fromColors(
+                            //                                   baseColor: Colors.grey[200]!,
+                            //                                   highlightColor: Colors.grey[300]!,
+                            //                                   child: Container(
+                            //                                     height: double.infinity,
+                            //                                     width: double.infinity,
+                            //                                     decoration: BoxDecoration(
+                            //                                       color: Colors.black,
+                            //                                       borderRadius:
+                            //                                       BorderRadius.circular(8.0),
+                            //                                     ),
+                            //                                   ),
+                            //                                 );
+                            //                               },
+                            //                               errorWidget: (context, url, error) =>
+                            //                               const Icon(Icons.error),
+                            //                             )
+                          ),
+                          InkWell(
+                            onTap: () {
+                              cubit.getImagePick();
+                            },
+                            overlayColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            splashColor: Colors.transparent,
+                            child: Container(
+                              height: 132.h,
+                              width: 132.w,
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                color: Colors.black38,
+                                shape: BoxShape.circle,
                               ),
+                              child: Icon(Icons.add_a_photo_outlined,
+                                  size: 35.r, color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     const CustomSizedBox(
                       height: 11,
                     ),
                     CustomTextField(
                       hintText: "الاسم بالعربيه",
-                      controller: cubit.productNameAr,
+                      controller: cubit.laborerNameAr,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "يجب ادخال البيانات";
@@ -137,7 +165,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     ),
                     CustomTextField(
                       hintText: "الاسم بالانجليزيه",
-                      controller: cubit.productNameEn,
+                      controller: cubit.laborerNameEn,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "يجب ادخال البيانات";
@@ -149,8 +177,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "العنوان بالعربيه",
-                      controller: cubit.locationAr,
+                      hintText: "الجنسيه بالعربيه",
+                      controller: cubit.nationalityAr,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "يجب ادخال البيانات";
@@ -162,8 +190,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "العنوان بالانجليزيه",
-                      controller: cubit.locationEn,
+                      hintText: "الجنسيه بالانجليزيه",
+                      controller: cubit.nationalityEn,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "يجب ادخال البيانات";
@@ -175,8 +203,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: LocaleKeys.price.tr(),
-                      controller: cubit.productPrice,
+                      hintText: "الهاتف",
+                      controller: cubit.laborerPhone,
+                      keyboardType: TextInputType.phone,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "يجب ادخال البيانات";
@@ -188,10 +217,22 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الوصف بالعربيه",
-                      maxLines: 8,
-                      controller: cubit.productDescriptionAr,
-                      textAlignVertical: TextAlignVertical.top,
+                      hintText: "البريد الاليكتروني",
+                      controller: cubit.laborerEmail,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "يجب ادخال البيانات";
+                        }
+                        return null;
+                      },
+                    ),
+                    const CustomSizedBox(
+                      height: 11,
+                    ),
+                    CustomTextField(
+                      hintText: "المهنه بالعربيه",
+                      controller: cubit.professionAr,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -204,10 +245,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الوصف بالانجليزيه",
-                      maxLines: 8,
-                      controller: cubit.productDescriptionEn,
-                      textAlignVertical: TextAlignVertical.top,
+                      hintText: "المهنه بالانجليزيه",
+                      controller: cubit.professionEn,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -220,12 +259,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     InkWell(
-                      onTap: () async{
-                        Map<String, dynamic> result = await Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      onTap: () async {
+                        Map<String, dynamic> result = await Navigator.push(
+                            context, MaterialPageRoute(builder: (_) {
                           return const MapScreen();
                         }));
-                        cubit.getLocation(locationName: result["name"], coordinates: result['coordinates']);
-
+                        cubit.getLocation(
+                            locationName: result["name"],
+                            coordinates: result['coordinates']);
                       },
                       child: CustomTextField(
                         prefix: Icon(
@@ -241,70 +282,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     const CustomSizedBox(
                       height: 11,
                     ),
-                    InkWell(
-                      onTap: () {
-                        cubit.getImagePick();
-                      },
-                      child: CustomTextField(
-                        prefix: Icon(
-                          Icons.camera_alt,
-                          size: 20.r,
-                          color: AppColors.authBorderColor,
-                        ),
-                        hintText: LocaleKeys.uploadImages.tr(),
-                        enabled: false,
-                        height: 45,
-                      ),
-                    ),
-                    const CustomSizedBox(
-                      height: 11,
-                    ),
-                    CustomSizedBox(
-                      height: 40,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: cubit.productImages.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            height: 36.h,
-                            width: 50.w,
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4.r),
-                            ),
-                            child: Image.file(
-                              cubit.productImages[index],
-                              fit: BoxFit.cover,
-                            ),
-                          ).onlyDirectionalPadding(end: 5);
-                        },
-                      ),
-                    ),
-                    const CustomSizedBox(
-                      height: 11,
-                    ),
                     CustomTextField(
-                      prefix: Icon(
-                        Icons.link_rounded,
-                        size: 20.r,
-                        color: AppColors.authBorderColor,
-                      ),
-                      hintText: LocaleKeys.youtubeLink.tr(),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
-                        }
-                        return null;
-                      },
-                    ),
-                    const CustomSizedBox(
-                      height: 11,
-                    ),
-                    CustomTextField(
-                      hintText: "المميزات بالانجليزيه",
-                      maxLines: 8,
-                      controller: cubit.productProsEn,
-                      textAlignVertical: TextAlignVertical.top,
+                      hintText: "العنوان بالانجليزيه",
+                      controller: cubit.laborerAddressEn,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -317,10 +297,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "المميزات بالعربيه",
-                      maxLines: 8,
-                      controller: cubit.productProsAr,
-                      textAlignVertical: TextAlignVertical.top,
+                      hintText: "العنوان بالعربيه",
+                      controller: cubit.laborerAddressAr,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -331,90 +309,40 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     ),
                     const CustomSizedBox(
                       height: 11,
-                    ),
-                    CustomTextField(
-                      hintText: "العيوب بالانجليزيه",
-                      maxLines: 8,
-                      controller: cubit.productConsEn,
-                      textAlignVertical: TextAlignVertical.top,
-                      keyboardType: TextInputType.multiline,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
-                        }
-                        return null;
-                      },
-                    ),
-                    const CustomSizedBox(
-                      height: 11,
-                    ),
-                    CustomTextField(
-                      hintText: "العيوب بالعربيه",
-                      controller: cubit.productConsAr,
-                      maxLines: 8,
-                      textAlignVertical: TextAlignVertical.top,
-                      keyboardType: TextInputType.multiline,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
-                        }
-                        return null;
-                      },
                     ),
                     const CustomSizedBox(
                       height: 40,
                     ),
                     CustomElevatedButton(
-                      title: LocaleKeys.uploadYourProduct.tr(),
+                      title: "ارفاق البيانات",
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          if (cubit.productImages.isEmpty) {
+                          if (cubit.laborerImage == null) {
                             showToast(
-                                errorType: 1, message: "يجب اختيار صور للمنتج");
+                                errorType: 1,
+                                message: "يجب اختيار صوره للمنتج");
                           } else {
-                            if (cubit.productCategory == null) {
+                            if (cubit.mapLocation == null) {
                               showToast(
-                                  errorType: 1,
-                                  message:
-                                      "يجب اختيار تصنيف المنتج الاساسي والفرعي");
+                                  errorType: 1, message: "يجب اختيار الموقع");
                             } else {
-                              if(
-                              cubit.productSubCategory == null){showToast(
-                                  errorType: 1,
-                                  message:
-                                  "يجب اختيار تصنيف المنتج الاساسي والفرعي");
-                              }else{
-                                if (cubit.mapLocation == null) {
-                                  showToast(
-                                      errorType: 1, message: "يجب اختيار الموقع");
-                                } else {
-                                  cubit.uploadProduct(
-                                    productParameters: ProductParameters(
-                                      catId: cubit.productCategory!.id!.toString(),
-                                      subCatId:
-                                      cubit.productSubCategory!.id!.toString(),
-                                      nameAr: cubit.productNameAr.text,
-                                      nameEn: cubit.productNameEn.text,
-                                      salePrice: cubit.productPrice.text,
-                                      mainImage: cubit.productImages[0],
-                                      locationAr: cubit.locationAr.text,
-                                      locationEn: cubit.locationEn.text,
-                                      descriptionAr:
-                                      cubit.productDescriptionAr.text,
-                                      descriptionEn:
-                                      cubit.productDescriptionEn.text,
-                                      coordinates: cubit.mapCoordinates,
-                                      mapLocation: cubit.mapLocation,
-                                      youtubeLink: cubit.youtubeLink.text,
-                                      advantagesEn: cubit.productProsEn.text,
-                                      advantagesAr: cubit.productProsAr.text,
-                                      defectsEn: cubit.productConsEn.text,
-                                      defectsAr: cubit.productConsAr.text,
-                                      images: cubit.productImages,
-                                    ),
-                                  );
-                                }
-                              }
+                              cubit.uploadLaborer(
+                                productParameters: LaborerParameters(
+                                  image: cubit.laborerImage!,
+                                  nameAr: cubit.laborerNameAr.text,
+                                  nameEn: cubit.laborerNameEn.text,
+                                  phone: cubit.laborerPhone.text,
+                                  addressAr: cubit.laborerAddressAr.text,
+                                  addressEn: cubit.laborerAddressEn.text,
+                                  professionAr: cubit.professionAr.text,
+                                  professionEn: cubit.professionEn.text,
+                                  coordinates: cubit.mapCoordinates,
+                                  mapLocation: cubit.mapLocation,
+                                  email: cubit.laborerEmail.text,
+                                  nationalityEn: cubit.nationalityEn.text,
+                                  nationalityAr: cubit.nationalityAr.text,
+                                ),
+                              );
                             }
                           }
                         }

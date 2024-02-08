@@ -2,7 +2,6 @@ import 'package:anam/core/network/dio_helper.dart';
 import 'package:anam/core/parameters/store_parameters.dart';
 import 'package:anam/data/models/stores_models/get_all_store_model.dart';
 import 'package:anam/data/models/stores_models/store_data_model.dart';
-import 'package:anam/data/models/stores_models/store_data_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -13,11 +12,11 @@ import '../../../core/network/error_message_model.dart';
 import '../../models/base_model.dart';
 import 'services_base_remote_data_source.dart';
 
-class StoresDataSource extends ServicesBaseUseCase<GetAllStoreModel,
+class StoresServicesRemoteDatasource extends ServicesBaseDatasource<GetAllStoreModel,
     StoreDataModel, StoreParameters> {
   final DioHelper dioHelper;
 
-  StoresDataSource({required this.dioHelper});
+  StoresServicesRemoteDatasource({required this.dioHelper});
 
   @override
   Future<Either<ErrorException, GetAllStoreModel>> getAll(
@@ -63,6 +62,7 @@ class StoresDataSource extends ServicesBaseUseCase<GetAllStoreModel,
     }
   }
 
+  @override
   Future<Either<ErrorException, StoreDataModel>> showSingle({
     required int id,
   }) async {
@@ -96,7 +96,7 @@ class StoresDataSource extends ServicesBaseUseCase<GetAllStoreModel,
     required int id,
   }) async {
     try {
-      final response = await dioHelper.getData(
+      final response = await dioHelper.deleteData(
         url: "${EndPoints.stores}/$id",
         token: token,
       );

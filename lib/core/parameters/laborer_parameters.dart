@@ -3,11 +3,12 @@ import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:path/path.dart' as path;
 
-class StoreParameters extends Equatable {
+class LaborerParameters extends Equatable {
   final String? nameAr;
   final String? nameEn;
   final String? phone;
   final File? image;
+  final String? id;
   final String? coordinates;
   final String? mapLocation;
   final String? nationalityAr;
@@ -18,8 +19,9 @@ class StoreParameters extends Equatable {
   final String? addressAr;
   final String? addressEn;
 
-  const StoreParameters({
+  const LaborerParameters({
     this.nameAr,
+    this.id,
     this.nameEn,
     this.phone,
     this.image,

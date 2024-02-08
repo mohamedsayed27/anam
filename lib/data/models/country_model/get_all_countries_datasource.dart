@@ -1,47 +1,26 @@
 import 'package:anam/data/models/base_model.dart';
 import 'package:anam/data/models/city_model/city_model.dart';
+import 'package:anam/data/models/country_model/country_model.dart';
 import 'package:anam/data/models/pagination_model.dart';
 
-class GetAllLaborersModel extends BaseResponseModel {
-  final CitiesPaginatedModel? citiesPaginatedModel;
+class GetAllCountriesModel extends BaseResponseModel {
+  final List<CountryModel>? countriesList;
 
-  const GetAllLaborersModel({
+  const GetAllCountriesModel({
     required super.success,
     required super.code,
     required super.message,
-    this.citiesPaginatedModel,
+    this.countriesList,
   });
 
-  factory GetAllLaborersModel.fromJson(Map<String, dynamic> json) {
-    return GetAllLaborersModel(
+  factory GetAllCountriesModel.fromJson(Map<String, dynamic> json) {
+    return GetAllCountriesModel(
       success: json['success'],
       code: json['code'],
       message: json['message'],
-      citiesPaginatedModel: json['result'] != null
-          ? CitiesPaginatedModel.fromJson(json['result'])
-          : null,
-    );
-  }
-}
-
-class CitiesPaginatedModel extends PaginationModel {
-  final List<CityModel>? laborerModel;
-
-  const CitiesPaginatedModel({
-    required super.currentPage,
-    required super.lastPage,
-    required super.total,
-    this.laborerModel,
-  });
-
-  factory CitiesPaginatedModel.fromJson(Map<String, dynamic> json) {
-    return CitiesPaginatedModel(
-      currentPage: json['currentPage'],
-      lastPage: json['lastPage'],
-      total: json['total'],
-      laborerModel: json['data'] != null && json['data'].isNotEmpty
-          ? List<CityModel>.from(
-          json['data'].map((e) => CityModel.fromJson(e)))
+      countriesList: json['result'] != null && json['result'].isNotEmpty
+          ? List<CountryModel>.from(
+          json['result'].map((e) => CountryModel.fromJson(e)))
           : null,
     );
   }

@@ -16,3 +16,19 @@ class LoginErrorState extends AuthState {
   final String error;
   LoginErrorState({required this.error});
 }
+class ChangeRoleState extends AuthState{}
+class ChangeCityState extends AuthState{}
+
+
+
+class GetAllCountriesLoadingState extends AuthState {}
+
+class GetAllCountriesSuccessState extends AuthState {}
+
+class GetAllCountriesErrorState extends AuthState {
+  final String error;
+
+  GetAllCountriesErrorState({required this.error});
+}
+
+
