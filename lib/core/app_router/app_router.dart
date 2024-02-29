@@ -1,8 +1,6 @@
 import 'package:anam/core/app_router/screens_name.dart';
 import 'package:anam/data/models/products_model/product_model.dart';
 import 'package:anam/data/models/requests/request_model.dart';
-import 'package:anam/data/models/requests/request_model.dart';
-import 'package:anam/data/models/vendor_data_model.dart';
 import 'package:anam/data/models/vendor_data_model.dart';
 import 'package:anam/presentation/screens/intro_screens/splash_screen.dart';
 import 'package:anam/presentation/screens/main_layout_screens/conversations_screens/chat_screen.dart';

@@ -45,6 +45,7 @@ class _PhoneComponentState extends State<PhoneComponent> {
       },
       builder: (context, state) {
         var cubit = AuthCubit.get(context);
+        print(cubit.countriesList);
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -1,6 +1,6 @@
 class EndPoints{
-static const baseUrl ='https://back.elanaam.ocodaserver.com/api/v2';
-static const imagesBaseUrl ='https://back.elanaam.ocodaserver.com/';
+static const baseUrl ='https://ban3am.com//api/v2';
+static const imagesBaseUrl ='https://ban3am.com//';
 static const products ='/products';
 static const wishList ='/users/wish-list';
 static const changeProductStatus ='/products/toggle-status/';
@@ -23,4 +23,6 @@ static const veterinarians ='/veterinarians';
 static const categories ='/categories';
 static const cities ='/cities';
 static const countries ='/countries';
+static const chats ='/chats';
+static const show ='$chats/show';
 }

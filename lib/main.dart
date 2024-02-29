@@ -20,6 +20,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/app_router/app_router.dart';
 import 'core/app_router/screens_name.dart';
 import 'core/network/dio_helper.dart';
+import 'domain/controllers/chat_cubit/chat_cubit.dart';
 import 'domain/controllers/home_cubit/home_cubit.dart';
 import 'domain/controllers/main_layout_cubit/main_layout_cubit.dart';
 import 'domain/controllers/map_cubit/map_cubit.dart';
@@ -76,6 +77,9 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) => RequestsCubit(),
+            ),
+            BlocProvider(
+              create: (context) => ChatCubit(),
             ),
             BlocProvider(
               create: (context) => AuthCubit()..getAllCountries(),

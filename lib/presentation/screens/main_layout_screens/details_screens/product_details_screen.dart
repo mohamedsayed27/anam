@@ -175,7 +175,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
-                      builder: (_) => const ChatBottomSheet(),
+                      builder: (_) => ChatBottomSheet(receiverId: widget.productDataModel.uploadedBy!.id!,),
                     );
                   }, price: widget.productDataModel.regularPrice?.toString()??"", rate: widget.productDataModel.rate!.toString(),
                 )

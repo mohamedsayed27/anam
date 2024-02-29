@@ -3,6 +3,7 @@ import 'package:anam/data/datasources/remote_datasource/auth_remote_datasource.d
 import 'package:get_it/get_it.dart';
 
 import '../../data/datasources/remote_datasource/categories_remote_datasource.dart';
+import '../../data/datasources/remote_datasource/chat_remote_data_source.dart';
 import '../../data/datasources/remote_datasource/cities_and_countries_remote_datasource.dart';
 import '../../data/datasources/remote_datasource/laborers_services_remote_datasource.dart';
 import '../../data/datasources/remote_datasource/products_remote_datasource.dart';
@@ -20,6 +21,7 @@ class ServicesLocator {
 
     ///DATA SOURCE
     sl.registerLazySingleton(() => AuthRemoteDataSource(dioHelper:sl(),),);
+    sl.registerLazySingleton(() => ChatRemoteDataSource(dioHelper:sl(),),);
     sl.registerLazySingleton(() => ProfileRemoteDatasource(dioHelper:sl(),),);
     sl.registerLazySingleton(() => CategoriesRemoteDatasource(dioHelper:sl(),),);
     sl.registerLazySingleton(() => RequestsRemoteDatasource(dioHelper:sl(),),);

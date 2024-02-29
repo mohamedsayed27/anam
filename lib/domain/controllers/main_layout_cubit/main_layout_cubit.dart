@@ -17,13 +17,13 @@ class MainLayoutCubit extends Cubit<MainLayoutState> {
 
   List<Widget> screens = [
     const ProfileScreen(),
-    const ConversationsScreen(),
+    if(token!=null)const ConversationsScreen(),
     const HomeScreen(),
     if(userType==UserTypeEnum.user.name&&token!=null) const FavoritesScreen(),
     if(userType==UserTypeEnum.vendor.name&&token!=null)const OrdersScreen(isPreviousOrders: false,),
   ];
 
-  int currentIndex = 2;
+  int currentIndex = token!=null?2:1;
 
   void changeNavBarIndex(int index){
     currentIndex = index;

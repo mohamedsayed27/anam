@@ -82,7 +82,7 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return LocaleKeys.enterPassword.tr();
-                    } else if (value.length < 9) {
+                    } else if (value.length < 6) {
                       return LocaleKeys.validatePassword.tr();
                     }
                     return null;

@@ -10,7 +10,9 @@ import '../../../core/app_theme/app_colors.dart';
 import '../../../translations/locale_keys.g.dart';
 
 class ChatTextField extends StatelessWidget {
-  const ChatTextField({super.key});
+  final TextEditingController? controller;
+  final void Function()? onTap;
+  const ChatTextField({super.key, this.controller, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class ChatTextField extends StatelessWidget {
         SizedBox(
           height: 40.h,
           child: TextField(
+            controller: controller,
             style: Theme.of(context)
                 .textTheme
                 .headlineMedium!
@@ -51,7 +54,7 @@ class ChatTextField extends StatelessWidget {
           ),
         ).onlyDirectionalPadding(end: 8.w),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: onTap,
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primaryColor,
             shape: const CircleBorder(),

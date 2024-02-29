@@ -13,6 +13,7 @@ import '../shared_widget/custom_circle_button.dart';
 
 class VendorDetailsComponent extends StatelessWidget {
   final ProductDataModel productDataModel;
+
   const VendorDetailsComponent({super.key, required this.productDataModel});
 
   @override
@@ -26,7 +27,7 @@ class VendorDetailsComponent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                productDataModel.name??"",
+                productDataModel.name ?? "",
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       fontSize: 24.sp,
                       fontWeight: FontWeight.w400,
@@ -79,7 +80,7 @@ class VendorDetailsComponent extends StatelessWidget {
                 height: 5,
               ),
               Text(
-                productDataModel.location??"",
+                productDataModel.location ?? "",
                 style: Theme.of(context).textTheme.labelSmall!.copyWith(
                       fontSize: 16.sp,
                       decoration: TextDecoration.underline,
@@ -112,22 +113,31 @@ class VendorDetailsComponent extends StatelessWidget {
             Positioned(
               top: 48.h,
               child: BlocConsumer<ProductsCubit, ProductsState>(
-  listener: (context, state) {
-    // TODO: implement listener
-  },
-  builder: (context, state) {
-    ProductsCubit cubit = ProductsCubit.get(context);
-    return CustomCircleButton(
-                width: 28.w,
-                height: 28.h,
-                iconPath: cubit.followedVendors[productDataModel.uploadedBy!.id.toString()]?Icons.remove:Icons.add,
-                iconSize: 25.r,
-                iconColor: Colors.white,
-                onPressed: () {},
-                backgroundColor: cubit.followedVendors[productDataModel.uploadedBy!.id.toString()]?AppColors.primaryColor:AppColors.orangeColor,
-              );
-  },
-),
+                listener: (context, state) {
+                  // TODO: implement listener
+                },
+                builder: (context, state) {
+                  ProductsCubit cubit = ProductsCubit.get(context);
+                  return CustomCircleButton(
+                    width: 28.w,
+                    height: 28.h,
+                    iconPath: cubit.followedVendors.isNotEmpty
+                        ? cubit.followedVendors[
+                                productDataModel.uploadedBy!.id.toString()]
+                            ? Icons.remove
+                            : Icons.add
+                        : Icons.add,
+                    iconSize: 25.r,
+                    iconColor: Colors.white,
+                    onPressed: () {},
+                    backgroundColor: cubit.followedVendors.isNotEmpty
+                        ?cubit.followedVendors[
+                            productDataModel.uploadedBy!.id.toString()]
+                        ? AppColors.primaryColor
+                        : AppColors.orangeColor:AppColors.primaryColor,
+                  );
+                },
+              ),
             ),
           ],
         )

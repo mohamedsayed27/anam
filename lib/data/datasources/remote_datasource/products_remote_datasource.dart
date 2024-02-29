@@ -99,6 +99,7 @@ class ProductsRemoteDatasource {
         url: "${EndPoints.products}${EndPoints.following}?page=$pageNumber",
         token: token,
       );
+      print(response);
       return Right(GetAllProductModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {

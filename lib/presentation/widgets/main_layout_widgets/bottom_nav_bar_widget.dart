@@ -46,15 +46,29 @@ class BottomNavBarWidget extends StatelessWidget {
               height: 26.h,
             ),
           ),
-          BottomNavigationBarItem(
-            label: "",
-            icon: SvgPicture.asset(
-              currentIndex == 1 ? SvgPath.chatFillNavIcon : SvgPath.chatNavIcon,
-              width: 26.w,
-              height: 26.h,
+          if (token != null)
+            BottomNavigationBarItem(
+              label: "",
+              icon: SvgPicture.asset(
+                currentIndex == 1
+                    ? SvgPath.chatFillNavIcon
+                    : SvgPath.chatNavIcon,
+                width: 26.w,
+                height: 26.h,
+              ),
             ),
-          ),
-          BottomNavigationBarItem(
+          if (token == null)
+            BottomNavigationBarItem(
+              label: "",
+              icon: SvgPicture.asset(
+                currentIndex == 1
+                    ? SvgPath.homeFillNavIcon
+                    : SvgPath.homeNavIcon,
+                width: 26.w,
+                height: 26.h,
+              ),
+            ),
+          if (token != null)BottomNavigationBarItem(
             label: "",
             icon: SvgPicture.asset(
               currentIndex == 2 ? SvgPath.homeFillNavIcon : SvgPath.homeNavIcon,
@@ -62,28 +76,28 @@ class BottomNavBarWidget extends StatelessWidget {
               height: 26.h,
             ),
           ),
-          if(userType==UserTypeEnum.user.name&&token!=null)BottomNavigationBarItem(
-            label: "",
-            icon: SvgPicture.asset(
-              currentIndex == 3
-                  ? SvgPath.favoriteFillNavIcon
-                  : SvgPath.favoriteNavIcon,
-              width: 26.w,
-              height: 26.h,
-            ),
-          ),
-          if(userType==UserTypeEnum.vendor.name&&token!=null)
+          if (userType == UserTypeEnum.user.name && token != null)
             BottomNavigationBarItem(
-            label: "",
-            icon: SvgPicture.asset(
-              currentIndex == 3
-                  ? SvgPath.ordersFillNavIcon
-                  : SvgPath.ordersNavIcon,
-              width: 26.w,
-              height: 26.h,
+              label: "",
+              icon: SvgPicture.asset(
+                currentIndex == 3
+                    ? SvgPath.favoriteFillNavIcon
+                    : SvgPath.favoriteNavIcon,
+                width: 26.w,
+                height: 26.h,
+              ),
             ),
-          ),
-
+          if (userType == UserTypeEnum.vendor.name && token != null)
+            BottomNavigationBarItem(
+              label: "",
+              icon: SvgPicture.asset(
+                currentIndex == 3
+                    ? SvgPath.ordersFillNavIcon
+                    : SvgPath.ordersNavIcon,
+                width: 26.w,
+                height: 26.h,
+              ),
+            ),
         ],
       ),
     );

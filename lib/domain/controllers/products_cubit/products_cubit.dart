@@ -130,6 +130,7 @@ class ProductsCubit extends Cubit<ProductsState> {
               allProductsPageNumber++;
             }
           }
+          productsList.forEach((element) {print(element.uploadedBy!.isFollowed);});
           getAllProductsLoading = false;
           emit(GetAllProductsSuccessState());
         }
