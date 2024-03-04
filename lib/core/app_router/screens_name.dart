@@ -12,4 +12,5 @@ class ScreenName{
   static const followingScreen = "followingScreen";
   static const oldOrdersScreen = "oldOrdersScreen";
   static const productControlScreen = "productControlScreen";
+  static const notificationsScreen = "notificationsScreen";
 }

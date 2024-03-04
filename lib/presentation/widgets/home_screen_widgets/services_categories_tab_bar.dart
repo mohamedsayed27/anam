@@ -4,15 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../domain/controllers/home_cubit/home_cubit.dart';
-import '../../../domain/controllers/home_cubit/home_state.dart';
 import '../../../domain/controllers/services_cubit/services_cubit.dart';
 import '../../../domain/controllers/services_cubit/services_state.dart';
 import 'categories_shimmer_effect.dart';
 
-class ServicesCategoriesTabBarWidget extends StatelessWidget {
+class ServicesCategoriesTabBarWidget extends StatefulWidget {
   const ServicesCategoriesTabBarWidget({super.key});
 
+  @override
+  State<ServicesCategoriesTabBarWidget> createState() =>
+      _ServicesCategoriesTabBarWidgetState();
+}
+
+class _ServicesCategoriesTabBarWidgetState
+    extends State<ServicesCategoriesTabBarWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ServicesCubit, ServicesState>(
@@ -24,13 +29,16 @@ class ServicesCategoriesTabBarWidget extends StatelessWidget {
         return Container(
           height: 90.h,
           padding: EdgeInsets.only(bottom: 4.h),
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.10),
-              blurRadius: 4.r,
-              offset: Offset(0, 4.h),
-            )
-          ]),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.10),
+                blurRadius: 4.r,
+                offset: Offset(0, 4.h),
+              )
+            ],
+          ),
           child: cubit.getAllServicesLoading
               ? const CategoriesShimmerEffectList()
               : ListView.separated(

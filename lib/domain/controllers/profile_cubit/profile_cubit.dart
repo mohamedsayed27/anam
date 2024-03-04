@@ -6,6 +6,7 @@ import 'package:anam/core/parameters/update_profile_parameters.dart';
 import 'package:anam/data/datasources/remote_datasource/auth_remote_datasource.dart';
 import 'package:anam/data/datasources/remote_datasource/profile_remote_datasource.dart';
 import 'package:anam/data/models/base_model.dart';
+import 'package:anam/data/models/notification/notification_model.dart';
 import 'package:anam/data/models/user_model/profile_model.dart';
 import 'package:anam/data/models/vendor_data_model.dart';
 import 'package:anam/data/models/vendor_info_model.dart';
@@ -80,16 +81,40 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
-  bool getUserFollowingLoading = false;
+  void getNotification() async {
+    emit(GetNotificationsLoadingState());
+    final response = await profileRemoteDatasource.getNotification();
+    response.fold(
+      (l) {
+        baseErrorModel = l.baseErrorModel;
 
+        emit(
+          GetNotificationsErrorState(
+            error: baseErrorModel?.errors?[0] ?? baseErrorModel!.message,
+          ),
+        );
+      },
+      (r) async {
+        notifications = r;
+        emit(GetNotificationsSuccessState());
+      },
+    );
+  }
+
+  List<NotificationModel> notifications = [];
+
+  bool getUserFollowingLoading = false;
 
   Map<String, dynamic> userFollowing = {};
   List<UserDataModel> userDataList = [];
+
   void getUserFollowing() async {
     userDataList = [];
     getUserFollowingLoading = true;
     emit(GetUserFollowingLoadingState());
-    final response = await profileRemoteDatasource.getUserFollowing(id: userId!,);
+    final response = await profileRemoteDatasource.getUserFollowing(
+      id: userId!,
+    );
     response.fold(
       (l) {
         baseErrorModel = l.baseErrorModel;
@@ -98,7 +123,7 @@ class ProfileCubit extends Cubit<ProfileState> {
             error: baseErrorModel?.errors?[0] ?? baseErrorModel!.message));
       },
       (r) async {
-        if(r.getUserFollowingPaginatedModel!.userModel!=null){
+        if (r.getUserFollowingPaginatedModel!.userModel != null) {
           userDataList.addAll(r.getUserFollowingPaginatedModel!.userModel!);
         }
         getUserFollowingLoading = false;
@@ -106,13 +131,17 @@ class ProfileCubit extends Cubit<ProfileState> {
       },
     );
   }
+
   bool getVendorFollowingLoading = false;
   List<UserDataModel> vendorFollowingList = [];
+
   void getVendorFollowing() async {
     vendorFollowingList = [];
     getVendorFollowingLoading = true;
     emit(GetVendorFollowingLoadingState());
-    final response = await profileRemoteDatasource.getVendorFollowing(id: userId!,);
+    final response = await profileRemoteDatasource.getVendorFollowing(
+      id: userId!,
+    );
     response.fold(
       (l) {
         baseErrorModel = l.baseErrorModel;
@@ -121,8 +150,9 @@ class ProfileCubit extends Cubit<ProfileState> {
             error: baseErrorModel?.errors?[0] ?? baseErrorModel!.message));
       },
       (r) async {
-        if(r.getUserFollowingPaginatedModel!.userModel!=null){
-          vendorFollowingList.addAll(r.getUserFollowingPaginatedModel!.userModel!);
+        if (r.getUserFollowingPaginatedModel!.userModel != null) {
+          vendorFollowingList
+              .addAll(r.getUserFollowingPaginatedModel!.userModel!);
         }
 
         getVendorFollowingLoading = false;
@@ -204,6 +234,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       },
     );
   }
+
   void handleLogout() {
     emit(ProfileInitial());
   }

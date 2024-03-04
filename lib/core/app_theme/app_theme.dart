@@ -16,7 +16,7 @@ class AppTheme{
         foregroundColor: AppColors.primaryColor,
       ),
     ),
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: AppColors.whiteColor,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(

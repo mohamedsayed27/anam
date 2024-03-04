@@ -86,9 +86,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: NestedScrollView(
+    return Scaffold(
+      body: SafeArea(
+        child: NestedScrollView(
           headerSliverBuilder: (_, isScrolled) => [
             SliverToBoxAdapter(
               child: HomeTabBarWidget(

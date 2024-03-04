@@ -11,6 +11,7 @@ import '../../../core/constants/constants.dart';
 import '../../../core/network/api_end_points.dart';
 import '../../../core/network/dio_helper.dart';
 import '../../../core/network/error_message_model.dart';
+import '../../models/laborers_models/laborers_multi_lang.dart';
 
 class LaborersRemoteDatasource extends ServicesBaseDatasource<
     GetAllLaborersModel, LaborerModel, LaborerParameters> {
@@ -92,7 +93,7 @@ class LaborersRemoteDatasource extends ServicesBaseDatasource<
 
   @override
   Future<Either<ErrorException, LaborerModel>> showSingle(
-      {required int id}) async {
+      {required int id,}) async {
     try {
       final response = await dioHelper.getData(
         url: "${EndPoints.laborers}/$id",
@@ -171,4 +172,6 @@ class LaborersRemoteDatasource extends ServicesBaseDatasource<
       }
     }
   }
+
+
 }

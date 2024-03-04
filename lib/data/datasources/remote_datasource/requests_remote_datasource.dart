@@ -58,7 +58,7 @@ class RequestsRemoteDatasource {
   }
 
   Future<Either<ErrorException, RequestModel>> sendRequest(
-      {required RequestParameters requestParameters}) async {
+      {required RequestParameters requestParameters,}) async {
     try {
       final response = await dioHelper.postData(
         url: EndPoints.requests,

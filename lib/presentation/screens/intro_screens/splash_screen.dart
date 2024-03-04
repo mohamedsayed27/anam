@@ -42,16 +42,19 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          SizedBox(
-            height: double.infinity,
-            width: double.infinity,
-            child: Image.asset(ImagesPath.splashBackGround,fit: BoxFit.cover,),
-          ),
-          FadeTransition(opacity: animation,child: SvgPicture.asset(SvgPath.anaanLogo,width: 214.w,height: 285.h,),)
-        ],
+
+      body: SafeArea(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: Image.asset(ImagesPath.splashBackGround,fit: BoxFit.cover,),
+            ),
+            FadeTransition(opacity: animation,child: SvgPicture.asset(SvgPath.anaanLogo,width: 214.w,height: 285.h,),)
+          ],
+        ),
       ),
     );
   }

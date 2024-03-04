@@ -44,7 +44,7 @@ class AccountSettingsComponent extends StatelessWidget {
                 .headlineMedium!
                 .copyWith(fontSize: 20.sp, height: 1),
           ),
-        if (token != null&&userType!=UserTypeEnum.vendor.name)
+        if (token != null && userType != UserTypeEnum.vendor.name)
           AccountSettingItemWidget(
             onPressed: () {
               RequestsCubit.get(context).getPreviousServices();
@@ -53,7 +53,7 @@ class AccountSettingsComponent extends StatelessWidget {
             iconPath: SvgPath.oldOrders,
             title: "الطلبات السابقة",
           ),
-        if (token != null&&userType == UserTypeEnum.user.name)
+        if (token != null && userType == UserTypeEnum.user.name)
           AccountSettingItemWidget(
             onPressed: () {
               Navigator.pushNamed(context, ScreenName.followingScreen);
@@ -61,7 +61,7 @@ class AccountSettingsComponent extends StatelessWidget {
             iconPath: SvgPath.followersList,
             title: "قائمة المتابعة",
           ),
-        if (token != null&&userType == UserTypeEnum.vendor.name)
+        if (token != null && userType == UserTypeEnum.vendor.name)
           AccountSettingItemWidget(
             onPressed: () {
               Navigator.pushNamed(context, ScreenName.followersScreen);
@@ -80,7 +80,7 @@ class AccountSettingsComponent extends StatelessWidget {
         if (token != null)
           AccountSettingItemWidget(
             onPressed: () {
-              Navigator.pushNamed(context, ScreenName.editProfileScreen);
+              Navigator.pushNamed(context, ScreenName.notificationsScreen);
             },
             iconPath: SvgPath.notification,
             title: "الاشعارات",
@@ -94,22 +94,29 @@ class AccountSettingsComponent extends StatelessWidget {
           AccountSettingItemWidget(
             onPressed: () {
               showProgressIndicator(context);
-              Timer(const Duration(seconds: 1), () async {
-                await CacheHelper.removeData(key: CacheKeys.token);
-                await CacheHelper.removeData(key: CacheKeys.userId);
-                await CacheHelper.removeData(key: CacheKeys.userType)
-                    .then((value) {
-                  MainLayoutCubit.get(context).screens = [
-                    const ProfileScreen(),
-                    const ConversationsScreen(),
-                    const HomeScreen(),
-                    if(userType==UserTypeEnum.user.name&&token!=null)const FavoritesScreen(),
-                    if(userType==UserTypeEnum.vendor.name&&token!=null)const OrdersScreen(isPreviousOrders: false,),
-                  ];
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, ScreenName.splashScreen, (route) => false);
-                });
-              });
+              Timer(
+                const Duration(seconds: 1),
+                () async {
+                  await CacheHelper.clearAllData().then(
+                    (value) {
+                      MainLayoutCubit.get(context).screens = [
+                        const ProfileScreen(),
+                        const ConversationsScreen(),
+                        const HomeScreen(),
+                        if (userType == UserTypeEnum.user.name && token != null)
+                          const FavoritesScreen(),
+                        if (userType == UserTypeEnum.vendor.name &&
+                            token != null)
+                          const OrdersScreen(
+                            isPreviousOrders: false,
+                          ),
+                      ];
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, ScreenName.splashScreen, (route) => false);
+                    },
+                  );
+                },
+              );
               // print(token);
             },
             iconPath: SvgPath.logout,

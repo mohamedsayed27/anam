@@ -18,6 +18,13 @@ class ShowProfileErrorState extends ProfileState {
 
   ShowProfileErrorState({required this.error});
 }
+class GetNotificationsLoadingState extends ProfileState {}
+class GetNotificationsSuccessState extends ProfileState {}
+class GetNotificationsErrorState extends ProfileState {
+  final String error;
+
+  GetNotificationsErrorState({required this.error});
+}
 
 class GetUserFollowingLoadingState extends ProfileState {}
 class GetUserFollowingSuccessState extends ProfileState {}

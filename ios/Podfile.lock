@@ -30,6 +30,9 @@ PODS:
     - Flutter
   - flutter_local_notifications (0.0.1):
     - Flutter
+  - flutter_paytabs_bridge (2.4.0):
+    - Flutter
+    - PayTabsSDK (= 6.6.9)
   - flutter_secure_storage (6.0.0):
     - Flutter
   - fluttertoast (0.0.2):
@@ -72,6 +75,7 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - PayTabsSDK (6.6.9)
   - PromisesObjC (2.3.1)
   - pusher_channels_flutter (0.0.1):
     - Flutter
@@ -93,6 +97,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - flutter_paytabs_bridge (from `.symlinks/plugins/flutter_paytabs_bridge/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - geocoding_ios (from `.symlinks/plugins/geocoding_ios/ios`)
@@ -122,6 +127,7 @@ SPEC REPOS:
     - GTMAppAuth
     - GTMSessionFetcher
     - NWWebSocket
+    - PayTabsSDK
     - PromisesObjC
     - PusherSwift
     - Toast
@@ -136,6 +142,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_facebook_auth/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  flutter_paytabs_bridge:
+    :path: ".symlinks/plugins/flutter_paytabs_bridge/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   fluttertoast:
@@ -172,6 +180,7 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_facebook_auth: 47c7a8594f2d6864618e30b5a6d59dff0d2e59fe
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
+  flutter_paytabs_bridge: 003ef6f1d61386251c0266c4271b691636f3e22a
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
@@ -187,6 +196,7 @@ SPEC CHECKSUMS:
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   NWWebSocket: 040d22f23438cc09aaeabf537beff67699c3c76d
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  PayTabsSDK: 2fca006441d2bc8abc59a6a38592d7b911ef026e
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   pusher_channels_flutter: 01297e6e420e0ad61a6e5901e27bb272a6f58ec2
   PusherSwift: cad631bad86cfff4b8458dce1310a7774e469b1f

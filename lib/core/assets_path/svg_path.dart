@@ -49,6 +49,7 @@ class SvgPath {
   static const profileFillNavIcon = "assets/svg/profileFillNavIcon.svg";
   static const followersList = "assets/svg/followersList.svg";
   static const notification = "assets/svg/notification.svg";
+  static const infoCircle = "assets/svg/infoCircle.svg";
   static const oldOrders = "assets/svg/oldOrders.svg";
   static const van = "assets/svg/van.svg";
   static const medicine = "assets/svg/medicine.svg";

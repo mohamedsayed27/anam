@@ -1,6 +1,6 @@
 class EndPoints{
-static const baseUrl ='https://ban3am.com//api/v2';
-static const imagesBaseUrl ='https://ban3am.com//';
+static const baseUrl ='https://ban3am.com/api/v2';
+static const imagesBaseUrl ='https://ban3am.com';
 static const products ='/products';
 static const wishList ='/users/wish-list';
 static const changeProductStatus ='/products/toggle-status/';
@@ -19,10 +19,12 @@ static const password ='/password';
 static const stores ='/stores';
 static const laborers ='/laborers';
 static const services ='/services';
+static const multiLang ='/multi-lang';
 static const veterinarians ='/veterinarians';
 static const categories ='/categories';
 static const cities ='/cities';
 static const countries ='/countries';
+static const notifications ='/notifications';
 static const chats ='/chats';
 static const show ='$chats/show';
 }

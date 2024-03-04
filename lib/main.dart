@@ -4,6 +4,8 @@ import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/services/services_locator.dart';
 import 'package:anam/data/datasources/map_remote_data_source.dart';
 import 'package:anam/domain/controllers/auth_cubit/auth_cubit.dart';
+import 'package:anam/presentation/screens/main_layout_screens/notification_screen/notification_screen.dart';
+import 'package:anam/presentation/screens/main_layout_screens/payment_screen/package_subscriptions_screen.dart';
 import 'package:anam/presentation/screens/main_layout_screens/services_screens/add_laborer_screen.dart';
 import 'package:anam/presentation/screens/main_layout_screens/services_screens/add_store_screen.dart';
 import 'package:anam/presentation/screens/main_layout_screens/services_screens/add_vet_store_screen.dart';
@@ -115,7 +117,7 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             onGenerateRoute: AppRouter.generateRoute,
             initialRoute: ScreenName.splashScreen,
-            // home: AddVetScreen(),
+            // home: NotificationsScreen(),
           ),
         );
       },

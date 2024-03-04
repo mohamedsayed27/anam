@@ -10,6 +10,7 @@ import '../../../core/constants/constants.dart';
 import '../../../core/error/error_exception.dart';
 import '../../../core/network/api_end_points.dart';
 import '../../../core/network/error_message_model.dart';
+import '../../models/notification/notification_model.dart';
 import '../../models/user_model/profile_model.dart';
 import '../../models/vendor_data_model.dart';
 
@@ -38,7 +39,34 @@ class ProfileRemoteDatasource {
     }
   }
 
-  Future<Either<ErrorException, GetVendorDetailsWidget>> showVendorDetails({required int id}) async {
+  Future<Either<ErrorException, List<NotificationModel>>>
+      getNotification() async {
+    try {
+      final response = await dioHelper.getData(
+        url: EndPoints.notifications,
+        token: token,
+      );
+      final list = List<NotificationModel>.from(
+        response.data["result"].map(
+          (e) => NotificationModel.fromJson(e),
+        ),
+      );
+      return Right(list);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(
+          ErrorException(
+            baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
+          ),
+        );
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<Either<ErrorException, GetVendorDetailsWidget>> showVendorDetails(
+      {required int id}) async {
     try {
       final response = await dioHelper.getData(
         url: "${EndPoints.vendorDetails}/$id",
@@ -58,7 +86,8 @@ class ProfileRemoteDatasource {
     }
   }
 
-  Future<Either<ErrorException, GetUserFollowingModel>> getUserFollowing({required String id}) async {
+  Future<Either<ErrorException, GetUserFollowingModel>> getUserFollowing(
+      {required String id}) async {
     try {
       final response = await dioHelper.getData(
         url: EndPoints.userFollowing(id: id.toString()),
@@ -78,7 +107,8 @@ class ProfileRemoteDatasource {
     }
   }
 
-  Future<Either<ErrorException, GetUserFollowingModel>> getVendorFollowing({required String id}) async {
+  Future<Either<ErrorException, GetUserFollowingModel>> getVendorFollowing(
+      {required String id}) async {
     try {
       final response = await dioHelper.getData(
         url: EndPoints.vendorFollowing(id: id.toString()),
@@ -99,11 +129,14 @@ class ProfileRemoteDatasource {
     }
   }
 
-  Future<Either<ErrorException, BaseResponseModel>> changePassword({required ChangePasswordParameters changePasswordParameters}) async {
+  Future<Either<ErrorException, BaseResponseModel>> changePassword(
+      {required ChangePasswordParameters changePasswordParameters}) async {
     try {
       final response = await dioHelper.putData(
         url: EndPoints.password,
-        data: FormData.fromMap(changePasswordParameters.toMap(),),
+        data: FormData.fromMap(
+          changePasswordParameters.toMap(),
+        ),
         token: token,
       );
       return Right(BaseResponseModel.fromJson(response.data));
@@ -120,11 +153,14 @@ class ProfileRemoteDatasource {
     }
   }
 
-  Future<Either<ErrorException, BaseResponseModel>> changeProfileData({required UpdateProfileParameters updateProfileParameters}) async {
+  Future<Either<ErrorException, BaseResponseModel>> changeProfileData(
+      {required UpdateProfileParameters updateProfileParameters}) async {
     try {
       final response = await dioHelper.postData(
         url: EndPoints.profile,
-        data: FormData.fromMap(await updateProfileParameters.toMap(),),
+        data: FormData.fromMap(
+          await updateProfileParameters.toMap(),
+        ),
         token: token,
       );
       return Right(BaseResponseModel.fromJson(response.data));

@@ -31,45 +31,47 @@ class _FollowingScreenState extends State<FollowingScreen> {
         preferredSize: AppBar().preferredSize,
         child: const CustomAppBar(title: "قائمة المتابعة ( 9 )"),
       ),
-      body: BlocConsumer<ProfileCubit, ProfileState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
-        builder: (context, state) {
-          ProfileCubit cubit = ProfileCubit.get(context);
-          return cubit.getUserFollowingLoading
-              ? const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                )
-              : Column(
-                  children: [
-                    const CustomDivider(
-                      hPadding: 16,
-                    ),
-                    const CustomSizedBox(
-                      height: 8,
-                    ),
-                    Expanded(
-                      child: ListView.separated(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 16.h),
-                        itemBuilder: (_, index) {
-                          return FollowersWidgets(
-                            isAccepted: false,
-                            userDataModel: cubit.userDataList[index],
-                          );
-                        },
-                        separatorBuilder: (_, index) {
-                          return const CustomSizedBox(
-                            height: 20,
-                          );
-                        },
-                        itemCount: cubit.userDataList.length,
+      body: SafeArea(
+        child: BlocConsumer<ProfileCubit, ProfileState>(
+          listener: (context, state) {
+            // TODO: implement listener
+          },
+          builder: (context, state) {
+            ProfileCubit cubit = ProfileCubit.get(context);
+            return cubit.getUserFollowingLoading
+                ? const Center(
+                    child: CircularProgressIndicator.adaptive(),
+                  )
+                : Column(
+                    children: [
+                      const CustomDivider(
+                        hPadding: 16,
                       ),
-                    ),
-                  ],
-                );
-        },
+                      const CustomSizedBox(
+                        height: 8,
+                      ),
+                      Expanded(
+                        child: ListView.separated(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 16.h),
+                          itemBuilder: (_, index) {
+                            return FollowersWidgets(
+                              isAccepted: false,
+                              userDataModel: cubit.userDataList[index],
+                            );
+                          },
+                          separatorBuilder: (_, index) {
+                            return const CustomSizedBox(
+                              height: 20,
+                            );
+                          },
+                          itemCount: cubit.userDataList.length,
+                        ),
+                      ),
+                    ],
+                  );
+          },
+        ),
       ),
     );
   }

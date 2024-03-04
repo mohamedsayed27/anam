@@ -27,9 +27,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   Widget build(BuildContext context) {
 
-    return SafeArea(
-      child: Scaffold(
-        body: BlocConsumer<ProductsCubit, ProductsState>(
+    return Scaffold(
+      body: SafeArea(
+        child: BlocConsumer<ProductsCubit, ProductsState>(
           listener: (context, state) {
             // TODO: implement listener
           },

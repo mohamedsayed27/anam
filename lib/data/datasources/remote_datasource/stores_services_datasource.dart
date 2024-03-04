@@ -20,7 +20,7 @@ class StoresServicesRemoteDatasource extends ServicesBaseDatasource<GetAllStoreM
 
   @override
   Future<Either<ErrorException, GetAllStoreModel>> getAll(
-      {required int pageNumber}) async {
+      {required int pageNumber,}) async {
     try {
       final response = await dioHelper.getData(
         url: "${EndPoints.stores}?page=$pageNumber",
