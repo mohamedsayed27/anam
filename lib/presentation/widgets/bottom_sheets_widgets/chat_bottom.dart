@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:anam/core/app_theme/app_colors.dart';
 import 'package:anam/core/assets_path/fonts_path.dart';
 import 'package:anam/core/assets_path/svg_path.dart';
@@ -5,6 +7,7 @@ import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_paytabs_bridge/BaseBillingShippingInfo.dart';
@@ -14,6 +17,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
+import '../../../core/pusher/pusher_methods.dart';
 import '../../../domain/controllers/chat_cubit/chat_cubit.dart';
 import '../conversations_widgets/chat_text_field.dart';
 import '../conversations_widgets/message_item_widget.dart';
@@ -36,137 +40,44 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
     // TODO: implement initState
     cubit = ChatCubit.get(context);
     cubit.getChats(receiverId: widget.receiverId);
-    print(userId);
-    print(widget.receiverId);
-    channelSubscription(receiverId: widget.receiverId, senderId: int.parse(userId.toString(),),);
-    // configuration = PaymentSdkConfigurationDetails(
-    //   profileId: "108520",
-    //   serverKey: "S6JN6RNND9-JHR69NT2MJ-6R26LT6B69",
-    //   clientKey: "CBKMVH-2BDG6H-RGPQ7M-6KKVKT",
-    //   cartId: "19",
-    //   cartDescription: "cart desc",
-    //   merchantName: "merchant name",
-    //   screentTitle: "Pay with Card",
-    //   merchantCountryCode: "EG",
-    //   currencyCode: "EGP",
-    //   billingDetails: billingDetails,
-    //   amount: 10.0,
-    //   shippingDetails: shippingDetails,
-    //   locale:
-    //       PaymentSdkLocale.AR, //PaymentSdkLocale.AR or PaymentSdkLocale.DEFAULT
-    // );
+    _pusherMethods = PusherMethods(pusher: pusher);
+    subscribeChannel();
     super.initState();
   }
 
-  PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
+  late final PusherMethods _pusherMethods;
+  PusherChannelsFlutter pusher = PusherChannelsFlutter();
 
-  void channelSubscription({
-    required int receiverId,
-    required int senderId,
-  }) async {
-    final list = <int>[receiverId, senderId]..sort();
-    try {
-      await pusher.init(
-          apiKey: "d7e9da7b3bc9de6317b3",
-          cluster: "eu",
-          onSubscriptionSucceeded: (String channelName, dynamic data,) {
-            print("onSubscriptionSucceeded: $channelName data: $data");
-          },
-          onEvent: (PusherEvent event) {
-            print("onEvent: $event");
-          },
-          onSubscriptionError: (String message, dynamic e) {
-            print("onSubscriptionError: $message Exception: $e");
-          },
-          onDecryptionFailure: (error, data) {},
-          onMemberAdded: (String channelName, PusherMember member) {
-            print("onMemberAdded: $channelName user: $member");
-          },
-          onConnectionStateChange:
-              (dynamic currentState, dynamic previousState,) {
-            print("Connection: $currentState");
-          },
-          onMemberRemoved: (error, pusherMember) {},
-
-          // authEndpoint: "<Your Authendpoint>",
-          onAuthorizer: onAuthorizer,);
-
-      await pusher.subscribe(
-          channelName: "private.chat.${list.join(".")}");
-      await pusher.connect();
-    } catch (e) {
-      print("ERROR: $e");
-    }
-    print(pusher.connectionState);
-
-    // print(pusher.channels);
-
-    // print(pp.members);
+  @override
+  void dispose() {
+    super.dispose();
   }
 
-  var billingDetails = BillingDetails(
-    "John Smith",
-    "email@domain.com",
-    "+97311111111",
-    "st. 12",
-    "eg",
-    "dubai",
-    "dubai",
-    "12345",
-  );
-  var shippingDetails = ShippingDetails(
-    "John Smith",
-    "email@domain.com",
-    "+97311111111",
-    "st. 12",
-    "eg",
-    "dubai",
-    "dubai",
-    "12345",
-  );
-  late PaymentSdkConfigurationDetails configuration;
+  void unsubscribe() async {
+    final list = <int>[
+      widget.receiverId,
+      int.parse(userId.toString()),
+    ]..sort();
+    await pusher.unsubscribe(channelName: "private.chat.${list.join(".")}");
+  }
 
-//{
-//       'Content-Type': 'application/json',
-//       'lang': '',
-//       if (token != null) "Authorization": "Bearer $token",
-//       'Accept': 'text/plain',
-//       "Content-Language":lang
-//     }
-
-  dynamic onAuthorizer(
-      String channelName, String socketId, dynamic options) async {
-    return {
-      'Content-Type': 'application/json',
-      'lang': '',
-      if (token != null) "Authorization": "Bearer $token",
-      'Accept': 'text/plain',
-    };
+  void subscribeChannel() {
+    _pusherMethods.channelSubscription(
+      receiverId: widget.receiverId,
+      senderId: int.parse(userId.toString()),
+      onEvent: (PusherEvent event) {
+        print("onEvent ====> : ${event.data}");
+      },
+      onSubscriptionError: (String message, dynamic e) {
+        print("onSubscriptionError: $message Exception: $e");
+      },
+      onSubscriptionSucceeded: (String channelName, dynamic data) {
+        print("onSubscriptionSucceeded: $channelName data: $data");
+      },
+    );
   }
 
   final TextEditingController controller = TextEditingController();
-
-  void testPayCallTabs() {
-    FlutterPaytabsBridge.startCardPayment(configuration, (event) {
-      setState(() {
-        if (event["status"] == "success") {
-          // Handle transaction details here.
-          var transactionDetails = event["data"];
-          print(transactionDetails);
-
-          if (transactionDetails["isSuccess"]) {
-            print("successful transaction");
-          } else {
-            print("failed transaction");
-          }
-        } else if (event["status"] == "error") {
-          // Handle error here.
-        } else if (event["status"] == "event") {
-          // Handle cancel events here.
-        }
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -250,7 +161,8 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
                 controller: controller,
                 onTap: () {
                   // testPayCallTabs();
-                  cubit.sendMessage(receiverId: widget.receiverId, message: controller.text);
+                  cubit.sendMessage(
+                      receiverId: widget.receiverId, message: controller.text);
                 },
               ).symmetricPadding(horizontal: 27),
               const CustomSizedBox(
