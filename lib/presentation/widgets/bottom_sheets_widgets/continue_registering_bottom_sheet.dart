@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../domain/controllers/auth_cubit/auth_cubit.dart';
 import '../../../domain/controllers/auth_cubit/auth_state.dart';
+import '../../../domain/controllers/main_layout_cubit/main_layout_cubit.dart';
 import '../../../domain/controllers/profile_cubit/profile_cubit.dart';
 import '../../../domain/controllers/profile_cubit/profile_state.dart';
 import '../../../facebook_login_test.dart';
@@ -42,6 +43,7 @@ class _ContinueRegisteringBottomSheetState extends State<ContinueRegisteringBott
               showProgressIndicator(context);
             }
             if(state is RegisterSuccessState){
+              MainLayoutCubit.get(context).handleAuthMethods();
               Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashScreen, (route) => false);
             }
             if(state is RegisterErrorState){

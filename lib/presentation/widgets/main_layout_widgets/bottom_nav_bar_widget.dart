@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../core/app_theme/app_colors.dart';
 import '../../../core/assets_path/svg_path.dart';
+import '../../../core/cache_helper/cache_keys.dart';
+import '../../../core/cache_helper/shared_pref_methods.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/enums/user_type_enum.dart';
 
@@ -46,7 +48,7 @@ class BottomNavBarWidget extends StatelessWidget {
               height: 26.h,
             ),
           ),
-          if (token != null)
+          if (CacheHelper.getData(key: CacheKeys.token) != null)
             BottomNavigationBarItem(
               label: "",
               icon: SvgPicture.asset(
@@ -57,7 +59,7 @@ class BottomNavBarWidget extends StatelessWidget {
                 height: 26.h,
               ),
             ),
-          if (token == null)
+          if (CacheHelper.getData(key: CacheKeys.token) == null)
             BottomNavigationBarItem(
               label: "",
               icon: SvgPicture.asset(
@@ -68,15 +70,19 @@ class BottomNavBarWidget extends StatelessWidget {
                 height: 26.h,
               ),
             ),
-          if (token != null)BottomNavigationBarItem(
-            label: "",
-            icon: SvgPicture.asset(
-              currentIndex == 2 ? SvgPath.homeFillNavIcon : SvgPath.homeNavIcon,
-              width: 26.w,
-              height: 26.h,
+          if (CacheHelper.getData(key: CacheKeys.token) != null)
+            BottomNavigationBarItem(
+              label: "",
+              icon: SvgPicture.asset(
+                currentIndex == 2
+                    ? SvgPath.homeFillNavIcon
+                    : SvgPath.homeNavIcon,
+                width: 26.w,
+                height: 26.h,
+              ),
             ),
-          ),
-          if (userType == UserTypeEnum.user.name && token != null)
+          if (userType == UserTypeEnum.user.name &&
+              CacheHelper.getData(key: CacheKeys.token) != null)
             BottomNavigationBarItem(
               label: "",
               icon: SvgPicture.asset(
@@ -87,7 +93,8 @@ class BottomNavBarWidget extends StatelessWidget {
                 height: 26.h,
               ),
             ),
-          if (userType == UserTypeEnum.vendor.name && token != null)
+          if (userType == UserTypeEnum.vendor.name &&
+              CacheHelper.getData(key: CacheKeys.token) != null)
             BottomNavigationBarItem(
               label: "",
               icon: SvgPicture.asset(

@@ -1,27 +1,19 @@
 import 'package:anam/bloc_observer.dart';
-import 'package:anam/core/app_theme/app_theme.dart';
 import 'package:anam/core/cache_helper/shared_pref_methods.dart';
-import 'package:anam/core/services/services_locator.dart';
-import 'package:anam/data/datasources/map_remote_data_source.dart';
-import 'package:anam/domain/controllers/auth_cubit/auth_cubit.dart';
-import 'package:anam/presentation/screens/main_layout_screens/notification_screen/notification_screen.dart';
-import 'package:anam/presentation/screens/main_layout_screens/payment_screen/package_subscriptions_screen.dart';
-import 'package:anam/presentation/screens/main_layout_screens/services_screens/add_laborer_screen.dart';
-import 'package:anam/presentation/screens/main_layout_screens/services_screens/add_store_screen.dart';
-import 'package:anam/presentation/screens/main_layout_screens/services_screens/add_vet_store_screen.dart';
-import 'package:anam/presentation/screens/main_layout_screens/services_screens/laborers_details_screen.dart';
-import 'package:anam/presentation/screens/main_layout_screens/services_screens/store_services_details_screen.dart';
-import 'package:anam/presentation/screens/main_layout_screens/services_screens/vet_service_details_screen.dart';
 import 'package:anam/translations/codegen_loader.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/app_router/app_router.dart';
 import 'core/app_router/screens_name.dart';
+import 'core/app_theme/app_theme.dart';
 import 'core/network/dio_helper.dart';
+import 'core/services/services_locator.dart';
+import 'domain/controllers/auth_cubit/auth_cubit.dart';
 import 'domain/controllers/chat_cubit/chat_cubit.dart';
 import 'domain/controllers/home_cubit/home_cubit.dart';
 import 'domain/controllers/main_layout_cubit/main_layout_cubit.dart';
@@ -31,7 +23,6 @@ import 'domain/controllers/profile_cubit/profile_cubit.dart';
 import 'domain/controllers/requests_cubit/requests_cubit.dart';
 import 'domain/controllers/services_cubit/services_cubit.dart';
 import 'firebase_options.dart';
-import 'presentation/screens/main_layout_screens/profile_screens/products_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,19 +35,21 @@ void main() async {
   ServicesLocator().init();
   Bloc.observer = MyBlocObserver();
   runApp(
-    EasyLocalization(
-      supportedLocales: const [
-        Locale(
-          'en',
-        ),
-        Locale(
-          'ar',
-        ),
-      ],
-      startLocale: const Locale("ar"),
-      path: 'assets/translations',
-      assetLoader: const CodegenLoader(),
-      child: const MyApp(),
+    Phoenix(
+      child: EasyLocalization(
+        supportedLocales: const [
+          Locale(
+            'en',
+          ),
+          Locale(
+            'ar',
+          ),
+        ],
+        startLocale: const Locale("ar"),
+        path: 'assets/translations',
+        assetLoader: const CodegenLoader(),
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -105,7 +98,9 @@ class MyApp extends StatelessWidget {
                 ..getAllLaborer()
                 ..getUserFollowingLaborer()
                 ..getAllStore()
-                ..getUserFollowingStore()..getAllCategories()..getAllCities(),
+                ..getUserFollowingStore()
+                ..getAllCategories()
+                ..getAllCities(),
             ),
           ],
           child: MaterialApp(

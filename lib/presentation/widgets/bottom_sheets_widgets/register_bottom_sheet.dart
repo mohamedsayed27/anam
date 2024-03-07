@@ -34,7 +34,6 @@ class _RegisterBottomSheetState extends State<RegisterBottomSheet> {
     return BaseBottomSheetWidget(
       child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          // TODO: implement listener
         },
         builder: (context, state) {
           var cubit = AuthCubit.get(context);

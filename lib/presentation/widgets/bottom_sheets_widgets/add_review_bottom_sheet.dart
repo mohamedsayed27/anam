@@ -51,6 +51,7 @@ class _AddProductReviewBottomSheetState
               cubit.addProductReviewName.clear();
               cubit.addProductReviewDescription.clear();
               cubit.addProductReviewRate = 0;
+              cubit.getProductReview(productId: widget.id);
               showToast(
                   errorType: 0, message: state.baseResponseModel.message!);
             }

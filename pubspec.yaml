@@ -66,6 +66,7 @@ dependencies:
   geocoding: ^2.1.1
   google_maps_flutter: ^2.5.0
   geolocator: ^10.0.1
+  flutter_phoenix: ^1.1.1
   custom_info_window: ^1.0.1
   flutter_facebook_auth: ^6.0.1
   pusher_channels_flutter: ^2.2.1

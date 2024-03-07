@@ -1,3 +1,5 @@
+import 'package:anam/core/cache_helper/cache_keys.dart';
+import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/enums/user_type_enum.dart';
 import 'package:anam/presentation/screens/main_layout_screens/orders_screens/orders_screen.dart';
@@ -17,26 +19,28 @@ class MainLayoutCubit extends Cubit<MainLayoutState> {
 
   List<Widget> screens = [
     const ProfileScreen(),
-    if(token!=null)const ConversationsScreen(),
+    if(CacheHelper.getData(key: CacheKeys.token)!=null)const ConversationsScreen(),
     const HomeScreen(),
-    if(userType==UserTypeEnum.user.name&&token!=null) const FavoritesScreen(),
-    if(userType==UserTypeEnum.vendor.name&&token!=null)const OrdersScreen(isPreviousOrders: false,),
+    if(userType==UserTypeEnum.user.name&&CacheHelper.getData(key: CacheKeys.token)!=null) const FavoritesScreen(),
+    if(userType==UserTypeEnum.vendor.name&&CacheHelper.getData(key: CacheKeys.token)!=null)const OrdersScreen(isPreviousOrders: false,),
   ];
 
-  int currentIndex = token!=null?2:1;
+  int currentIndex = CacheHelper.getData(key: CacheKeys.token)!=null?2:1;
 
   void changeNavBarIndex(int index){
     currentIndex = index;
     emit(ChangeBottomNavBarIndexState());
   }
 
-  void handleLogout() {
+  void handleAuthMethods() {
+    currentIndex = CacheHelper.getData(key: CacheKeys.token)!=null?2:1;
+    screens = [
+      const ProfileScreen(),
+      if(CacheHelper.getData(key: CacheKeys.token)!=null)const ConversationsScreen(),
+      const HomeScreen(),
+      if(userType==UserTypeEnum.user.name&&CacheHelper.getData(key: CacheKeys.token)!=null) const FavoritesScreen(),
+      if(userType==UserTypeEnum.vendor.name&&CacheHelper.getData(key: CacheKeys.token)!=null)const OrdersScreen(isPreviousOrders: false,),
+    ];
     emit(MainLayoutInitial());
-  }
-
-  @override
-  Future<void> close() {
-    handleLogout();
-    return super.close();
   }
 }

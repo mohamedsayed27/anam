@@ -48,11 +48,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       vsync: this,
     );
     _followersTabController = TabController(
-      length: 2,
+      length: userType == UserTypeEnum.user.name ? 2 : 1,
       vsync: this,
     );
     _followersServicesTabController = TabController(
-      length: 2,
+      length: userType == UserTypeEnum.user.name ? 2 : 1,
       vsync: this,
     );
     prepareAnimations();
@@ -68,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       parent: expandController,
       curve: Curves.fastOutSlowIn,
     );
+    if (userType != UserTypeEnum.user.name&&userType ==null) expandController.forward();
   }
 
   @override
@@ -115,11 +116,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 children: [
                   const Expanded(child: SearchBarWidget()),
                   if (appearMapButton == false &&
+                      userType != null &&
                       userType != UserTypeEnum.user.name)
                     const CustomSizedBox(
                       width: 8,
                     ),
                   if (appearMapButton == false &&
+                      userType != null &&
                       userType != UserTypeEnum.user.name)
                     BlocConsumer<ServicesCubit, ServicesState>(
                       listener: (context, state) {},
@@ -132,17 +135,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   if (cubit.selectedServicesValue!.type ==
                                       ServicesTypeEnum.veterinary.name) {
                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => const AddVetScreen(),),);
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => const AddVetScreen(),
+                                      ),
+                                    );
                                   } else if (cubit
                                           .selectedServicesValue!.type ==
                                       ServicesTypeEnum
                                           .livestock_transportation.name) {
                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => const AddStoreScreen(),),);
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => const AddStoreScreen(),
+                                      ),
+                                    );
                                   } else if (cubit
                                           .selectedServicesValue!.type ==
                                       ServicesTypeEnum.laborers.name) {
@@ -228,7 +235,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       Expanded(
                         child: isMap
                             ? const HomeGoogleMapsView()
-                            : isFollowingTap
+                            : isFollowingTap &&
+                                    userType != null &&
+                                    userType == UserTypeEnum.user.name
                                 ? const ProductsFollowingListViewWidget()
                                 : const AllProductsListViewWidget(),
                       )
@@ -261,7 +270,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             return TabBarView(
                               controller: _followersServicesTabController,
                               children: [
-                                cubit.selectedServicesValue != null
+                                if(userType == UserTypeEnum.user.name)cubit.selectedServicesValue != null
                                     ? const ServicesFollowingList()
                                     : const Center(
                                         child: CircularProgressIndicator

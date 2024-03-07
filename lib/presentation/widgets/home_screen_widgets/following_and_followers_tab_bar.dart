@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/app_theme/app_colors.dart';
 import '../../../core/app_theme/custom_themes.dart';
+import '../../../core/constants/constants.dart';
+import '../../../core/enums/user_type_enum.dart';
 
 class FollowingAndFollowersTabBar extends StatelessWidget {
   final TabController tabController;
@@ -40,7 +42,7 @@ class FollowingAndFollowersTabBar extends StatelessWidget {
         )
       ),
       tabs: [
-        Tab(
+        if(userType==UserTypeEnum.user.name)Tab(
           text: "قائمة المتابعة",
         ),
         Tab(

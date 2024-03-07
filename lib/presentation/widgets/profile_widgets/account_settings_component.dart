@@ -5,6 +5,7 @@ import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/domain/controllers/main_layout_cubit/main_layout_cubit.dart';
 import 'package:anam/domain/controllers/requests_cubit/requests_cubit.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import '../../../../domain/controllers/profile_cubit/profile_cubit.dart';
 import '../../../../domain/controllers/profile_cubit/profile_state.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -99,18 +100,8 @@ class AccountSettingsComponent extends StatelessWidget {
                 () async {
                   await CacheHelper.clearAllData().then(
                     (value) {
-                      MainLayoutCubit.get(context).screens = [
-                        const ProfileScreen(),
-                        const ConversationsScreen(),
-                        const HomeScreen(),
-                        if (userType == UserTypeEnum.user.name && token != null)
-                          const FavoritesScreen(),
-                        if (userType == UserTypeEnum.vendor.name &&
-                            token != null)
-                          const OrdersScreen(
-                            isPreviousOrders: false,
-                          ),
-                      ];
+                      Phoenix.rebirth(context);
+                      // MainLayoutCubit.get(context).handleAuthMethods();
                       Navigator.pushNamedAndRemoveUntil(
                           context, ScreenName.splashScreen, (route) => false);
                     },

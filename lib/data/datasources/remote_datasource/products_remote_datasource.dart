@@ -31,7 +31,7 @@ class ProductsRemoteDatasource {
       return Right(GetAllProductModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {
-        print(e.response);
+        print(e);
         return Left(
           ErrorException(
             baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
@@ -103,6 +103,7 @@ class ProductsRemoteDatasource {
       return Right(GetAllProductModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {
+        print(e);
         return Left(
           ErrorException(
             baseErrorModel: BaseErrorModel.fromJson(e.response!.data),

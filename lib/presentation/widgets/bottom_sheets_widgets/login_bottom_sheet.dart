@@ -9,6 +9,7 @@ import '../../../core/constants/constants.dart';
 import '../../../core/constants/reg_exp.dart';
 import '../../../domain/controllers/auth_cubit/auth_cubit.dart';
 import '../../../domain/controllers/auth_cubit/auth_state.dart';
+import '../../../domain/controllers/main_layout_cubit/main_layout_cubit.dart';
 import '../../../translations/locale_keys.g.dart';
 import '../auth_widgets/custom_text_field.dart';
 import '../shared_widget/bottom_sheet_title_text_widget.dart';
@@ -36,6 +37,7 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
             showProgressIndicator(context);
           }
           if(state is LoginSuccessState){
+            MainLayoutCubit.get(context).handleAuthMethods();
             Navigator.pushNamedAndRemoveUntil(context, ScreenName.splashScreen, (route) => false);
           }
           if(state is LoginErrorState){

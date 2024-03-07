@@ -108,6 +108,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
+                      useSafeArea: true,
                       builder: (_) =>  AddProductReviewBottomSheet(id: widget.productDataModel.id.toString(),),
                     );
                   },
