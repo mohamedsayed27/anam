@@ -165,7 +165,16 @@ class VetServicesWidget extends StatelessWidget {
                                 vetModel.vendor!.id!.toString()]
                             ? "الغاء المتابعة"
                             : "متابعة",
-                        onPressed: () {},
+                        onPressed: () {
+                          print(cubit.followedVendors[
+                          vetModel.vendor!.id!.toString()]);
+                          if(!cubit.followedVendors[
+                          vetModel.vendor!.id!.toString()]){
+                            cubit.followVendor(vendorId: vetModel.vendor!.id!);
+                          }else{
+                            cubit.unfollowVendor(vendorId: vetModel.vendor!.id!);
+                          }
+                        },
                         padding: EdgeInsets.zero,
                         buttonSize: Size(120.w, 40.h),
                       );

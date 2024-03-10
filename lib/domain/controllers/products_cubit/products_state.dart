@@ -124,6 +124,17 @@ class UpdateProductErrorState extends ProductsState {
 
   UpdateProductErrorState({required this.error});
 }
+class WishProductLoadingState extends ProductsState {}
+
+class WishProductSuccessState extends ProductsState {
+
+}
+
+class WishProductErrorState extends ProductsState {
+  final String error;
+
+  WishProductErrorState({required this.error});
+}
 
 
 

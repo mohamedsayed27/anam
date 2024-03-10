@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:anam/data/datasources/remote_datasource/multi_lang_remote_data_source.dart';
+import 'package:anam/data/datasources/remote_datasource/profile_remote_datasource.dart';
 import 'package:anam/data/models/laborers_models/laborers_multi_lang.dart';
 import 'package:anam/data/models/multi_lang_models/store_multi_lang_model.dart';
 import 'package:anam/data/models/multi_lang_models/veterian_multi_lang_model.dart';
@@ -42,6 +43,7 @@ class ServicesCubit extends Cubit<ServicesState> {
   final StoresServicesRemoteDatasource _storesServicesRemoteDatasource = sl();
   final ServicesRemoteDataSource _servicesRemoteDataSource = sl();
   final CategoriesRemoteDatasource _categoriesRemoteDatasource = sl();
+  final ProfileRemoteDatasource _profileRemoteDatasource = sl();
 
   BaseErrorModel? baseErrorModel;
   List<LaborerModel> laborersList = [];
@@ -376,13 +378,18 @@ class ServicesCubit extends Cubit<ServicesState> {
               r.storePaginatedModel!.lastPage!) {
             vetsList.addAll(r.storePaginatedModel!.vetList!);
             for (var element in vetsList) {
+              print("element.vendor!.isFollowed");
+              print(element.vendor!.isFollowed);
               if (element.vendor!.isFollowed != null) {
+                print("${element.vendor!.isFollowed}+\"2\"");
                 if (!followedVendors.containsKey(element.id!.toString())) {
+                  print("object");
                   followedVendors.addAll({
                     element.vendor!.id.toString(): element.vendor!.isFollowed
                   });
                 }
               }
+              print(followedVendors);
             }
             allVetPageNumber++;
           }
@@ -591,6 +598,44 @@ class ServicesCubit extends Cubit<ServicesState> {
       (r) async {
         showStoreModel = r;
         emit(ShowStoreDetailsSuccessState());
+      },
+    );
+  }
+
+  void followVendor({required int vendorId}) async {
+    followedVendors[vendorId.toString()] = !followedVendors[vendorId.toString()];
+    emit(FollowVendorLoadingState());
+    final response =
+        await _profileRemoteDatasource.followVendor(id: vendorId);
+    response.fold(
+      (l) {
+        followedVendors[vendorId.toString()] = !followedVendors[vendorId];
+        baseErrorModel = l.baseErrorModel;
+        emit(FollowVendorErrorState(
+            error: baseErrorModel?.errors?[0] ?? ""));
+      },
+      (r) async {
+        print(r);
+        emit(FollowVendorSuccessState());
+      },
+    );
+  }
+
+  void unfollowVendor({required int vendorId}) async {
+    followedVendors[vendorId.toString()] = !followedVendors[vendorId.toString()];
+    emit(UnfollowLoadingState());
+    final response =
+        await _profileRemoteDatasource.unfollowVendor(id: vendorId);
+    response.fold(
+      (l) {
+        followedVendors[vendorId.toString()] = !followedVendors[vendorId];
+        baseErrorModel = l.baseErrorModel;
+        emit(UnfollowErrorState(
+            error: baseErrorModel?.errors?[0] ?? ""));
+      },
+      (r) async {
+        print(r);
+        emit(UnfollowSuccessState());
       },
     );
   }

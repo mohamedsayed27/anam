@@ -160,15 +160,26 @@ class StoreServicesWidget extends StatelessWidget {
                 ),
                 if (CacheHelper.getData(key: CacheKeys.userType) == UserTypeEnum.user.name)
                   BlocConsumer<ServicesCubit, ServicesState>(
-                    listener: (context, state) {},
+                    listener: (context, state) {
+                      // TODO: implement listener
+                    },
                     builder: (context, state) {
                       var cubit = ServicesCubit.get(context);
                       return CustomElevatedButton(
                         title: cubit.followedVendors[
-                                storeDataModel.vendor!.id!.toString()]
+                        storeDataModel.vendor!.id!.toString()]
                             ? "الغاء المتابعة"
                             : "متابعة",
-                        onPressed: () {},
+                        onPressed: () {
+                          print(cubit.followedVendors[
+                          storeDataModel.vendor!.id!.toString()]);
+                          if(!cubit.followedVendors[
+                          storeDataModel.vendor!.id!.toString()]){
+                            cubit.followVendor(vendorId: storeDataModel.vendor!.id!);
+                          }else{
+                            cubit.unfollowVendor(vendorId: storeDataModel.vendor!.id!);
+                          }
+                        },
                         padding: EdgeInsets.zero,
                         buttonSize: Size(120.w, 40.h),
                       );

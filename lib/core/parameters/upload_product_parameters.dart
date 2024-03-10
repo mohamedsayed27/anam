@@ -27,13 +27,13 @@ class ProductParameters {
 
   ProductParameters({
     this.productId,
-    required this.catId,
+     this.catId,
      this.method,
-    required this.subCatId,
+    this.subCatId,
     required this.nameAr,
     required this.nameEn,
     required this.salePrice,
-    required this.mainImage,
+    this.mainImage,
     required this.locationAr,
     // required this.method,
     required this.locationEn,
@@ -60,8 +60,8 @@ class ProductParameters {
     });
     }
     Map<String, dynamic> data = <String, dynamic>{};
-    data['category_id'] = catId;
-    data['sub_category_id'] = subCatId;
+    if(catId!=null)data['category_id'] = catId;
+    if(subCatId!=null)data['sub_category_id'] = subCatId;
     data['name_ar'] = nameAr;
     data['name_en'] = nameEn;
     data['sale_price'] = salePrice;

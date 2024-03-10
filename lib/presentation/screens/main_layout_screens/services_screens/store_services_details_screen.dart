@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/assets_path/svg_path.dart';
+import '../../../widgets/bottom_sheets_widgets/chat_bottom.dart';
 import '../../../widgets/services_widgets/store_images_list_widget.dart';
 import '../../../widgets/services_widgets/vet_services_images_widget.dart';
 import '../../../widgets/shared_widget/custom_sized_box.dart';
@@ -73,7 +74,14 @@ class StoreServiceDetailsScreen extends StatelessWidget {
                     Expanded(
                       child: CustomElevatedButton(
                         title: "تواصل معنا",
-                        onPressed: () {},
+                        onPressed: () {
+
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (_) => ChatBottomSheet(receiverId:storeDataModel.vendor!.id!,),
+                          );
+                        },
                         titleSize: 16,
                       ),
                     ),

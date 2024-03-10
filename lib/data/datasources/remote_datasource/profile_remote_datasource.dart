@@ -153,6 +153,48 @@ class ProfileRemoteDatasource {
     }
   }
 
+  Future<Either<ErrorException, BaseResponseModel>> followVendor(
+      {required int id}) async {
+    try {
+      final response = await dioHelper.putData(
+        url:"${EndPoints.users}/$id${EndPoints.follow}",
+        token: token,
+      );
+      return Right(BaseResponseModel.fromJson(response.data));
+    } catch (e) {
+      if (e is DioException) {
+        return Left(
+          ErrorException(
+            baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
+          ),
+        );
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<Either<ErrorException, BaseResponseModel>> unfollowVendor(
+      {required int id}) async {
+    try {
+      final response = await dioHelper.putData(
+        url:"${EndPoints.users}/$id${EndPoints.unfollow}",
+        token: token,
+      );
+      return Right(BaseResponseModel.fromJson(response.data));
+    } catch (e) {
+      if (e is DioException) {
+        return Left(
+          ErrorException(
+            baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
+          ),
+        );
+      } else {
+        rethrow;
+      }
+    }
+  }
+
   Future<Either<ErrorException, BaseResponseModel>> changeProfileData(
       {required UpdateProfileParameters updateProfileParameters}) async {
     try {

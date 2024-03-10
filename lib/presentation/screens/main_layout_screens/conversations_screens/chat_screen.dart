@@ -1,12 +1,9 @@
-import 'package:anam/core/app_theme/app_colors.dart';
-import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
-import 'package:anam/presentation/widgets/conversations_widgets/message_item_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
+import '../../../../core/constants/constants.dart';
 import '../../../widgets/conversations_widgets/chat_text_field.dart';
+import '../../../widgets/conversations_widgets/message_item_widget.dart';
 import '../../../widgets/shared_widget/custom_divider.dart';
 import '../../../widgets/shared_widget/custom_sized_box.dart';
 import '../../../widgets/shared_widget/custom_app_bar.dart';
@@ -85,14 +82,14 @@ class _ChatScreenState extends State<ChatScreen> {
                 itemCount: 8,
                 itemBuilder: (BuildContext context, int index) {
                   return MessageItemWidget(
-                          isMyMessage: index % 2 == 0 ? true : false)
-                      .onlyDirectionalPadding(bottom: 15);
+                    isMyMessage: index % 2 == 0 ? true : false,
+                  ).onlyDirectionalPadding(bottom: 15);
                 },
               ),
             ),
             const ChatTextField(),
           ],
-        ).symmetricPadding(horizontal: 24, vertical: 13),
+        ).symmetricPadding(horizontal: 24, vertical: 13,),
       ),
     );
   }

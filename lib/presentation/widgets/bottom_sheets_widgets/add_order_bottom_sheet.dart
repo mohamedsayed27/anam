@@ -30,13 +30,6 @@ class AddOrderBottomSheet extends StatelessWidget {
             ),
             const CustomDivider(),
             const CustomSizedBox(
-              height: 29,
-            ),
-            CustomTextField(
-              hintText: "${LocaleKeys.fullName.tr()}*",
-              height: 45,
-            ),
-            const CustomSizedBox(
               height: 14,
             ),
             const OrderTypeDropDownButtonWidget(),

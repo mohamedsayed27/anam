@@ -65,6 +65,28 @@ class ProductsRemoteDatasource {
     }
   }
 
+  Future<Either<ErrorException, BaseResponseModel>> addToFavorite(
+      {required int id}) async {
+    try {
+      final response = await dioHelper.postData(
+        url: "${EndPoints.changeWishProduct}/$id",
+        token: token,
+      );
+      return Right(BaseResponseModel.fromJson(response.data));
+    } catch (e) {
+      if (e is DioException) {
+        print(e);
+        return Left(
+          ErrorException(
+            baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
+          ),
+        );
+      } else {
+        rethrow;
+      }
+    }
+  }
+
   Future<Either<ErrorException, BaseResponseModel>> changeProductStatus({
     required int id,
     required String status,

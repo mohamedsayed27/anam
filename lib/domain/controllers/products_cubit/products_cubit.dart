@@ -425,11 +425,31 @@ class ProductsCubit extends Cubit<ProductsState> {
     );
     response.fold(
       (l) {
+        print(l);
         baseErrorModel = l.baseErrorModel;
         emit(UpdateProductErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
       (r) {
         emit(UpdateProductSuccessState(updateProductModel: r));
+      },
+    );
+  }
+
+  void changeFavorite({required int id}) async {
+    favoriteProduct[id.toString()] = !favoriteProduct[id.toString()];
+    emit(WishProductLoadingState());
+    final response = await _productsRemoteDatasource.addToFavorite(
+      id: id,
+    );
+    response.fold(
+      (l) {
+        favoriteProduct[id.toString()] = !favoriteProduct[id.toString()];
+        print(l);
+        baseErrorModel = l.baseErrorModel;
+        emit(WishProductErrorState(error: baseErrorModel?.errors?[0] ?? ""));
+      },
+      (r) {
+        emit(WishProductSuccessState());
       },
     );
   }

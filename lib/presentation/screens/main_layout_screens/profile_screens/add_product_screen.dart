@@ -450,7 +450,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       title: LocaleKeys.uploadYourProduct.tr(),
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          if (widget.productMultiLangModel != null) {
+                          if (widget.productMultiLangModel == null) {
                             if (cubit.productImages.isEmpty) {
                               showToast(
                                   errorType: 1,
@@ -506,13 +506,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           } else {
                             cubit.updateProduct(
                                 productParameters: ProductParameters(
-                              catId: cubit.productCategory!.id!.toString(),
+                              catId: widget.productMultiLangModel!.categoryId!.toString(),
                               subCatId:
-                                  cubit.productSubCategory!.id!.toString(),
+                              widget.productMultiLangModel!.subCategoryId.toString(),
                               nameAr: cubit.productNameAr.text,
                               nameEn: cubit.productNameEn.text,
+                              productId: widget.productMultiLangModel!.id.toString(),
                               salePrice: cubit.productPrice.text,
-                              mainImage: cubit.productImages[0],
+                              // mainImage: cubit.productImages[0],
                               locationAr: cubit.locationAr.text,
                               method: "PUT",
                               locationEn: cubit.locationEn.text,

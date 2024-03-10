@@ -170,10 +170,19 @@ class LaborerServicesWidget extends StatelessWidget {
                       var cubit = ServicesCubit.get(context);
                       return CustomElevatedButton(
                         title: cubit.followedVendors[
-                                laborerModel.vendor!.id!.toString()]
+                        laborerModel.vendor!.id!.toString()]
                             ? "الغاء المتابعة"
                             : "متابعة",
-                        onPressed: () {},
+                        onPressed: () {
+                          print(cubit.followedVendors[
+                          laborerModel.vendor!.id!.toString()]);
+                          if(!cubit.followedVendors[
+                          laborerModel.vendor!.id!.toString()]){
+                            cubit.followVendor(vendorId: laborerModel.vendor!.id!);
+                          }else{
+                            cubit.unfollowVendor(vendorId: laborerModel.vendor!.id!);
+                          }
+                        },
                         padding: EdgeInsets.zero,
                         buttonSize: Size(120.w, 40.h),
                       );

@@ -1,4 +1,3 @@
-import 'package:anam/core/constants/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
@@ -23,12 +22,16 @@ class ChatCubit extends Cubit<ChatState> {
     );
     response.fold((l) {
       emit(GetChatError());
-      print(l);
     }, (r) {
       conversationsList = r.conversationList;
       emit(GetChatSuccess());
-      print(r);
     });
+  }
+
+  void addMessage({required Conversation conversation}){
+    print(conversation);
+    conversationsList!.insert(0,conversation);
+    emit(AddMessageState());
   }
 //   void channelSubscription({
 //     required int receiverId,
@@ -88,10 +91,8 @@ class ChatCubit extends Cubit<ChatState> {
     );
     response.fold((l) {
       emit(SendMessageError());
-      print(l);
     }, (r) {
       emit(SendMessageSuccess());
-      print(r);
     });
   }
 }

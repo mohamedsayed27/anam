@@ -219,6 +219,26 @@ class ShowStoreDetailsErrorState extends ServicesState {
   ShowStoreDetailsErrorState({required this.error});
 }
 
+class FollowVendorLoadingState extends ServicesState {}
+
+class FollowVendorSuccessState extends ServicesState {}
+
+class FollowVendorErrorState extends ServicesState {
+  final String error;
+
+  FollowVendorErrorState({required this.error});
+}
+
+class UnfollowLoadingState extends ServicesState {}
+
+class UnfollowSuccessState extends ServicesState {}
+
+class UnfollowErrorState extends ServicesState {
+  final String error;
+
+  UnfollowErrorState({required this.error});
+}
+
 class DeleteStoreLoadingState extends ServicesState {}
 
 class DeleteStoreSuccessState extends ServicesState {

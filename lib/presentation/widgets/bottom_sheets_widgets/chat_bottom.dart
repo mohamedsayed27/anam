@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:anam/core/app_theme/app_colors.dart';
 import 'package:anam/core/assets_path/fonts_path.dart';
 import 'package:anam/core/assets_path/svg_path.dart';
@@ -33,7 +35,6 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
     // TODO: implement initState
     cubit = ChatCubit.get(context);
     cubit.getChats(receiverId: widget.receiverId);
-    _pusherMethods = PusherMethods(pusher: pusher);
     subscribeChannel();
     super.initState();
   }
@@ -54,28 +55,47 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
     await pusher.unsubscribe(channelName: "private.chat.${list.join(".")}");
   }
 
-  void subscribeChannel() {
-    _pusherMethods.channelSubscription(
-      receiverId: widget.receiverId,
-      senderId: int.parse(userId.toString()),
-      onEvent: (PusherEvent event) {
-        cubit.conversationsList?.add(
-          Conversation(
-            message: event.data["message"],
-            senderId: event.data["sender_id"],
-            receiverId: event.data["receiver_id"],
+  void subscribeChannel() async {
+    final list = <int>[widget.receiverId, int.parse(userId.toString())]..sort();
+    try{
+      await pusher.init(
+        apiKey: "d7e9da7b3bc9de6317b3",
+        cluster: "eu",
+        onEvent: (PusherEvent event) {
+          var data=jsonDecode(event.data);
+          print("====================data");
+          print(data["message"]);
+          print(data["sender_id"]);
+          print(data["reciever_id"]);
+          ChatCubit.get(context).addMessage(conversation: Conversation(
+            message: data["message"].toString(),
+            senderId: int.parse(data["sender_id"].toString()),
+            receiverId: int.parse(data["reciever_id"].toString()),
+          ));
+          controller.clear();
+          //   cubit.conversationsList?.add(
+          //     Conversation(
+          //       message: data["message"],
+          //       senderId: data["sender_id"],
+          //       receiverId: data["reciever_id"],
+          //     ),
+          //   );
+          print(event);
+          print("onEvent ====> : ${event}");
+        },
+        onSubscriptionError: (String message, dynamic e) {
+          print("onSubscriptionError: $message Exception: $e");
+        },
+        onSubscriptionSucceeded: (String channelName, dynamic data) {
+          print("onSubscriptionSucceeded: $channelName data: $data");
+        },
+      );
+      await pusher.subscribe(channelName: "private.chat.${list.join(".")}");
+      await pusher.connect();
+    }catch(e){
+      print("Error : ${e}");
+    }
 
-          ),
-        );
-        print("onEvent ====> : ${event.data}");
-      },
-      onSubscriptionError: (String message, dynamic e) {
-        print("onSubscriptionError: $message Exception: $e");
-      },
-      onSubscriptionSucceeded: (String channelName, dynamic data) {
-        print("onSubscriptionSucceeded: $channelName data: $data");
-      },
-    );
   }
 
   final TextEditingController controller = TextEditingController();
@@ -150,6 +170,7 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
                 SizedBox(
                   height: 300.h,
                   child: ListView.builder(
+                    reverse: true,
                     itemCount: cubit.conversationsList?.length,
                     itemBuilder: (BuildContext context, int index) {
                       return MessageItemWidget(
@@ -174,6 +195,7 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
                     cubit.sendMessage(
                         receiverId: widget.receiverId,
                         message: controller.text);
+
                   },
                 ).symmetricPadding(horizontal: 27),
                 const CustomSizedBox(
