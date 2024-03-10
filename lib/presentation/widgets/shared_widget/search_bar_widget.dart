@@ -8,7 +8,20 @@ import 'package:flutter_svg/svg.dart';
 import '../../../core/assets_path/svg_path.dart';
 
 class SearchBarWidget extends StatelessWidget {
-  const SearchBarWidget({super.key});
+  final void Function()? onTap;
+  final void Function()? onSearchClicked;
+  final TextEditingController? controller;
+  final void Function(String)? onSubmitted;
+  final bool? enabled;
+  final bool autofocus;
+  final bool readOnly;
+  const SearchBarWidget({
+    super.key,
+    this.onTap,
+    this.controller,
+    this.onSearchClicked,
+    this.enabled, this.autofocus = false, this.readOnly = false, this.onSubmitted,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +33,12 @@ class SearchBarWidget extends StatelessWidget {
       ),
     );
     return TextField(
+      onTap: onTap,
+      onSubmitted: onSubmitted,
+      controller: controller,
+      autofocus: autofocus,
+      enabled: enabled,
+      readOnly: readOnly,
       decoration: InputDecoration(
         fillColor: Colors.white,
         filled: true,
@@ -31,7 +50,7 @@ class SearchBarWidget extends StatelessWidget {
         hintStyle: Theme.of(context).textTheme.titleSmall,
         floatingLabelBehavior: FloatingLabelBehavior.never,
         prefixIcon: IconButton(
-          onPressed: () {},
+          onPressed: onSearchClicked,
           icon: SvgPicture.asset(
             SvgPath.searchIcon,
             colorFilter: const ColorFilter.mode(

@@ -27,6 +27,7 @@ import '../../../widgets/shared_widget/custom_sized_box.dart';
 import '../services_screens/add_laborer_screen.dart';
 import '../services_screens/add_store_screen.dart';
 import '../services_screens/add_vet_store_screen.dart';
+import 'search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -127,7 +128,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             SliverToBoxAdapter(
               child: Row(
                 children: [
-                  const Expanded(child: SearchBarWidget()),
+                  Expanded(
+                    child: Hero(
+                      tag: "searchField",
+                      child: Material(
+                        color: Colors.transparent,
+                        child: SearchBarWidget(
+                          readOnly: true,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const SearchScreen(),
+                              ),
+                            );
+                          },
+                          enabled: true,
+                        ),
+                      ),
+                    ),
+                  ),
                   if (appearMapButton == false &&
                       CacheHelper.getData(key: CacheKeys.userType) != null &&
                       CacheHelper.getData(key: CacheKeys.userType) !=

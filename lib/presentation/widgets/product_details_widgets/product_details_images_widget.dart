@@ -68,7 +68,7 @@ class _ProductDetailsImagesWidgetState
             ],
           ),
         ),
-        Positioned.fill(
+        if(widget.imagesList.isNotEmpty)Positioned.fill(
             bottom: 14.h,
             child: Align(
               alignment: Alignment.bottomCenter,
