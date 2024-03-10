@@ -57,17 +57,18 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
 
   void subscribeChannel() async {
     final list = <int>[widget.receiverId, int.parse(userId.toString())]..sort();
-    try{
+    try {
       await pusher.init(
         apiKey: "d7e9da7b3bc9de6317b3",
         cluster: "eu",
         onEvent: (PusherEvent event) {
-          var data=jsonDecode(event.data);
+          var data = jsonDecode(event.data);
           print("====================data");
           print(data["message"]);
           print(data["sender_id"]);
           print(data["reciever_id"]);
-          ChatCubit.get(context).addMessage(conversation: Conversation(
+          ChatCubit.get(context).addMessage(
+              conversation: Conversation(
             message: data["message"].toString(),
             senderId: int.parse(data["sender_id"].toString()),
             receiverId: int.parse(data["reciever_id"].toString()),
@@ -92,10 +93,9 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
       );
       await pusher.subscribe(channelName: "private.chat.${list.join(".")}");
       await pusher.connect();
-    }catch(e){
+    } catch (e) {
       print("Error : ${e}");
     }
-
   }
 
   final TextEditingController controller = TextEditingController();
@@ -114,9 +114,7 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
           ),
         ),
         child: BlocConsumer<ChatCubit, ChatState>(
-          listener: (context, state) {
-            // TODO: implement listener
-          },
+          listener: (context, state) {},
           builder: (context, state) {
             return Column(
               mainAxisSize: MainAxisSize.min,
@@ -169,21 +167,26 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
                 ),
                 SizedBox(
                   height: 300.h,
-                  child: ListView.builder(
-                    reverse: true,
-                    itemCount: cubit.conversationsList?.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return MessageItemWidget(
-                        isMyMessage: cubit.conversationsList![index].senderId ==
-                                int.parse(
-                                  userId.toString(),
-                                )
-                            ? true
-                            : false,
-                        text: cubit.conversationsList![index].message,
-                      ).onlyDirectionalPadding(bottom: 15);
-                    },
-                  ),
+                  child: cubit.getChat
+                      ? const Center(
+                          child: CircularProgressIndicator.adaptive(),
+                        )
+                      : ListView.builder(
+                          reverse: true,
+                          itemCount: cubit.conversationsList?.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return MessageItemWidget(
+                              isMyMessage:
+                                  cubit.conversationsList![index].senderId ==
+                                          int.parse(
+                                            userId.toString(),
+                                          )
+                                      ? true
+                                      : false,
+                              text: cubit.conversationsList![index].message,
+                            ).onlyDirectionalPadding(bottom: 15);
+                          },
+                        ),
                 ).symmetricPadding(horizontal: 27),
                 const CustomSizedBox(
                   height: 10,
@@ -195,7 +198,6 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
                     cubit.sendMessage(
                         receiverId: widget.receiverId,
                         message: controller.text);
-
                   },
                 ).symmetricPadding(horizontal: 27),
                 const CustomSizedBox(

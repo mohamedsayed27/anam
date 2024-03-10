@@ -15,14 +15,18 @@ class ChatCubit extends Cubit<ChatState> {
   final ChatRemoteDataSource _chatRemoteDataSource = sl();
 
   List<Conversation>? conversationsList;
+  bool getChat = false;
   void getChats({required int receiverId}) async {
+    getChat = true;
     emit(GetChatLoading());
     final response = await _chatRemoteDataSource.getChatData(
       receiverId: receiverId,
     );
     response.fold((l) {
+      getChat = false;
       emit(GetChatError());
     }, (r) {
+      getChat = false;
       conversationsList = r.conversationList;
       emit(GetChatSuccess());
     });
