@@ -12,6 +12,7 @@ class ProductParameters {
   final File? mainImage;
   final String? locationAr;
   final String? locationEn;
+  final String? method;
   final String? descriptionAr;
   final String? descriptionEn;
   final String? coordinates;
@@ -27,6 +28,7 @@ class ProductParameters {
   ProductParameters({
     this.productId,
     required this.catId,
+     this.method,
     required this.subCatId,
     required this.nameAr,
     required this.nameEn,
@@ -49,22 +51,26 @@ class ProductParameters {
 
   Future<Map<String, dynamic>> toMap() async {
     final formData = FormData();
-    images?.forEach((element) async{ 
+    if(images!=null) {
+      images?.forEach((element) async{
       formData.files.add(MapEntry("images", await MultipartFile.fromFile(
         element.path,
         filename: path.basename(element.path),
       )));
     });
+    }
     Map<String, dynamic> data = <String, dynamic>{};
     data['category_id'] = catId;
     data['sub_category_id'] = subCatId;
     data['name_ar'] = nameAr;
     data['name_en'] = nameEn;
     data['sale_price'] = salePrice;
-    data['main_image'] =mainImage!=null? await MultipartFile.fromFile(
+    if(mainImage!=null) {
+      data['main_image'] =mainImage!=null? await MultipartFile.fromFile(
       mainImage!.path,
       filename: path.basename(mainImage!.path),
     ):null;
+    }
     data['location_ar'] = locationAr;
     data['location_en'] = locationEn;
     data['description_ar'] = descriptionAr;
@@ -73,6 +79,7 @@ class ProductParameters {
     data['map_location'] = mapLocation;
     data['youtube_link'] = youtubeLink;
     data['advantages_ar'] = advantagesAr;
+    data['_method'] = method;
     data['advantages_en'] = advantagesEn;
     data['defects_ar'] = descriptionAr;
     data['defects_en'] = defectsEn;

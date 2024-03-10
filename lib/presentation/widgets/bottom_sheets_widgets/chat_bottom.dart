@@ -1,9 +1,9 @@
-
 import 'package:anam/core/app_theme/app_colors.dart';
 import 'package:anam/core/assets_path/fonts_path.dart';
 import 'package:anam/core/assets_path/svg_path.dart';
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
+import 'package:anam/data/models/chat_models/conversation_model.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,6 +59,14 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
       receiverId: widget.receiverId,
       senderId: int.parse(userId.toString()),
       onEvent: (PusherEvent event) {
+        cubit.conversationsList?.add(
+          Conversation(
+            message: event.data["message"],
+            senderId: event.data["sender_id"],
+            receiverId: event.data["receiver_id"],
+
+          ),
+        );
         print("onEvent ====> : ${event.data}");
       },
       onSubscriptionError: (String message, dynamic e) {
@@ -75,7 +83,9 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),      child: Container(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
         decoration: BoxDecoration(
           color: AppColors.whiteColor,
           borderRadius: BorderRadius.only(
@@ -140,10 +150,16 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
                 SizedBox(
                   height: 300.h,
                   child: ListView.builder(
-                    itemCount: 8,
+                    itemCount: cubit.conversationsList?.length,
                     itemBuilder: (BuildContext context, int index) {
                       return MessageItemWidget(
-                        isMyMessage: index % 2 == 0 ? true : false,
+                        isMyMessage: cubit.conversationsList![index].senderId ==
+                                int.parse(
+                                  userId.toString(),
+                                )
+                            ? true
+                            : false,
+                        text: cubit.conversationsList![index].message,
                       ).onlyDirectionalPadding(bottom: 15);
                     },
                   ),
@@ -156,7 +172,8 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
                   onTap: () {
                     // testPayCallTabs();
                     cubit.sendMessage(
-                        receiverId: widget.receiverId, message: controller.text);
+                        receiverId: widget.receiverId,
+                        message: controller.text);
                   },
                 ).symmetricPadding(horizontal: 27),
                 const CustomSizedBox(

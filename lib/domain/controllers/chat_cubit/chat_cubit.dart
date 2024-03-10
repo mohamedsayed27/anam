@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/services/services_locator.dart';
 import '../../../data/datasources/remote_datasource/chat_remote_data_source.dart';
+import '../../../data/models/chat_models/conversation_model.dart';
 
 part 'chat_state.dart';
 
@@ -14,6 +15,7 @@ class ChatCubit extends Cubit<ChatState> {
 
   final ChatRemoteDataSource _chatRemoteDataSource = sl();
 
+  List<Conversation>? conversationsList;
   void getChats({required int receiverId}) async {
     emit(GetChatLoading());
     final response = await _chatRemoteDataSource.getChatData(
@@ -23,6 +25,7 @@ class ChatCubit extends Cubit<ChatState> {
       emit(GetChatError());
       print(l);
     }, (r) {
+      conversationsList = r.conversationList;
       emit(GetChatSuccess());
       print(r);
     });

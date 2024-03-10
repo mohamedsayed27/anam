@@ -266,7 +266,7 @@ class ProductsRemoteDatasource {
     required ProductParameters productParameters,
   }) async {
     try {
-      final response = await dioHelper.putData(
+      final response = await dioHelper.postData(
         url: "${EndPoints.products}/${productParameters.productId}",
         data: FormData.fromMap(
           await productParameters.toMap(),

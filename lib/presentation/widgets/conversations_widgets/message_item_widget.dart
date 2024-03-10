@@ -7,8 +7,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MessageItemWidget extends StatelessWidget {
   final bool isMyMessage;
+  final String? text;
 
-  const MessageItemWidget({super.key, required this.isMyMessage});
+  const MessageItemWidget(
+      {super.key, required this.isMyMessage, this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class MessageItemWidget extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    "لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.إذا كنت تحتاج إلى عدد أكبر من الفقرات " ,
+                    text??"Test test test test test test",
                     style: Theme.of(context)
                         .textTheme
                         .labelSmall!
@@ -70,7 +72,7 @@ class MessageItemWidget extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    "لقد تم توليد هى، حيث يمكننصوص الأخرى إض] تحتاج إلى عدد أكبر من الفقرات ",
+                    text??"Test test test test test test test test test test test test test test test test",
                     style: Theme.of(context)
                         .textTheme
                         .labelSmall!
