@@ -2,7 +2,9 @@ import 'package:anam/core/assets_path/images_path.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -51,7 +53,7 @@ class OrderComponent extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         width: itemWidth?.w ?? double.infinity,
-        height: isTherePhoto?152.h:null,
+        height: isTherePhoto?170.h:null,
         padding:
             EdgeInsetsDirectional.all(16.r),
         decoration: BoxDecoration(
@@ -99,18 +101,23 @@ class OrderComponent extends StatelessWidget {
               ),
             Expanded(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        requestModel.title??"",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall!
-                            .copyWith(fontSize: titleFontSize.sp),
+                      Expanded(
+                        child: Text(
+                          requestModel.title??"",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(fontSize: titleFontSize.sp),
+                        ),
                       ),
-                      CustomSizedBox(
+                      const CustomSizedBox(
                         height: 2.18,
                       ),
                       OrderTypeContainer(
@@ -137,34 +144,41 @@ class OrderComponent extends StatelessWidget {
                               color: AppColors.blackColor,
                               size: locationIconSize?.r ?? 5.r,
                             ),
-                            Text(
-                              requestModel.mapLocation??"",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .copyWith(
-                                    fontSize: cityFontSize.sp,
-                                    decoration: TextDecoration.underline,
-                                    decorationColor: AppColors.blackColor,
-                                  ),
+                            Expanded(
+                              child: Text(
+                                requestModel.mapLocation??"",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .copyWith(
+                                      fontSize: cityFontSize.sp,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: AppColors.blackColor,
+                                    ),
+                              ),
                             ),
                           ],
                         ),
-                        CustomSizedBox(
+                        const CustomSizedBox(
                           height: 2.18,
                         ),
-                        Text(
-                          requestModel.description??"",
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(
-                                fontSize: descriptionFontSize.sp,
-                              ),
+                        Expanded(
+
+                          child: Text(
+                            requestModel.description??"",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .copyWith(
+                                  fontSize: descriptionFontSize.sp,
+                                ),
+                          ),
                         ),
-                        CustomSizedBox(
+                        const CustomSizedBox(
                           height: 2.18,
                         ),
                         Text(

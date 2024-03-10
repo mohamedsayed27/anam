@@ -152,6 +152,8 @@ class ProductsCubit extends Cubit<ProductsState> {
   }
 
   void getFavoriteProducts() async {
+    favoriteProductsList.clear();
+    allFavoriteProductsPageNumber = 1;
     emit(GetFavoriteProductsLoadingState());
     final response = await _productsRemoteDatasource.getFavoriteProducts(
       pageNumber: allFavoriteProductsPageNumber,

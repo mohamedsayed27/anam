@@ -73,7 +73,7 @@ class _ItemImageWidgetState extends State<ItemImageWidget> {
             },
           ),
         ),
-        if (widget.productDataModel.images != null)
+        if (widget.productDataModel.images != null&&widget.productDataModel.images!.isNotEmpty)
           Align(
             alignment: Alignment.bottomCenter,
             child: SmoothPageIndicator(

@@ -18,7 +18,9 @@ class GetAllProductsErrorState extends ProductsState {
   GetAllProductsErrorState({required this.error});
 }
 
-class GetLocationNameAndCoordinates extends ProductsState {}
+class GetLocationNameAndCoordinates extends ProductsState {
+
+}
 class GetFavoriteProductsLoadingState extends ProductsState {}
 
 class GetFavoriteProductsSuccessState extends ProductsState {}

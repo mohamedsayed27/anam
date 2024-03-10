@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
               create: (context) => HomeCubit(),
             ),
             BlocProvider(
-              create: (context) => RequestsCubit(),
+              create: (context) => RequestsCubit()..getAllCountries(),
             ),
             BlocProvider(
               create: (context) => ChatCubit(),

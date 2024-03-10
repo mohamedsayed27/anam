@@ -65,7 +65,7 @@ class RequestsRemoteDatasource {
         data: FormData.fromMap(requestParameters.toMap()),
         token: token,
       );
-      return Right(RequestModel.fromJson(response.data));
+      return Right(RequestModel.fromJson(response.data["result"]));
     } catch (e) {
       if (e is DioException) {
         return Left(

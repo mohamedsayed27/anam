@@ -58,7 +58,13 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 ),
                 if(userType==UserTypeEnum.user.name)CustomOutlinedButton(
                   height: 40.h,
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (_) => AddOrderBottomSheet(),
+                    );
+                  },
                   radius: 8.r,
                   borderColor: AppColors.greyColor9D,
                   padding: EdgeInsets.symmetric(horizontal: 14.w),

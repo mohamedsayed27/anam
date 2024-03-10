@@ -48,7 +48,7 @@ class AccountSettingsComponent extends StatelessWidget {
         if (token != null && userType != UserTypeEnum.vendor.name)
           AccountSettingItemWidget(
             onPressed: () {
-              RequestsCubit.get(context).getPreviousServices();
+              RequestsCubit.get(context).getPreviousRequests();
               Navigator.pushNamed(context, ScreenName.oldOrdersScreen);
             },
             iconPath: SvgPath.oldOrders,

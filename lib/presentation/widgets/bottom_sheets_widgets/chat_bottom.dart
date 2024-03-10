@@ -63,39 +63,21 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
         cluster: "eu",
         onEvent: (PusherEvent event) {
           var data = jsonDecode(event.data);
-          print("====================data");
-          print(data["message"]);
-          print(data["sender_id"]);
-          print(data["reciever_id"]);
-          ChatCubit.get(context).addMessage(
-              conversation: Conversation(
-            message: data["message"].toString(),
-            senderId: int.parse(data["sender_id"].toString()),
-            receiverId: int.parse(data["reciever_id"].toString()),
-          ));
+          cubit.addMessage(
+            conversation: Conversation(
+              message: data["message"].toString(),
+              senderId: int.parse(data["sender_id"].toString()),
+              receiverId: int.parse(data["reciever_id"].toString()),
+            ),
+          );
           controller.clear();
-          //   cubit.conversationsList?.add(
-          //     Conversation(
-          //       message: data["message"],
-          //       senderId: data["sender_id"],
-          //       receiverId: data["reciever_id"],
-          //     ),
-          //   );
-          print(event);
-          print("onEvent ====> : ${event}");
         },
-        onSubscriptionError: (String message, dynamic e) {
-          print("onSubscriptionError: $message Exception: $e");
-        },
-        onSubscriptionSucceeded: (String channelName, dynamic data) {
-          print("onSubscriptionSucceeded: $channelName data: $data");
-        },
+        onSubscriptionError: (String message, dynamic e) {},
+        onSubscriptionSucceeded: (String channelName, dynamic data) {},
       );
       await pusher.subscribe(channelName: "private.chat.${list.join(".")}");
       await pusher.connect();
-    } catch (e) {
-      print("Error : ${e}");
-    }
+    } catch (e) {}
   }
 
   final TextEditingController controller = TextEditingController();
@@ -171,9 +153,14 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
                       ? const Center(
                           child: CircularProgressIndicator.adaptive(),
                         )
-                      : ListView.builder(
+                      : ListView.separated(
                           reverse: true,
-                          itemCount: cubit.conversationsList?.length,
+                          separatorBuilder: (BuildContext context, int index) {
+                            return CustomSizedBox(
+                              height: 16,
+                            );
+                          },
+                          itemCount: cubit.conversationsList!.length,
                           itemBuilder: (BuildContext context, int index) {
                             return MessageItemWidget(
                               isMyMessage:
@@ -184,7 +171,7 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
                                       ? true
                                       : false,
                               text: cubit.conversationsList![index].message,
-                            ).onlyDirectionalPadding(bottom: 15);
+                            );
                           },
                         ),
                 ).symmetricPadding(horizontal: 27),

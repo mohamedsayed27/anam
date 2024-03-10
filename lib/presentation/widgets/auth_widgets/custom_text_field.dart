@@ -37,38 +37,35 @@ class CustomTextField extends StatelessWidget {
         width: 0.74.w,
       ),
     );
-    return SizedBox(
-      height: height?.h,
-      child: TextFormField(
-        controller: controller,
-        maxLines: maxLines,
-        validator: validator,
-        minLines: minLines,
-        expands: expands,
-        onTap: onTap,
-        enabled: enabled,
-        keyboardType: keyboardType,
-        textAlignVertical: textAlignVertical,
-        style: Theme.of(context)
-            .textTheme
-            .headlineSmall!
-            .copyWith(fontSize: 12.sp),
-        decoration: InputDecoration(
-          border: border,
-          enabledBorder: border,
-          disabledBorder: border,
-          prefixIcon: prefix,
-          focusedBorder: border,
-          contentPadding: EdgeInsets.symmetric(
-            vertical: 9.h,
-            horizontal: 10.w,
-          ),
-          hintText: hintText,
-          floatingLabelBehavior: FloatingLabelBehavior.never,
-          hintStyle: Theme.of(context)
-              .textTheme
-              .titleSmall
+    return TextFormField(
+      controller: controller,
+      maxLines: maxLines,
+      validator: validator,
+      minLines: minLines,
+      expands: expands,
+      onTap: onTap,
+      enabled: enabled,
+      keyboardType: keyboardType,
+      textAlignVertical: textAlignVertical,
+      style: Theme.of(context)
+          .textTheme
+          .headlineSmall!
+          .copyWith(fontSize: 12.sp),
+      decoration: InputDecoration(
+        border: border,
+        enabledBorder: border,
+        disabledBorder: border,
+        prefixIcon: prefix,
+        focusedBorder: border,
+        contentPadding: EdgeInsets.symmetric(
+          vertical: 9.h,
+          horizontal: 10.w,
         ),
+        hintText: hintText,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        hintStyle: Theme.of(context)
+            .textTheme
+            .titleSmall
       ),
     );
   }

@@ -17,40 +17,56 @@ class MessageItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isMyMessage
-        ? Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16.r),
-              border: Border.all(
-                color: AppColors.greyColor9D,
-                width: 0.72.w,
+        ? Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 12.w,
+                vertical: 8.h,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadiusDirectional.only(
+                  topEnd: Radius.circular(16.r),
+                  topStart: Radius.circular(16.r),
+                  bottomEnd: Radius.circular(16.r),
+                ),
+                border: Border.all(
+                  color: AppColors.greyColor9D,
+                  width: 0.72.w,
+                ),
+              ),
+              child: Text(
+                text ?? "Test",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelSmall!
+                    .copyWith(fontSize: 16.sp, height: 1.5.h),
               ),
             ),
-            child: Text(
-              text ?? "Test test test test test test",
-              style: Theme.of(context)
-                  .textTheme
-                  .labelSmall!
-                  .copyWith(fontSize: 16.sp, height: 1.5.h),
-            ),
-          ).onlyDirectionalPadding(end: 16)
-        : Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16.r),
-              border: Border.all(
-                color: AppColors.greyColor9D,
-                width: 0.72.w,
+          )
+        : Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadiusDirectional.only(
+                  topEnd: Radius.circular(16.r),
+                  topStart: Radius.circular(16.r),
+                  bottomStart: Radius.circular(16.r),
+                ),
+                border: Border.all(
+                  color: AppColors.greyColor9D,
+                  width: 0.72.w,
+                ),
+              ),
+              child: Text(
+                text ?? "Test",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelSmall!
+                    .copyWith(fontSize: 16.sp, height: 1.5.h),
               ),
             ),
-            child: Text(
-              text ??
-                  "Test test test test test test test test test test test test test test test test",
-              style: Theme.of(context)
-                  .textTheme
-                  .labelSmall!
-                  .copyWith(fontSize: 16.sp, height: 1.5.h),
-            ),
-          ).onlyDirectionalPadding(start: 16);
+          );
   }
 }
