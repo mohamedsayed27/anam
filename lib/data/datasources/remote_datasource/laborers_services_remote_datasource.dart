@@ -119,7 +119,7 @@ class LaborersRemoteDatasource extends ServicesBaseDatasource<
   Future<Either<ErrorException, LaborerModel>> update(
       {required LaborerParameters parameters}) async {
     try {
-      final response = await dioHelper.putData(
+      final response = await dioHelper.postData(
         url: "${EndPoints.laborers}/${parameters.id}",
         data: FormData.fromMap(
           await parameters.toMap(),

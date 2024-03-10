@@ -2,6 +2,7 @@ import 'package:anam/core/app_theme/app_colors.dart';
 import 'package:anam/core/enums/user_type_enum.dart';
 import 'package:anam/data/models/vet_models/vet_model.dart';
 import 'package:anam/domain/controllers/profile_cubit/profile_cubit.dart';
+import 'package:anam/presentation/screens/main_layout_screens/services_screens/add_vet_store_screen.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_elevated_button.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -12,6 +13,8 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../core/app_router/screens_name.dart';
 import '../../../core/app_theme/custom_themes.dart';
+import '../../../core/cache_helper/cache_keys.dart';
+import '../../../core/cache_helper/shared_pref_methods.dart';
 import '../../../core/constants/constants.dart';
 import '../../../domain/controllers/services_cubit/services_cubit.dart';
 import '../../../domain/controllers/services_cubit/services_state.dart';
@@ -113,16 +116,44 @@ class VetServicesWidget extends StatelessWidget {
             Row(
               children: [
                 if (vetModel.vendor!.id.toString() == userId)
-                  CustomElevatedButton(
-                    title: "تعديل",
-                    padding: EdgeInsets.zero,
-                    onPressed: () {},
-                    buttonSize: Size(120.w, 40.h),
+                  BlocConsumer<ServicesCubit, ServicesState>(
+                    listener: (context, state) {
+                      var cubit = ServicesCubit.get(context);
+                      if (state is ShowVetMultiLangErrorState) {
+                        Navigator.pop(context);
+                      }
+                      if (state is ShowVetMultiLangSuccessState) {
+                        Navigator.pop(context);
+                        // Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => AddVetScreen(
+                              veterinarianMultiLangModel:
+                                  cubit.veterinarianMultiLangModel,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      var cubit = ServicesCubit.get(context);
+                      return CustomElevatedButton(
+                        title: "تعديل",
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          cubit.getMultiLangVeterinarian(id: vetModel.id!);
+                          showProgressIndicator(context);
+                        },
+                        buttonSize: Size(120.w, 40.h),
+                      );
+                    },
                   ),
                 const CustomSizedBox(
                   width: 8,
                 ),
-                if (userType == UserTypeEnum.user.name)
+                if (CacheHelper.getData(key: CacheKeys.userType) ==
+                    UserTypeEnum.user.name)
                   BlocConsumer<ServicesCubit, ServicesState>(
                     listener: (context, state) {
                       // TODO: implement listener

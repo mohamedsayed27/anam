@@ -6,6 +6,7 @@ import '../../data/datasources/remote_datasource/categories_remote_datasource.da
 import '../../data/datasources/remote_datasource/chat_remote_data_source.dart';
 import '../../data/datasources/remote_datasource/cities_and_countries_remote_datasource.dart';
 import '../../data/datasources/remote_datasource/laborers_services_remote_datasource.dart';
+import '../../data/datasources/remote_datasource/multi_lang_remote_data_source.dart';
 import '../../data/datasources/remote_datasource/products_remote_datasource.dart';
 import '../../data/datasources/remote_datasource/profile_remote_datasource.dart';
 import '../../data/datasources/remote_datasource/requests_remote_datasource.dart';
@@ -31,6 +32,7 @@ class ServicesLocator {
     sl.registerLazySingleton(() => StoresServicesRemoteDatasource(dioHelper:sl(),),);
     sl.registerLazySingleton(() => CitiesAndCountriesRemoteDatasource(dioHelper:sl(),),);
     sl.registerLazySingleton(() => ServicesRemoteDataSource(dioHelper:sl(),),);
+    sl.registerLazySingleton(() => MultiLangRemoteDataSource(dioHelper:sl(),),);
     /// API Methods Class (DIO)
     sl.registerLazySingleton(() => DioHelper());
   }

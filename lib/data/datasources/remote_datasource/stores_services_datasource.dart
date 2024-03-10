@@ -125,7 +125,7 @@ class StoresServicesRemoteDatasource extends ServicesBaseDatasource<GetAllStoreM
     required StoreParameters parameters,
   }) async {
     try {
-      final response = await dioHelper.putData(
+      final response = await dioHelper.postData(
         url: "${EndPoints.stores}/${parameters.id}",
         data: FormData.fromMap(
           await parameters.toMap(),
@@ -139,6 +139,7 @@ class StoresServicesRemoteDatasource extends ServicesBaseDatasource<GetAllStoreM
       );
     } catch (e) {
       if (e is DioException) {
+        print(e);
         return Left(
           ErrorException(
             baseErrorModel: BaseErrorModel.fromJson(

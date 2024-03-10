@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/app_theme/app_colors.dart';
 import '../../../core/app_theme/custom_themes.dart';
+import '../../../core/cache_helper/cache_keys.dart';
+import '../../../core/cache_helper/shared_pref_methods.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/enums/user_type_enum.dart';
 
@@ -42,7 +44,7 @@ class FollowingAndFollowersTabBar extends StatelessWidget {
         )
       ),
       tabs: [
-        if(userType==UserTypeEnum.user.name)Tab(
+        if(CacheHelper.getData(key: CacheKeys.userType)==UserTypeEnum.user.name)Tab(
           text: "قائمة المتابعة",
         ),
         Tab(

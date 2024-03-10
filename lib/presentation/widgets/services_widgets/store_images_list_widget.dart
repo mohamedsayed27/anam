@@ -20,7 +20,7 @@ class StoreImagesComponentBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return images.isNotEmpty?Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -37,7 +37,7 @@ class StoreImagesComponentBuilder extends StatelessWidget {
               width: 10.w,
             ),
             scrollDirection: Axis.horizontal,
-            itemCount: 3,
+            itemCount: images.length,
             itemBuilder: (context, index) {
               return Container(
                 height: 160.h,
@@ -85,6 +85,6 @@ class StoreImagesComponentBuilder extends StatelessWidget {
           ),
         )
       ],
-    );
+    ):CustomSizedBox();
   }
 }

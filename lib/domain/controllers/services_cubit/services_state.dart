@@ -37,6 +37,38 @@ class ShowLaborerDetailsErrorState extends ServicesState {
   ShowLaborerDetailsErrorState({required this.error});
 }
 
+class ShowLaborerMultiLangLoadingState extends ServicesState {}
+
+class ShowLaborerMultiLangSuccessState extends ServicesState {}
+
+class ShowLaborerMultiLangErrorState extends ServicesState {
+  final String error;
+
+  ShowLaborerMultiLangErrorState({required this.error});
+}
+
+
+class ShowVetMultiLangLoadingState extends ServicesState {}
+
+class ShowVetMultiLangSuccessState extends ServicesState {}
+
+class ShowVetMultiLangErrorState extends ServicesState {
+  final String error;
+
+  ShowVetMultiLangErrorState({required this.error});
+}
+
+
+class ShowStoreMultiLangLoadingState extends ServicesState {}
+
+class ShowStoreMultiLangSuccessState extends ServicesState {}
+
+class ShowStoreMultiLangErrorState extends ServicesState {
+  final String error;
+
+  ShowStoreMultiLangErrorState({required this.error});
+}
+
 class GetCitiesLoadingState extends ServicesState {}
 
 class GetCitiesSuccessState extends ServicesState {}

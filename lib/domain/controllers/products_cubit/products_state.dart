@@ -49,6 +49,16 @@ class ShowProductDetailsErrorState extends ProductsState {
   ShowProductDetailsErrorState({required this.error});
 }
 
+class ShowProductMultiLangLoadingState extends ProductsState {}
+
+class ShowProductMultiLangSuccessState extends ProductsState {}
+
+class ShowProductMultiLangErrorState extends ProductsState {
+  final String error;
+
+  ShowProductMultiLangErrorState({required this.error});
+}
+
 class ChangeProductStatusLoadingState extends ProductsState {}
 
 class ChangeProductStatusSuccessState extends ProductsState {}

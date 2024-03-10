@@ -116,7 +116,7 @@ class VetServicesRemoteDatasource
   Future<Either<ErrorException, VetModel>> update(
       {required VetParameters parameters}) async {
     try {
-      final response = await dioHelper.putData(
+      final response = await dioHelper.postData(
         url: "${EndPoints.veterinarians}/${parameters.id}",
         data: FormData.fromMap(
           await parameters.toMap(),

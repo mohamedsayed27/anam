@@ -24,9 +24,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     cubit.getFavoriteProducts();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea(
         child: BlocConsumer<ProductsCubit, ProductsState>(
@@ -45,8 +45,11 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 return ProductItemComponent(
                   isFavorite: true,
                   onPressed: () {
-                    // Navigator.pushNamed(
-                    //     context, ScreenName.productDetailsScreen);
+                    Navigator.pushNamed(
+                      context,
+                      ScreenName.productDetailsScreen,
+                      arguments: cubit.favoriteProductsList[index],
+                    );
                   },
                   productDataModel: cubit.favoriteProductsList[index],
                 );

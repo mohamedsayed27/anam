@@ -1,4 +1,8 @@
 import 'dart:io';
+import 'package:anam/data/datasources/remote_datasource/multi_lang_remote_data_source.dart';
+import 'package:anam/data/models/laborers_models/laborers_multi_lang.dart';
+import 'package:anam/data/models/multi_lang_models/store_multi_lang_model.dart';
+import 'package:anam/data/models/multi_lang_models/veterian_multi_lang_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -31,6 +35,7 @@ class ServicesCubit extends Cubit<ServicesState> {
   static ServicesCubit get(context) => BlocProvider.of(context);
 
   final LaborersRemoteDatasource _laborerRemoteDatasource = sl();
+  final MultiLangRemoteDataSource _multiLangRemoteDataSource = sl();
   final CitiesAndCountriesRemoteDatasource _citiesAndCountriesRemoteDatasource =
       sl();
   final VetServicesRemoteDatasource _vetServicesRemoteDatasource = sl();
@@ -216,6 +221,75 @@ class ServicesCubit extends Cubit<ServicesState> {
     );
   }
 
+  LaborerMultiLangModel? laborerMultiLangModel;
+  bool? getMultiLangLaborerLoading;
+
+  void getMultiLangLaborer({required int id}) async {
+    getMultiLangLaborerLoading = true;
+    emit(ShowLaborerMultiLangLoadingState());
+    final response =
+        await _multiLangRemoteDataSource.getLaborerMultiLang(id: id);
+    response.fold(
+      (l) {
+        getMultiLangLaborerLoading = false;
+        baseErrorModel = l.baseErrorModel;
+        emit(ShowLaborerMultiLangErrorState(
+            error: baseErrorModel?.errors?[0] ?? ""));
+      },
+      (r) async {
+        getMultiLangLaborerLoading = false;
+        laborerMultiLangModel = r;
+        emit(ShowLaborerMultiLangSuccessState());
+      },
+    );
+  }
+
+  VeterinarianMultiLangModel? veterinarianMultiLangModel;
+  bool getMultiLangVetLoading = false;
+
+  void getMultiLangVeterinarian({required int id}) async {
+    getMultiLangVetLoading = true;
+    emit(ShowVetMultiLangLoadingState());
+    final response =
+        await _multiLangRemoteDataSource.geVeterinarianMultiLang(id: id);
+    response.fold(
+      (l) {
+        getMultiLangVetLoading = false;
+        baseErrorModel = l.baseErrorModel;
+        emit(ShowVetMultiLangErrorState(
+            error: baseErrorModel?.errors?[0] ?? ""));
+      },
+      (r) async {
+        print(r);
+        getMultiLangVetLoading = false;
+        veterinarianMultiLangModel = r;
+        emit(ShowVetMultiLangSuccessState());
+      },
+    );
+  }
+
+  StoreMultiLangModel? storeMultiLangModel;
+  bool getMultiLangStoreLoading = false;
+
+  void getMultiLangStore({required int id}) async {
+    getMultiLangStoreLoading = true;
+    emit(ShowStoreMultiLangLoadingState());
+    final response = await _multiLangRemoteDataSource.geStoreMultiLang(id: id);
+    response.fold(
+      (l) {
+        getMultiLangStoreLoading = false;
+        baseErrorModel = l.baseErrorModel;
+        emit(ShowStoreMultiLangErrorState(
+            error: baseErrorModel?.errors?[0] ?? ""));
+      },
+      (r) async {
+        getMultiLangStoreLoading = false;
+        storeMultiLangModel = r;
+        emit(ShowStoreMultiLangSuccessState());
+      },
+    );
+  }
+
   bool getAllCitiesLoading = false;
 
   void getAllCities() async {
@@ -257,6 +331,7 @@ class ServicesCubit extends Cubit<ServicesState> {
     );
     response.fold(
       (l) {
+        print(l);
         baseErrorModel = l.baseErrorModel;
         emit(UploadLaborerErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
@@ -413,6 +488,7 @@ class ServicesCubit extends Cubit<ServicesState> {
     );
     response.fold(
       (l) {
+        print(l);
         baseErrorModel = l.baseErrorModel;
         emit(UpdateVetErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
@@ -553,6 +629,7 @@ class ServicesCubit extends Cubit<ServicesState> {
   void updateStore({
     required StoreParameters vetParameters,
   }) async {
+    print(vetParameters);
     emit(UpdateStoreLoadingState());
     final response = await _storesServicesRemoteDatasource.update(
       parameters: vetParameters,
@@ -560,6 +637,7 @@ class ServicesCubit extends Cubit<ServicesState> {
     response.fold(
       (l) {
         baseErrorModel = l.baseErrorModel;
+        print(l);
         emit(UpdateStoreErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
       (r) {

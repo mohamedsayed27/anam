@@ -7,6 +7,7 @@ import 'package:path/path.dart' as path;
 class VetParameters extends Equatable {
   final String? nameAr;
   final String? nameEn;
+  final String? method;
   final String? phone;
   final File? image;
   final String? coordinates;
@@ -23,6 +24,7 @@ class VetParameters extends Equatable {
   const VetParameters({
     this.nameAr,
     this.nameEn,
+    this.method,
     this.id,
     this.phone,
     this.image,
@@ -47,6 +49,7 @@ class VetParameters extends Equatable {
     mapLocation,
     email,
     addressAr,
+    method,
     addressEn,
     qualificationAr,
     qualificationEn,
@@ -59,7 +62,8 @@ class VetParameters extends Equatable {
       'name_ar': nameAr,
       'name_en': nameEn,
       'phone': phone,
-      'image': await MultipartFile.fromFile(
+      if(method!=null)'_method': method,
+      if(image!=null)'image': await MultipartFile.fromFile(
         image!.path,
         filename: path.basename(image!.path),
       ), // Assuming you want the file path here

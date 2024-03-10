@@ -17,10 +17,12 @@ class StoreParameters extends Equatable {
   final List<File>? images;
   final String? email;
   final String? id;
+  final String? method;
   const StoreParameters({
     this.countryId,
     this.cityId,
     this.nameAr,
+    this.method,
     this.nameEn,
     this.phone,
     this.image,
@@ -44,6 +46,7 @@ class StoreParameters extends Equatable {
     coordinates,
     mapLocation,
     truckTypeAr,
+    method,
     truckTypeEn,
     images,
     email,
@@ -51,19 +54,22 @@ class StoreParameters extends Equatable {
 
   Future<Map<String, dynamic>> toMap() async{
     final formData = FormData();
-    images?.forEach((element) async{
+    if(images!=null) {
+      images?.forEach((element) async{
       formData.files.add(MapEntry("images", await MultipartFile.fromFile(
         element.path,
         filename: path.basename(element.path),
       )));
     });
+    }
     Map<String, dynamic> data = {
       'country_id': countryId,
       'city_id': cityId,
       'name_ar': nameAr,
+      if(method!=null)"_method":method,
       'name_en': nameEn,
       'phone': phone,
-      'image': await MultipartFile.fromFile(
+      if(image!=null)'image': await MultipartFile.fromFile(
         image!.path,
         filename: path.basename(image!.path),
       ), // Assuming you want the file path here

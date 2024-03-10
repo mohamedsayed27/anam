@@ -1,15 +1,13 @@
-import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
-import 'package:anam/core/enums/services_type_enum.dart';
-import 'package:anam/core/enums/user_type_enum.dart';
-import 'package:anam/presentation/screens/main_layout_screens/services_screens/add_laborer_screen.dart';
-import 'package:anam/presentation/screens/main_layout_screens/services_screens/add_store_screen.dart';
-import 'package:anam/presentation/widgets/services_widgets/services_following_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/app_theme/app_colors.dart';
 import '../../../../core/app_theme/custom_themes.dart';
+import '../../../../core/cache_helper/cache_keys.dart';
+import '../../../../core/cache_helper/shared_pref_methods.dart';
+import '../../../../core/enums/services_type_enum.dart';
+import '../../../../core/enums/user_type_enum.dart';
 import '../../../../domain/controllers/services_cubit/services_cubit.dart';
 import '../../../../domain/controllers/services_cubit/services_state.dart';
 import '../../../widgets/home_screen_widgets/all_products_list_view_widget.dart';
@@ -22,9 +20,12 @@ import '../../../widgets/home_screen_widgets/show_map_button.dart';
 import '../../../widgets/home_screen_widgets/tab_bar_widget.dart';
 import '../../../widgets/maps_widgets/home_google_map_view.dart';
 import '../../../widgets/services_widgets/services_all_products_list.dart';
+import '../../../widgets/services_widgets/services_following_list.dart';
 import '../../../widgets/shared_widget/custom_outlined_button.dart';
 import '../../../widgets/shared_widget/search_bar_widget.dart';
 import '../../../widgets/shared_widget/custom_sized_box.dart';
+import '../services_screens/add_laborer_screen.dart';
+import '../services_screens/add_store_screen.dart';
 import '../services_screens/add_vet_store_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -48,11 +49,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       vsync: this,
     );
     _followersTabController = TabController(
-      length: userType == UserTypeEnum.user.name ? 2 : 1,
+      length: CacheHelper.getData(key: CacheKeys.userType) != null &&
+              CacheHelper.getData(key: CacheKeys.userType) ==
+                  UserTypeEnum.user.name
+          ? 2
+          : 1,
       vsync: this,
     );
     _followersServicesTabController = TabController(
-      length: userType == UserTypeEnum.user.name ? 2 : 1,
+      length: CacheHelper.getData(key: CacheKeys.userType) != null &&
+              CacheHelper.getData(key: CacheKeys.userType) ==
+                  UserTypeEnum.user.name
+          ? 2
+          : 1,
       vsync: this,
     );
     prepareAnimations();
@@ -68,7 +77,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       parent: expandController,
       curve: Curves.fastOutSlowIn,
     );
-    if (userType != UserTypeEnum.user.name&&userType ==null) expandController.forward();
+    if (CacheHelper.getData(key: CacheKeys.userType) !=
+            UserTypeEnum.user.name &&
+        CacheHelper.getData(key: CacheKeys.userType) == null) {
+      expandController.forward();
+    }
   }
 
   @override
@@ -116,14 +129,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 children: [
                   const Expanded(child: SearchBarWidget()),
                   if (appearMapButton == false &&
-                      userType != null &&
-                      userType != UserTypeEnum.user.name)
+                      CacheHelper.getData(key: CacheKeys.userType) != null &&
+                      CacheHelper.getData(key: CacheKeys.userType) !=
+                          UserTypeEnum.user.name)
                     const CustomSizedBox(
                       width: 8,
                     ),
                   if (appearMapButton == false &&
-                      userType != null &&
-                      userType != UserTypeEnum.user.name)
+                      CacheHelper.getData(key: CacheKeys.userType) != null &&
+                      CacheHelper.getData(key: CacheKeys.userType) !=
+                          UserTypeEnum.user.name)
                     BlocConsumer<ServicesCubit, ServicesState>(
                       listener: (context, state) {},
                       builder: (context, state) {
@@ -134,6 +149,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 onPressed: () {
                                   if (cubit.selectedServicesValue!.type ==
                                       ServicesTypeEnum.veterinary.name) {
+                                    cubit.vetImage = null;
+                                    cubit.vetNameAr.clear();
+                                    cubit.vetNameEn.clear();
+                                    cubit.vetPhone.clear();
+                                    cubit.vetAddressAr.clear();
+                                    cubit.vetAddressEn.clear();
+                                    cubit.mapCoordinates;
+                                    cubit.mapLocation;
+                                    cubit.vetEmail.clear();
+                                    cubit.chosenCity = null;
+                                    cubit.chosenCity = null;
+                                    cubit.qualificationsAr.clear();
+                                    cubit.qualificationsEn.clear();
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -144,6 +172,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                           .selectedServicesValue!.type ==
                                       ServicesTypeEnum
                                           .livestock_transportation.name) {
+                                    cubit.storeImage = null;
+                                    cubit.storeNameAr.clear();
+                                    cubit.storeNameEn.clear();
+                                    cubit.storePhone.clear();
+                                    cubit.chosenCity = null;
+                                    cubit.trunkTypeEn.clear();
+                                    cubit.storeImages = [];
+                                    cubit.trunkTypeAr.clear();
+                                    cubit.mapCoordinates = null;
+                                    cubit.mapLocation = null;
+                                    cubit.storeEmail.clear();
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -153,6 +192,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   } else if (cubit
                                           .selectedServicesValue!.type ==
                                       ServicesTypeEnum.laborers.name) {
+                                    cubit.laborerImage = null;
+                                    cubit.laborerNameAr.clear();
+                                    cubit.laborerNameEn.clear();
+                                    cubit.laborerPhone.clear();
+                                    cubit.laborerAddressAr.clear();
+                                    cubit.laborerAddressEn.clear();
+                                    cubit.professionAr.clear();
+                                    cubit.professionEn.clear();
+                                    cubit.mapCoordinates = null;
+                                    cubit.mapLocation = null;
+                                    cubit.laborerEmail.clear();
+                                    cubit.nationalityEn.clear();
+                                    cubit.nationalityAr.clear();
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -236,8 +288,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         child: isMap
                             ? const HomeGoogleMapsView()
                             : isFollowingTap &&
-                                    userType != null &&
-                                    userType == UserTypeEnum.user.name
+                                    CacheHelper.getData(
+                                            key: CacheKeys.userType) !=
+                                        null &&
+                                    CacheHelper.getData(
+                                            key: CacheKeys.userType) ==
+                                        UserTypeEnum.user.name
                                 ? const ProductsFollowingListViewWidget()
                                 : const AllProductsListViewWidget(),
                       )
@@ -270,16 +326,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             return TabBarView(
                               controller: _followersServicesTabController,
                               children: [
-                                if(userType == UserTypeEnum.user.name)cubit.selectedServicesValue != null
-                                    ? const ServicesFollowingList()
-                                    : const Center(
-                                        child: CircularProgressIndicator
-                                            .adaptive()),
+                                if (CacheHelper.getData(
+                                        key: CacheKeys.userType) ==
+                                    UserTypeEnum.user.name)
+                                  cubit.selectedServicesValue != null
+                                      ? const ServicesFollowingList()
+                                      : const Center(
+                                          child: CircularProgressIndicator
+                                              .adaptive()),
                                 cubit.selectedServicesValue != null
                                     ? const ServicesAllProductsList()
                                     : const Center(
                                         child: CircularProgressIndicator
-                                            .adaptive()),
+                                            .adaptive(),
+                                      ),
                               ],
                             );
                           },

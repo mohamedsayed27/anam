@@ -205,7 +205,7 @@ class ProductsRemoteDatasource {
     required int id,
   }) async {
     try {
-      final response = await dioHelper.getData(
+      final response = await dioHelper.deleteData(
         url: "${EndPoints.products}/$id",
         token: token,
       );

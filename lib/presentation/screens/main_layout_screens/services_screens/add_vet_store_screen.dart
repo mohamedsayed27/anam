@@ -1,6 +1,7 @@
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/core/parameters/vet_parameters.dart';
+import 'package:anam/data/models/multi_lang_models/veterian_multi_lang_model.dart';
 import 'package:anam/domain/controllers/services_cubit/services_state.dart';
 import 'package:anam/presentation/screens/map_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ import '../../../widgets/shared_widget/custom_elevated_button.dart';
 import '../../../widgets/shared_widget/custom_sized_box.dart';
 
 class AddVetScreen extends StatefulWidget {
-  const AddVetScreen({super.key});
+  final VeterinarianMultiLangModel? veterinarianMultiLangModel;
+  const AddVetScreen({super.key, this.veterinarianMultiLangModel});
 
   @override
   State<AddVetScreen> createState() => _AddVetScreenState();
@@ -25,6 +27,26 @@ class AddVetScreen extends StatefulWidget {
 
 class _AddVetScreenState extends State<AddVetScreen> {
   final formKey = GlobalKey<FormState>();
+  late final ServicesCubit cubit;
+  @override
+  void initState() {
+    cubit = ServicesCubit.get(context);
+
+    if (widget.veterinarianMultiLangModel != null) {
+      cubit.vetNameAr.text = widget.veterinarianMultiLangModel!.name?["ar"]??"";
+      cubit.vetNameEn.text = widget.veterinarianMultiLangModel!.name?["en"]??"";
+      cubit.vetAddressAr.text = widget.veterinarianMultiLangModel!.address?["ar"]??"";
+      cubit.vetAddressEn.text = widget.veterinarianMultiLangModel!.address?["en"]??"";
+      cubit.qualificationsAr.text = widget.veterinarianMultiLangModel!.qualification?["ar"]??"";
+      cubit.qualificationsEn.text = widget.veterinarianMultiLangModel!.qualification?["en"]??"";
+      cubit.vetPhone.text = widget.veterinarianMultiLangModel!.phone??"";
+      cubit.chosenCity = cubit.citiesList.firstWhere((element) => element.id==widget.veterinarianMultiLangModel!.cityId);
+      cubit.mapCoordinates = widget.veterinarianMultiLangModel!.coordinates;
+      cubit.mapLocation = widget.veterinarianMultiLangModel!.mapLocation;
+      cubit.vetEmail.text = widget.veterinarianMultiLangModel!.email??"";
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +54,7 @@ class _AddVetScreenState extends State<AddVetScreen> {
       body: SafeArea(
         child: BlocConsumer<ServicesCubit, ServicesState>(
           listener: (context, state) {
-            ServicesCubit cubit = ServicesCubit.get(context);
+
             if (state is UploadVetLoadingState) {
               showProgressIndicator(context);
             }
@@ -56,6 +78,33 @@ class _AddVetScreenState extends State<AddVetScreen> {
               // Navigator.pop(context);
             }
             if (state is UploadVetErrorState) {
+              Navigator.pop(context);
+              showToast(errorType: 1, message: state.error);
+            }
+
+            if (state is UpdateVetLoadingState) {
+              showProgressIndicator(context);
+            }
+            if (state is UpdateVetSuccessState) {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              cubit.vetImage = null;
+              cubit.vetNameAr.clear();
+              cubit.vetNameEn.clear();
+              cubit.vetPhone.clear();
+              cubit.vetAddressAr.clear();
+              cubit.vetAddressEn.clear();
+              cubit.mapCoordinates;
+              cubit.mapLocation;
+              cubit.vetEmail.clear();
+              cubit.chosenCity = null;
+              cubit.chosenCity = null;
+              cubit.qualificationsAr.clear();
+              cubit.qualificationsEn.clear();
+              print("Updateeddddd");
+              // Navigator.pop(context);
+            }
+            if (state is UpdateVetErrorState) {
               Navigator.pop(context);
               showToast(errorType: 1, message: state.error);
             }
@@ -311,35 +360,58 @@ class _AddVetScreenState extends State<AddVetScreen> {
                       title: "ارفاق البيانات",
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          if (cubit.vetImage == null) {
-                            showToast(
-                                errorType: 1,
-                                message: "يجب اختيار صوره للبيطري");
-                          } else {
-                            if (cubit.mapLocation == null) {
-                              showToast(
-                                  errorType: 1, message: "يجب اختيار الموقع");
-                            } else {
-                              cubit.uploadVet(
-                                vetParameters: VetParameters(
-                                  image: cubit.vetImage!,
-                                  nameAr: cubit.vetNameAr.text,
-                                  nameEn: cubit.vetNameEn.text,
-                                  phone: cubit.vetPhone.text,
-                                  addressAr: cubit.vetAddressAr.text,
-                                  addressEn: cubit.vetAddressEn.text,
-                                  coordinates: cubit.mapCoordinates,
-                                  mapLocation: cubit.mapLocation,
-                                  email: cubit.vetEmail.text,
-                                  countryId:
-                                      cubit.chosenCity!.country!.id.toString(),
-                                  cityId: cubit.chosenCity!.id.toString(),
-                                  qualificationAr: cubit.qualificationsAr.text,
-                                  qualificationEn: cubit.qualificationsEn.text,
-                                ),
-                              );
-                            }
-                          }
+                         if(widget.veterinarianMultiLangModel==null){
+                           if (cubit.vetImage == null) {
+                             showToast(
+                                 errorType: 1,
+                                 message: "يجب اختيار صوره للبيطري");
+                           } else {
+                             if (cubit.mapLocation == null) {
+                               showToast(
+                                   errorType: 1, message: "يجب اختيار الموقع");
+                             } else {
+                               cubit.uploadVet(
+                                 vetParameters: VetParameters(
+                                   image: cubit.vetImage!,
+                                   nameAr: cubit.vetNameAr.text,
+                                   nameEn: cubit.vetNameEn.text,
+                                   phone: cubit.vetPhone.text,
+                                   addressAr: cubit.vetAddressAr.text,
+                                   addressEn: cubit.vetAddressEn.text,
+                                   coordinates: cubit.mapCoordinates,
+                                   mapLocation: cubit.mapLocation,
+                                   email: cubit.vetEmail.text,
+                                   countryId:
+                                   cubit.chosenCity!.country!.id.toString(),
+                                   cityId: cubit.chosenCity!.id.toString(),
+                                   qualificationAr: cubit.qualificationsAr.text,
+                                   qualificationEn: cubit.qualificationsEn.text,
+                                 ),
+                               );
+                             }
+                           }
+                         }else{
+                           cubit.updateVet(
+                             vetParameters: VetParameters(
+                               image: cubit.vetImage,
+                               method: "PUT",
+                               id: widget.veterinarianMultiLangModel!.id!.toString(),
+                               nameAr: cubit.vetNameAr.text,
+                               nameEn: cubit.vetNameEn.text,
+                               phone: cubit.vetPhone.text,
+                               addressAr: cubit.vetAddressAr.text,
+                               addressEn: cubit.vetAddressEn.text,
+                               coordinates: cubit.mapCoordinates,
+                               mapLocation: cubit.mapLocation,
+                               email: cubit.vetEmail.text,
+                               countryId:
+                               cubit.chosenCity!.country!.id.toString(),
+                               cityId: cubit.chosenCity!.id.toString(),
+                               qualificationAr: cubit.qualificationsAr.text,
+                               qualificationEn: cubit.qualificationsEn.text,
+                             ),
+                           );
+                         }
                         }
                       },
                       buttonSize: Size(double.infinity, 48.h),

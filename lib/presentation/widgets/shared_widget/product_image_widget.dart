@@ -67,7 +67,7 @@ class _ItemImageWidgetState extends State<ItemImageWidget> {
             },
           ),
         ),
-        Align(
+        if(widget.productDataModel.images!=null)Align(
           alignment: Alignment.bottomCenter,
           child: SmoothPageIndicator(
             controller: controller,
@@ -91,7 +91,6 @@ class _ItemImageWidgetState extends State<ItemImageWidget> {
               ProfileCubit.get(context).showVendorProfile(id:  widget.productDataModel.uploadedBy!.id!).then((value) {
                 Navigator.pushNamed(context, ScreenName.vendorDetailsScreen,arguments:ProfileCubit.get(context).vendorProfileModel );
               });
-              // Timer(Duration(seconds: 1), () {});
             },
             child: Container(
               height: 48.h,

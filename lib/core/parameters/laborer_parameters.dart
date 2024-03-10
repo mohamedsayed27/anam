@@ -7,6 +7,7 @@ class LaborerParameters extends Equatable {
   final String? nameAr;
   final String? nameEn;
   final String? phone;
+  final String? method;
   final File? image;
   final String? id;
   final String? coordinates;
@@ -24,6 +25,7 @@ class LaborerParameters extends Equatable {
     this.id,
     this.nameEn,
     this.phone,
+    this.method,
     this.image,
     this.coordinates,
     this.mapLocation,
@@ -45,6 +47,7 @@ class LaborerParameters extends Equatable {
         coordinates,
         mapLocation,
         nationalityAr,
+    method,
         nationalityEn,
         email,
         professionAr,
@@ -58,7 +61,8 @@ class LaborerParameters extends Equatable {
       'name_ar': nameAr,
       'name_en': nameEn,
       'phone': phone,
-      'image': image != null
+      if(method!=null)'_method': method,
+      if( image != null)'image': image != null
           ? await MultipartFile.fromFile(
               image!.path,
               filename: path.basename(image!.path),

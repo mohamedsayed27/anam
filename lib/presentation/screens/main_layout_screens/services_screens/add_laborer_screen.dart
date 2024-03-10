@@ -1,11 +1,14 @@
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/core/parameters/laborer_parameters.dart';
+import 'package:anam/data/models/laborers_models/laborers_multi_lang.dart';
 import 'package:anam/domain/controllers/services_cubit/services_state.dart';
 import 'package:anam/presentation/screens/map_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/app_theme/app_colors.dart';
 import '../../../../domain/controllers/services_cubit/services_cubit.dart';
@@ -15,7 +18,9 @@ import '../../../widgets/shared_widget/custom_elevated_button.dart';
 import '../../../widgets/shared_widget/custom_sized_box.dart';
 
 class AddLaborerScreen extends StatefulWidget {
-  const AddLaborerScreen({super.key});
+  final LaborerMultiLangModel? laborerMultiLangModel;
+
+  const AddLaborerScreen({super.key, this.laborerMultiLangModel});
 
   @override
   State<AddLaborerScreen> createState() => _AddLaborerScreenState();
@@ -24,23 +29,31 @@ class AddLaborerScreen extends StatefulWidget {
 class _AddLaborerScreenState extends State<AddLaborerScreen> {
   final formKey = GlobalKey<FormState>();
 
+  late final ServicesCubit cubit;
+
+  @override
+  void initState() {
+    cubit = ServicesCubit.get(context);
+    if (widget.laborerMultiLangModel != null) {
+      cubit.laborerNameAr.text = widget.laborerMultiLangModel!.name?["ar"]??"";
+      cubit.laborerNameEn.text = widget.laborerMultiLangModel!.name?["en"]??"";
+      cubit.laborerPhone.text = widget.laborerMultiLangModel!.phone??"";
+      cubit.laborerAddressAr.text = widget.laborerMultiLangModel!.address?["ar"]??"";
+      cubit.laborerAddressEn.text = widget.laborerMultiLangModel!.address?["en"]??"";
+      cubit.professionAr.text = widget.laborerMultiLangModel!.profession?["ar"]??"";
+      cubit.professionEn.text = widget.laborerMultiLangModel!.profession?["en"]??"";
+      cubit.mapCoordinates = widget.laborerMultiLangModel!.coordinates;
+      cubit.mapLocation = widget.laborerMultiLangModel!.mapLocation;
+      cubit.laborerEmail.text = widget.laborerMultiLangModel!.email??"";
+      cubit.nationalityEn.text = widget.laborerMultiLangModel!.nationality?["ar"]??"";
+      cubit.nationalityAr.text = widget.laborerMultiLangModel!.profession?["en"]??"";
+    }
+    super.initState();
+  }
 
   @override
   void dispose() {
-    ServicesCubit cubit = ServicesCubit.get(context);
-    cubit.laborerImage = null;
-    cubit.laborerNameAr.clear();
-    cubit.laborerNameEn.clear();
-    cubit.laborerPhone.clear();
-    cubit.laborerAddressAr.clear();
-    cubit.laborerAddressEn.clear();
-    cubit.professionAr.clear();
-    cubit.professionEn.clear();
-    cubit.mapCoordinates = null;
-    cubit.mapLocation = null;
-    cubit.laborerEmail.clear();
-    cubit.nationalityEn.clear();
-    cubit.nationalityAr.clear();
+
     super.dispose();
   }
 
@@ -57,8 +70,45 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
             if (state is UploadLaborerSuccessState) {
               Navigator.pop(context);
               Navigator.pop(context);
+              cubit.laborerImage = null;
+              cubit.laborerNameAr.clear();
+              cubit.laborerNameEn.clear();
+              cubit.laborerPhone.clear();
+              cubit.laborerAddressAr.clear();
+              cubit.laborerAddressEn.clear();
+              cubit.professionAr.clear();
+              cubit.professionEn.clear();
+              cubit.mapCoordinates = null;
+              cubit.mapLocation = null;
+              cubit.laborerEmail.clear();
+              cubit.nationalityEn.clear();
+              cubit.nationalityAr.clear();
             }
             if (state is UploadLaborerErrorState) {
+              Navigator.pop(context);
+              showToast(errorType: 1, message: state.error);
+            }
+            if (state is UpdateLaborerLoadingState) {
+              showProgressIndicator(context);
+            }
+            if (state is UpdateLaborerSuccessState) {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              cubit.laborerImage = null;
+              cubit.laborerNameAr.clear();
+              cubit.laborerNameEn.clear();
+              cubit.laborerPhone.clear();
+              cubit.laborerAddressAr.clear();
+              cubit.laborerAddressEn.clear();
+              cubit.professionAr.clear();
+              cubit.professionEn.clear();
+              cubit.mapCoordinates = null;
+              cubit.mapLocation = null;
+              cubit.laborerEmail.clear();
+              cubit.nationalityEn.clear();
+              cubit.nationalityAr.clear();
+            }
+            if (state is UpdateLaborerErrorState) {
               Navigator.pop(context);
               showToast(errorType: 1, message: state.error);
             }
@@ -67,7 +117,6 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
             }
           },
           builder: (context, state) {
-            ServicesCubit cubit = ServicesCubit.get(context);
             return Form(
               key: formKey,
               child: SingleChildScrollView(
@@ -97,33 +146,35 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             decoration:
                                 const BoxDecoration(shape: BoxShape.circle),
-                            child: cubit.laborerImage == null
-                                ? null
-                                : Image.file(
-                                    cubit.laborerImage!,
+                            child: widget.laborerMultiLangModel == null
+                                ? cubit.laborerImage == null
+                                    ? null
+                                    : Image.file(
+                                        cubit.laborerImage!,
+                                        fit: BoxFit.cover,
+                                      )
+                                : CachedNetworkImage(
+                                    imageUrl:
+                                        widget.laborerMultiLangModel!.image!,
                                     fit: BoxFit.cover,
+                                    placeholder: (context, url) {
+                                      return Shimmer.fromColors(
+                                        baseColor: Colors.grey[200]!,
+                                        highlightColor: Colors.grey[300]!,
+                                        child: Container(
+                                          height: double.infinity,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
                                   ),
-                            //CachedNetworkImage(
-                            //                               imageUrl: cubit.laborerModel!.image!,
-                            //                               fit: BoxFit.cover,
-                            //                               placeholder: (context, url) {
-                            //                                 return Shimmer.fromColors(
-                            //                                   baseColor: Colors.grey[200]!,
-                            //                                   highlightColor: Colors.grey[300]!,
-                            //                                   child: Container(
-                            //                                     height: double.infinity,
-                            //                                     width: double.infinity,
-                            //                                     decoration: BoxDecoration(
-                            //                                       color: Colors.black,
-                            //                                       borderRadius:
-                            //                                       BorderRadius.circular(8.0),
-                            //                                     ),
-                            //                                   ),
-                            //                                 );
-                            //                               },
-                            //                               errorWidget: (context, url, error) =>
-                            //                               const Icon(Icons.error),
-                            //                             )
                           ),
                           InkWell(
                             onTap: () {
@@ -317,34 +368,56 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                       title: "ارفاق البيانات",
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          if (cubit.laborerImage == null) {
-                            showToast(
-                                errorType: 1,
-                                message: "يجب اختيار صوره للمنتج");
-                          } else {
-                            if (cubit.mapLocation == null) {
-                              showToast(
-                                  errorType: 1, message: "يجب اختيار الموقع");
-                            } else {
-                              cubit.uploadLaborer(
-                                productParameters: LaborerParameters(
-                                  image: cubit.laborerImage!,
-                                  nameAr: cubit.laborerNameAr.text,
-                                  nameEn: cubit.laborerNameEn.text,
-                                  phone: cubit.laborerPhone.text,
-                                  addressAr: cubit.laborerAddressAr.text,
-                                  addressEn: cubit.laborerAddressEn.text,
-                                  professionAr: cubit.professionAr.text,
-                                  professionEn: cubit.professionEn.text,
-                                  coordinates: cubit.mapCoordinates,
-                                  mapLocation: cubit.mapLocation,
-                                  email: cubit.laborerEmail.text,
-                                  nationalityEn: cubit.nationalityEn.text,
-                                  nationalityAr: cubit.nationalityAr.text,
-                                ),
-                              );
-                            }
-                          }
+                         if(widget.laborerMultiLangModel==null){
+                           if (cubit.laborerImage == null) {
+                             showToast(
+                                 errorType: 1,
+                                 message: "يجب اختيار صوره للمنتج");
+                           } else {
+                             if (cubit.mapLocation == null) {
+                               showToast(
+                                   errorType: 1, message: "يجب اختيار الموقع");
+                             } else {
+                               cubit.uploadLaborer(
+                                 productParameters: LaborerParameters(
+                                   image: cubit.laborerImage!,
+                                   nameAr: cubit.laborerNameAr.text,
+                                   nameEn: cubit.laborerNameEn.text,
+                                   phone: cubit.laborerPhone.text,
+                                   addressAr: cubit.laborerAddressAr.text,
+                                   addressEn: cubit.laborerAddressEn.text,
+                                   professionAr: cubit.professionAr.text,
+                                   professionEn: cubit.professionEn.text,
+                                   coordinates: cubit.mapCoordinates,
+                                   mapLocation: cubit.mapLocation,
+                                   email: cubit.laborerEmail.text,
+                                   nationalityEn: cubit.nationalityEn.text,
+                                   nationalityAr: cubit.nationalityAr.text,
+                                 ),
+                               );
+                             }
+                           }
+                         }else{
+                           cubit.updateLaborer(
+                             productParameters: LaborerParameters(
+                               image: cubit.laborerImage,
+                               nameAr: cubit.laborerNameAr.text,
+                               nameEn: cubit.laborerNameEn.text,
+                               phone: cubit.laborerPhone.text,
+                               method: "PUT",
+                               addressAr: cubit.laborerAddressAr.text,
+                               addressEn: cubit.laborerAddressEn.text,
+                               professionAr: cubit.professionAr.text,
+                               id: widget.laborerMultiLangModel!.id.toString(),
+                               professionEn: cubit.professionEn.text,
+                               coordinates: cubit.mapCoordinates,
+                               mapLocation: cubit.mapLocation,
+                               email: cubit.laborerEmail.text,
+                               nationalityEn: cubit.nationalityEn.text,
+                               nationalityAr: cubit.nationalityAr.text,
+                             ),
+                           );
+                         }
                         }
                       },
                       buttonSize: Size(double.infinity, 48.h),

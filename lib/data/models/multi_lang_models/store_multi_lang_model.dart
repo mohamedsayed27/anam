@@ -1,35 +1,35 @@
 import 'package:equatable/equatable.dart';
 
-class LaborerMultiLangModel extends Equatable {
+class StoreMultiLangModel extends Equatable {
   final int? id;
   final Map<String, String>? name;
-  final Map<String, String>? nationality;
-  final Map<String, String>? profession;
-  final Map<String, String>? address;
   final String? phone;
   final String? email;
   final String? image;
+  final Map<String, String>? truckType;
   final String? coordinates;
   final String? mapLocation;
   final int? isApproved;
+  final int? cityId;
+  final int? countryId;
   final int? vendorId;
   final int? serviceId;
   final int? statusId;
   final String? createdAt;
   final String? updatedAt;
 
-  const LaborerMultiLangModel({
+  const StoreMultiLangModel({
     this.id,
     this.name,
-    this.nationality,
-    this.profession,
-    this.address,
     this.phone,
     this.email,
     this.image,
+    this.truckType,
     this.coordinates,
     this.mapLocation,
     this.isApproved,
+    this.cityId,
+    this.countryId,
     this.vendorId,
     this.serviceId,
     this.statusId,
@@ -41,15 +41,15 @@ class LaborerMultiLangModel extends Equatable {
   List<Object?> get props => [
     id,
     name,
-    nationality,
-    profession,
-    address,
     phone,
     email,
     image,
+    truckType,
     coordinates,
     mapLocation,
     isApproved,
+    cityId,
+    countryId,
     vendorId,
     serviceId,
     statusId,
@@ -57,19 +57,19 @@ class LaborerMultiLangModel extends Equatable {
     updatedAt,
   ];
 
-  factory LaborerMultiLangModel.fromJson(Map<String, dynamic> json) {
-    return LaborerMultiLangModel(
+  factory StoreMultiLangModel.fromJson(Map<String, dynamic> json) {
+    return StoreMultiLangModel(
       id: json['id'],
       name: json['name'] != null ? Map<String, String>.from(json['name']) : null,
-      nationality: json['nationality'] != null ? Map<String, String>.from(json['nationality']) : null,
-      profession: json['profession'] != null ? Map<String, String>.from(json['profession']) : null,
-      address: json['address'] != null ? Map<String, String>.from(json['address']) : null,
       phone: json['phone'],
       email: json['email'],
       image: json['image'],
+      truckType: json['truck_type'] != null ? Map<String, String>.from(json['truck_type']) : null,
       coordinates: json['coordinates'],
       mapLocation: json['map_location'],
       isApproved: json['is_approved'],
+      cityId: json['city_id'],
+      countryId: json['country_id'],
       vendorId: json['vendor_id'],
       serviceId: json['service_id'],
       statusId: json['status_id'],
@@ -82,15 +82,15 @@ class LaborerMultiLangModel extends Equatable {
     return {
       'id': id,
       'name': name,
-      'nationality': nationality,
-      'profession': profession,
-      'address': address,
       'phone': phone,
       'email': email,
       'image': image,
+      'truck_type': truckType,
       'coordinates': coordinates,
       'map_location': mapLocation,
       'is_approved': isApproved,
+      'city_id': cityId,
+      'country_id': countryId,
       'vendor_id': vendorId,
       'service_id': serviceId,
       'status_id': statusId,

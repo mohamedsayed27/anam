@@ -5,6 +5,7 @@ import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/data/models/products_model/product_model.dart';
 import 'package:anam/domain/controllers/products_cubit/products_cubit.dart';
 import 'package:anam/domain/controllers/products_cubit/products_state.dart';
+import 'package:anam/presentation/screens/main_layout_screens/profile_screens/add_product_screen.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_switch_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,34 +52,54 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         fontSize: 20.sp,
                       ),
                 ),
-                CustomOutlinedButton(
-                  height: 40.h,
-                  radius: 8.r,
-                  onPressed: () {
-                    Navigator.pushNamed(context, ScreenName.addProductScreen);
+                BlocBuilder<ProductsCubit, ProductsState>(
+                  builder: (context, state) {
+                    ProductsCubit cubit = ProductsCubit.get(context);
+                    return CustomOutlinedButton(
+                      height: 40.h,
+                      radius: 8.r,
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, ScreenName.addProductScreen);
+                        cubit.productNameAr.clear();
+                        cubit.productNameEn.clear();
+                        cubit.locationAr.clear();
+                        cubit.locationEn.clear();
+                        cubit.productPrice.clear();
+                        cubit.productDescriptionAr.clear();
+                        cubit.productDescriptionEn.clear();
+                        cubit.productProsAr.clear();
+                        cubit.productProsEn.clear();
+                        cubit.productConsAr.clear();
+                        cubit.productConsEn.clear();
+                        cubit.youtubeLink.clear();
+                        cubit.mapLocation = null;
+                        cubit.productImages.clear();
+                      },
+                      borderColor: AppColors.greyColor9D,
+                      padding: EdgeInsets.symmetric(horizontal: 14.w),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.add,
+                            color: AppColors.greyColor71,
+                            size: 18.r,
+                          ),
+                          const CustomSizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            "اضافة منتج",
+                            style: CustomThemes.grey7DColorTextTheme(context)
+                                .copyWith(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   },
-                  borderColor: AppColors.greyColor9D,
-                  padding: EdgeInsets.symmetric(horizontal: 14.w),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.add,
-                        color: AppColors.greyColor71,
-                        size: 18.r,
-                      ),
-                      const CustomSizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        "اضافة منتج",
-                        style:
-                            CustomThemes.grey7DColorTextTheme(context).copyWith(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
               ],
             ).symmetricPadding(horizontal: 16),
@@ -102,9 +123,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             horizontal: 16,
                           ),
                           itemBuilder: (_, index) {
-
                             return ProductElement(
-                              productDataModel: cubit.vendorProfileModel!.productsList![index],
+                              productDataModel: cubit
+                                  .vendorProfileModel!.productsList![index],
                             );
                           },
                           separatorBuilder: (_, index) {
@@ -137,9 +158,32 @@ class ProductElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ProductsCubit, ProductsState>(
       listener: (context, state) {
-        // TODO: implement listener
+        ProductsCubit cubit = ProductsCubit.get(context);
+        if (state is DeleteProductSuccessState) {
+          Navigator.pop(context);
+          showToast(errorType: 1, message: "Deleted Successfully");
+        }
+        if (state is DeleteProductErrorState) {
+          Navigator.pop(context);
+          showToast(errorType: 0, message: "Error");
+        }
+        if (state is ShowProductMultiLangErrorState) {
+          Navigator.pop(context);
+        }
+        if (state is ShowProductMultiLangSuccessState) {
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => AddProductScreen(
+                productMultiLangModel: cubit.productMultiLangModel,
+              ),
+            ),
+          );
+        }
       },
       builder: (context, state) {
+        ProductsCubit cubit = ProductsCubit.get(context);
         return Container(
           height: 54.h,
           width: double.infinity,
@@ -185,18 +229,30 @@ class ProductElement extends StatelessWidget {
                   ],
                 ),
               ),
-              SvgPicture.asset(
-                SvgPath.editIcon,
-                width: 20.w,
-                height: 20.h,
+              InkWell(
+                onTap: () {
+                  cubit.getMultiLangProduct(id: productDataModel.id!);
+                  showProgressIndicator(context);
+                },
+                child: SvgPicture.asset(
+                  SvgPath.editIcon,
+                  width: 20.w,
+                  height: 20.h,
+                ),
               ),
               const CustomSizedBox(
                 width: 16,
               ),
-              SvgPicture.asset(
-                SvgPath.trash,
-                width: 20.w,
-                height: 20.h,
+              InkWell(
+                onTap: () {
+                  cubit.deleteProduct(productId: productDataModel.id!);
+                  showProgressIndicator(context);
+                },
+                child: SvgPicture.asset(
+                  SvgPath.trash,
+                  width: 20.w,
+                  height: 20.h,
+                ),
               ),
               const CustomSizedBox(
                 width: 16,

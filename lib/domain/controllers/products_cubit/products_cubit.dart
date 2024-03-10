@@ -4,15 +4,18 @@ import 'package:anam/core/network/error_message_model.dart';
 import 'package:anam/core/parameters/review_product_parameters.dart';
 import 'package:anam/core/parameters/upload_product_parameters.dart';
 import 'package:anam/data/datasources/remote_datasource/categories_remote_datasource.dart';
+import 'package:anam/data/datasources/remote_datasource/multi_lang_remote_data_source.dart';
 import 'package:anam/data/datasources/remote_datasource/products_remote_datasource.dart';
 import 'package:anam/data/models/base_model.dart';
 import 'package:anam/data/models/categories/categories_model.dart';
 import 'package:anam/data/models/categories/show_category_model.dart';
+import 'package:anam/data/models/multi_lang_models/product_multi_lang_model.dart';
 import 'package:anam/data/models/reviews_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:image_picker/image_picker.dart';
+import '../../../core/constants/constants.dart';
 import '../../../core/services/services_locator.dart';
 import '../../../data/datasources/remote_datasource/profile_remote_datasource.dart';
 import '../../../data/models/categories/sub_categories_model.dart';
@@ -27,6 +30,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   final CategoriesRemoteDatasource _categoriesRemoteDatasource = sl();
   final ProductsRemoteDatasource _productsRemoteDatasource = sl();
   final ProfileRemoteDatasource _profileRemoteDatasource = sl();
+  final MultiLangRemoteDataSource _multiLangRemoteDataSource = sl();
   BaseErrorModel? baseErrorModel;
   ProductDataModel? showProductDetailsModel;
   ShowCategoryDataModel? showCategoryModel;
@@ -337,16 +341,41 @@ class ProductsCubit extends Cubit<ProductsState> {
     );
   }
 
+
+
+  ProductMultiLangModel? productMultiLangModel;
+  bool? getMultiLangLaborerLoading;
+
+  void getMultiLangProduct({required int id}) async {
+    emit(ShowProductMultiLangLoadingState());
+    final response =
+    await _multiLangRemoteDataSource.geProductMultiLang(id: id);
+    response.fold(
+          (l) {
+        baseErrorModel = l.baseErrorModel;
+        emit(ShowProductMultiLangErrorState(
+            error: baseErrorModel?.errors?[0] ?? ""));
+      },
+          (r) async {
+        productMultiLangModel = r;
+        emit(ShowProductMultiLangSuccessState());
+      },
+    );
+  }
+
   void deleteProduct({required int productId}) async {
     emit(DeleteProductLoadingState());
     final response =
         await _productsRemoteDatasource.deleteProduct(id: productId);
     response.fold(
       (l) {
+        print(l);
         baseErrorModel = l.baseErrorModel;
         emit(DeleteProductErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
       (r) async {
+        print(r);
+        showVendorProfile(id: int.parse(userId!.toString()));
         emit(DeleteProductSuccessState(baseResponseModel: r));
       },
     );

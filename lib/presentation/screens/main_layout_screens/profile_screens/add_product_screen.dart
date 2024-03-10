@@ -3,6 +3,7 @@ import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/core/parameters/upload_product_parameters.dart';
 import 'package:anam/data/models/categories/categories_model.dart';
 import 'package:anam/data/models/categories/sub_categories_model.dart';
+import 'package:anam/data/models/multi_lang_models/product_multi_lang_model.dart';
 import 'package:anam/presentation/screens/map_screen.dart';
 import 'package:anam/translations/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -20,15 +21,36 @@ import '../../../widgets/shared_widget/custom_elevated_button.dart';
 import '../../../widgets/shared_widget/custom_sized_box.dart';
 
 class AddProductScreen extends StatefulWidget {
-  const AddProductScreen({super.key});
+  final ProductMultiLangModel? productMultiLangModel;
+  const AddProductScreen({super.key, this.productMultiLangModel});
 
   @override
   State<AddProductScreen> createState() => _AddProductScreenState();
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
+  late final ProductsCubit cubit;
   final formKey = GlobalKey<FormState>();
-
+  @override
+  void initState() {
+    cubit = ProductsCubit.get(context);
+    if(widget.productMultiLangModel!=null){
+     cubit.productNameAr.text = widget.productMultiLangModel!.name!['ar']??"";
+     cubit.productNameEn.text = widget.productMultiLangModel!.name!['en']??"";
+     cubit.locationAr.text = widget.productMultiLangModel!.location!['ar']??"";
+     cubit.locationEn.text = widget.productMultiLangModel!.location!['en']??"";
+     cubit.productPrice.text = widget.productMultiLangModel!.salePrice?.toString()??"";
+     cubit.productDescriptionAr.text = widget.productMultiLangModel!.description!['ar']??"";
+     cubit.productDescriptionEn.text = widget.productMultiLangModel!.description!['en']??"";
+     cubit.productProsAr.text = widget.productMultiLangModel!.advantages!['ar']??"";
+     cubit.productProsEn.text = widget.productMultiLangModel!.advantages!['en']??"";
+     cubit.productConsAr.text = widget.productMultiLangModel!.defects!['ar']??"";
+     cubit.productConsEn.text = widget.productMultiLangModel!.defects!['en']??"";
+     cubit.youtubeLink.text = widget.productMultiLangModel!.youtubeLink??"";
+     cubit.mapLocation = widget.productMultiLangModel!.mapLocation??"";
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,13 +63,27 @@ class _AddProductScreenState extends State<AddProductScreen> {
             if(state is UploadProductSuccessState){
               Navigator.pop(context);
               Navigator.pop(context);
+              cubit.productNameAr.clear();
+              cubit.productNameEn.clear();
+              cubit.locationAr.clear();
+              cubit.locationEn.clear();
+              cubit.productPrice.clear();
+              cubit.productDescriptionAr.clear();
+              cubit.productDescriptionEn.clear();
+              cubit.productProsAr.clear();
+              cubit.productProsEn.clear();
+              cubit.productConsAr.clear();
+              cubit.productConsEn.clear();
+              cubit.youtubeLink.clear();
+              cubit.mapLocation = null;
+              cubit.productImages.clear();
             } if(state is UploadProductErrorState){
               Navigator.pop(context);
               showToast(errorType: 1, message: state.error);
             }
           },
           builder: (context, state) {
-            ProductsCubit cubit = ProductsCubit.get(context);
+
             return Form(
               key: formKey,
               child: SingleChildScrollView(
@@ -78,7 +114,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     const CustomSizedBox(
                       height: 17,
                     ),
-                    cubit.getAllCategoriesLoading
+                    widget.productMultiLangModel==null?cubit.getAllCategoriesLoading
                         ? const Center(
                             child: CircularProgressIndicator.adaptive(),
                           )
@@ -97,7 +133,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                     ))
                                 .toList(),
                             value: cubit.productCategory,
-                          ),
+                          ):const CustomSizedBox(height: 0,),
                     const CustomSizedBox(
                       height: 11,
                     ),
@@ -288,6 +324,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         size: 20.r,
                         color: AppColors.authBorderColor,
                       ),
+                      controller: cubit.youtubeLink,
                       hintText: LocaleKeys.youtubeLink.tr(),
                       validator: (value) {
                         if (value!.isEmpty) {
