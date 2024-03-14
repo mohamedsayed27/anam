@@ -66,8 +66,9 @@ class _AllProductsListViewWidgetState extends State<AllProductsListViewWidget> {
                             .productsList!
                             .length,
                 itemBuilder: (BuildContext context, int index) {
+                  print(cubit.productsList[index].isFavorite);
                   return ProductItemComponent(
-                    isFavorite: false,
+                    isFavorite: cubit.productsList[index].isFavorite ?? false,
                     onPressed: () {
                       ProductsCubit.get(context).getProductReview(
                         productId: cubit.selectedCategoryIndex == null &&

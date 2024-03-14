@@ -1,16 +1,7 @@
-import 'dart:ffi';
 
-import 'package:anam/core/constants/extensions.dart';
-import 'package:anam/presentation/widgets/auth_widgets/custom_drop_down_button.dart';
-import 'package:anam/presentation/widgets/auth_widgets/custom_text_field.dart';
-import 'package:anam/presentation/widgets/auth_widgets/first_and_last_name_component.dart';
-import 'package:anam/presentation/widgets/auth_widgets/phone_auth_component.dart';
-import 'package:anam/presentation/widgets/bottom_sheets_widgets/chat_bottom.dart';
-import 'package:anam/presentation/widgets/bottom_sheets_widgets/register_as_a_vendor_bottom_sheet.dart';
-import 'package:anam/presentation/widgets/bottom_sheets_widgets/register_bottom_sheet.dart';
+import 'package:anam/core/assets_path/svg_path.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_elevated_button.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
-import 'package:anam/presentation/widgets/shared_widget/search_bar_widget.dart';
 import 'package:anam/presentation/widgets/shared_widget/title_and_body_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -19,6 +10,7 @@ import 'package:flutter_paytabs_bridge/PaymentSdkConfigurationDetails.dart';
 import 'package:flutter_paytabs_bridge/PaymentSdkLocale.dart';
 import 'package:flutter_paytabs_bridge/flutter_paytabs_bridge.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class TryScreen extends StatefulWidget {
   const TryScreen({super.key});
@@ -58,7 +50,7 @@ class _TryScreenState extends State<TryScreen> {
       body: Center(
         child: isLoggedIn
             ? Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TileAndBodyTextWidget(
                     titleText: userData['name'],
@@ -86,7 +78,8 @@ class _TryScreenState extends State<TryScreen> {
             : CustomElevatedButton(
                 title: "login",
                 onPressed: () {
-                  FacebookAuth.instance.login(permissions: ['public_profile','email']).then((value) {
+                  FacebookAuth.instance.login(
+                      permissions: ['public_profile', 'email']).then((value) {
                     FacebookAuth.instance.getUserData().then((value) {
                       setState(() {
                         isLoggedIn = true;
@@ -94,7 +87,7 @@ class _TryScreenState extends State<TryScreen> {
                       });
                       print(userData);
                     });
-                  }).catchError((error){
+                  }).catchError((error) {
                     print(error);
                   });
                 },
@@ -103,7 +96,8 @@ class _TryScreenState extends State<TryScreen> {
     );
   }
 }
-class PaymentPayTaps{
+
+class PaymentPayTaps {
   var billingDetails = BillingDetails(
     "John Smith",
     "email@domain.com",
@@ -125,7 +119,8 @@ class PaymentPayTaps{
     "12345",
   );
   late PaymentSdkConfigurationDetails configuration;
-  void init(){
+
+  void init() {
     configuration = PaymentSdkConfigurationDetails(
       profileId: "108520",
       serverKey: "S6JN6RNND9-JHR69NT2MJ-6R26LT6B69",
@@ -140,7 +135,7 @@ class PaymentPayTaps{
       amount: 10.0,
       shippingDetails: shippingDetails,
       locale:
-      PaymentSdkLocale.AR, //PaymentSdkLocale.AR or PaymentSdkLocale.DEFAULT
+          PaymentSdkLocale.AR, //PaymentSdkLocale.AR or PaymentSdkLocale.DEFAULT
     );
   }
 
@@ -164,5 +159,50 @@ class PaymentPayTaps{
       //   }
       // });
     });
+  }
+}
+
+class OrderProgressScreen extends StatefulWidget {
+  const OrderProgressScreen({super.key});
+
+  @override
+  State<OrderProgressScreen> createState() => _OrderProgressScreenState();
+}
+
+class _OrderProgressScreenState extends State<OrderProgressScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Track your order",
+          style: TextStyle(
+            color: Color(0xff676767),
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        elevation: 0,
+        centerTitle: false,
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+
+              child: Stepper(
+                type: StepperType.horizontal,
+                steps: [
+                  Step(title: SizedBox.shrink(), content: SvgPicture.asset(SvgPath.accepted,),),
+                  Step(title: SizedBox.shrink(), content: SvgPicture.asset(SvgPath.accepted,),),
+                  Step(title: SizedBox.shrink(), content: SvgPicture.asset(SvgPath.accepted,),),
+                  Step(title: SizedBox.shrink(), content: SvgPicture.asset(SvgPath.accepted,),),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -36,10 +36,12 @@ class ProductsCubit extends Cubit<ProductsState> {
   ShowCategoryDataModel? showCategoryModel;
   List<ReviewModel> reviewsList = [];
   List<ProductDataModel> productsList = [];
+  List<ProductDataModel> searchedProductsList = [];
   List<ProductDataModel> favoriteProductsList = [];
   List<ProductDataModel> userFollowingProductsList = [];
   List<CategoriesModel> categoriesList = [];
   int allProductsPageNumber = 1;
+  int allSearchedProductsPageNumber = 1;
   int allFavoriteProductsPageNumber = 1;
   int allCategoriesPageNumber = 1;
   int userFollowingProductsPageNumber = 1;
@@ -71,6 +73,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   final TextEditingController productConsAr = TextEditingController();
   final TextEditingController productConsEn = TextEditingController();
   final TextEditingController youtubeLink = TextEditingController();
+  final TextEditingController searchValue = TextEditingController();
   int addProductReviewRate = 0;
 
   List<File> productImages = [];
@@ -124,18 +127,77 @@ class ProductsCubit extends Cubit<ProductsState> {
                 }
                 if (element.isFavorite != null) {
                   if (!favoriteProduct.containsKey(element.id!.toString())) {
-                    favoriteProduct.addAll({
-                      element.id.toString():
-                          element.isFavorite
-                    });
+                    favoriteProduct
+                        .addAll({element.id.toString(): element.isFavorite});
                   }
                 }
               }
               allProductsPageNumber++;
             }
           }
-          productsList.forEach((element) {print(element.uploadedBy!.isFollowed);});
+          productsList.forEach((element) {
+            print(element.uploadedBy!.isFollowed);
+          });
           getAllProductsLoading = false;
+          emit(GetAllProductsSuccessState());
+        }
+      },
+    );
+  }
+
+  bool getSearchedProductsLoading = false;
+
+  void getAllSearchedProducts() async {
+    if (allSearchedProductsPageNumber == 1) {
+      getSearchedProductsLoading = true;
+      emit(GetAllProductsLoadingState());
+    }
+    print(searchValue.text);
+    final response = await _productsRemoteDatasource.getAllSearchedProducts(
+      pageNumber: allSearchedProductsPageNumber,
+      value: searchValue.text,
+    );
+    response.fold(
+      (l) {
+        baseErrorModel = l.baseErrorModel;
+        getSearchedProductsLoading = false;
+        emit(GetAllProductsErrorState(error: baseErrorModel?.message ?? ""));
+      },
+      (r) {
+        print(r.getPaginatedProductResultModel);
+        if (allSearchedProductsPageNumber <=
+            r.getPaginatedProductResultModel!.lastPage!) {
+          if (r.getPaginatedProductResultModel!.currentPage! <=
+              r.getPaginatedProductResultModel!.lastPage!) {
+            if (r.getPaginatedProductResultModel!.products!.isNotEmpty) {
+              for (var element in r.getPaginatedProductResultModel!.products!) {
+                if (!searchedProductsList.contains(element)) {
+                  searchedProductsList.add(element);
+                }
+              }
+              for (var element in searchedProductsList) {
+                if (element.uploadedBy!.isFollowed != null) {
+                  if (!followedVendors.containsKey(element.id!.toString())) {
+                    followedVendors.addAll({
+                      element.uploadedBy!.id.toString():
+                          element.uploadedBy!.isFollowed
+                    });
+                  }
+                }
+                if (element.isFavorite != null) {
+                  if (!favoriteProduct.containsKey(element.id!.toString())) {
+                    favoriteProduct
+                        .addAll({element.id.toString(): element.isFavorite});
+                  }
+                }
+              }
+              allSearchedProductsPageNumber++;
+            }
+          }
+          searchedProductsList.forEach((element) {
+            print(element.uploadedBy!.isFollowed);
+          });
+          getSearchedProductsLoading = false;
           emit(GetAllProductsSuccessState());
         }
       },
@@ -216,10 +278,8 @@ class ProductsCubit extends Cubit<ProductsState> {
                 }
                 if (element.isFavorite != null) {
                   if (!favoriteProduct.containsKey(element.id!.toString())) {
-                    favoriteProduct.addAll({
-                      element.id.toString():
-                      element.isFavorite
-                    });
+                    favoriteProduct
+                        .addAll({element.id.toString(): element.isFavorite});
                   }
                 }
               }
@@ -343,22 +403,20 @@ class ProductsCubit extends Cubit<ProductsState> {
     );
   }
 
-
-
   ProductMultiLangModel? productMultiLangModel;
   bool? getMultiLangLaborerLoading;
 
   void getMultiLangProduct({required int id}) async {
     emit(ShowProductMultiLangLoadingState());
     final response =
-    await _multiLangRemoteDataSource.geProductMultiLang(id: id);
+        await _multiLangRemoteDataSource.geProductMultiLang(id: id);
     response.fold(
-          (l) {
+      (l) {
         baseErrorModel = l.baseErrorModel;
         emit(ShowProductMultiLangErrorState(
             error: baseErrorModel?.errors?[0] ?? ""));
       },
-          (r) async {
+      (r) async {
         productMultiLangModel = r;
         emit(ShowProductMultiLangSuccessState());
       },
@@ -487,10 +545,8 @@ class ProductsCubit extends Cubit<ProductsState> {
             }
             if (element.isFavorite != null) {
               if (!favoriteProduct.containsKey(element.id!.toString())) {
-                favoriteProduct.addAll({
-                  element.id.toString():
-                  element.isFavorite
-                });
+                favoriteProduct
+                    .addAll({element.id.toString(): element.isFavorite});
               }
             }
           }
@@ -506,10 +562,8 @@ class ProductsCubit extends Cubit<ProductsState> {
                   }
                   if (element.isFavorite != null) {
                     if (!favoriteProduct.containsKey(element.id!.toString())) {
-                      favoriteProduct.addAll({
-                        element.id.toString():
-                        element.isFavorite
-                      });
+                      favoriteProduct
+                          .addAll({element.id.toString(): element.isFavorite});
                     }
                   }
                 }

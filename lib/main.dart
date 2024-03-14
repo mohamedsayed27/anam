@@ -1,5 +1,4 @@
 import 'package:anam/bloc_observer.dart';
-import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/translations/codegen_loader.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/app_router/app_router.dart';
 import 'core/app_router/screens_name.dart';
 import 'core/app_theme/app_theme.dart';
+import 'core/cache_helper/shared_pref_methods.dart';
 import 'core/network/dio_helper.dart';
 import 'core/services/services_locator.dart';
 import 'domain/controllers/auth_cubit/auth_cubit.dart';
@@ -83,10 +83,11 @@ class MyApp extends StatelessWidget {
               create: (context) => ProfileCubit(),
             ),
             BlocProvider(
-                create: (context) => ProductsCubit()
-                  ..getAllProducts()
-                  ..getUserFollowingProducts()
-                  ..getAllCategories()),
+              create: (context) => ProductsCubit()
+                ..getAllProducts()
+                ..getUserFollowingProducts()
+                ..getAllCategories(),
+            ),
             BlocProvider(
               create: (context) => MapCubit(),
             ),
@@ -112,7 +113,7 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             onGenerateRoute: AppRouter.generateRoute,
             initialRoute: ScreenName.splashScreen,
-            // home: NotificationsScreen(),
+            // home: OrderProgressScreen(),
           ),
         );
       },

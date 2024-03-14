@@ -21,13 +21,44 @@ class ProductsRemoteDatasource {
     required this.dioHelper,
   });
 
-  Future<Either<ErrorException, GetAllProductModel>> getAllProducts(
-      {required int pageNumber}) async {
+  Future<Either<ErrorException, GetAllProductModel>> getAllProducts({
+    required int pageNumber,
+  }) async {
     try {
       final response = await dioHelper.getData(
         url: "${EndPoints.products}?page=$pageNumber",
+        query: {},
         token: token,
       );
+      return Right(GetAllProductModel.fromJson(response.data));
+    } catch (e) {
+      if (e is DioException) {
+        print(e);
+        return Left(
+          ErrorException(
+            baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
+          ),
+        );
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<Either<ErrorException, GetAllProductModel>> getAllSearchedProducts({
+    required int pageNumber,
+    required String value,
+  }) async {
+    print(value);
+    try {
+      final response = await dioHelper.getData(
+        url: "${EndPoints.products}?search=$value&page=$pageNumber",
+        // query: {
+        //   "search": value,
+        // },
+        token: token,
+      );
+      print(response);
       return Right(GetAllProductModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {

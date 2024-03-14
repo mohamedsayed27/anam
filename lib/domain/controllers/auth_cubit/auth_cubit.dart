@@ -46,7 +46,7 @@ class AuthCubit extends Cubit<AuthState> {
         baseErrorModel = l.baseErrorModel;
         emit(
           LoginErrorState(
-            error: l.baseErrorModel.errors!=null?baseErrorModel!.errors![0]!:l.baseErrorModel!.message,
+            error: l.baseErrorModel.errors!=null?baseErrorModel!.errors![0]!:l.baseErrorModel?.message??"",
           ),
         );
       },
