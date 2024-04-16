@@ -27,7 +27,9 @@ class ChatCubit extends Cubit<ChatState> {
       emit(GetChatError());
     }, (r) {
       getChat = false;
-      conversationsList = r.conversationList;
+      print(r);
+      conversationsList = r.conversationList??[];
+      print(conversationsList);
       emit(GetChatSuccess());
     });
   }

@@ -1,5 +1,6 @@
 import 'package:anam/core/app_theme/custom_themes.dart';
 import 'package:anam/core/assets_path/images_path.dart';
+import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/dummy_data.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/data/models/laborers_models/laborer_model.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/app_theme/app_colors.dart';
 import '../../../../core/assets_path/svg_path.dart';
 import '../../../widgets/bottom_sheets_widgets/chat_bottom.dart';
+import '../../../widgets/bottom_sheets_widgets/login_bottom_sheet.dart';
 import '../../../widgets/services_widgets/vet_services_images_widget.dart';
 import '../../../widgets/shared_widget/custom_sized_box.dart';
 
@@ -70,12 +72,22 @@ class LaborersServiceDetailsScreen extends StatelessWidget {
                       child: CustomElevatedButton(
                         title: "تواصل معنا",
                         onPressed: () {
-
-                          showModalBottomSheet(
+                          print(token);
+                          if(token==null){
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (_) {
+                                return const LoginBottomSheet();
+                              },
+                            );
+                          }else {
+                            showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
                             builder: (_) => ChatBottomSheet(receiverId:laborerModel.vendor!.id!,),
                           );
+                          }
                         },
                         titleSize: 16,
                       ),

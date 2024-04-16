@@ -114,6 +114,7 @@ class ProductsCubit extends Cubit<ProductsState> {
               for (var element in r.getPaginatedProductResultModel!.products!) {
                 if (!productsList.contains(element)) {
                   productsList.add(element);
+                  productsList[productsList.indexWhere((e) => element.id==e.id)].images?.insert(0, Images(image: element.mainImage));
                 }
               }
               for (var element in productsList) {
@@ -135,9 +136,7 @@ class ProductsCubit extends Cubit<ProductsState> {
               allProductsPageNumber++;
             }
           }
-          productsList.forEach((element) {
-            print(element.uploadedBy!.isFollowed);
-          });
+
           getAllProductsLoading = false;
           emit(GetAllProductsSuccessState());
         }
@@ -152,7 +151,6 @@ class ProductsCubit extends Cubit<ProductsState> {
       getSearchedProductsLoading = true;
       emit(GetAllProductsLoadingState());
     }
-    print(searchValue.text);
     final response = await _productsRemoteDatasource.getAllSearchedProducts(
       pageNumber: allSearchedProductsPageNumber,
       value: searchValue.text,
@@ -164,7 +162,6 @@ class ProductsCubit extends Cubit<ProductsState> {
         emit(GetAllProductsErrorState(error: baseErrorModel?.message ?? ""));
       },
       (r) {
-        print(r.getPaginatedProductResultModel);
         if (allSearchedProductsPageNumber <=
             r.getPaginatedProductResultModel!.lastPage!) {
           if (r.getPaginatedProductResultModel!.currentPage! <=
@@ -173,6 +170,7 @@ class ProductsCubit extends Cubit<ProductsState> {
               for (var element in r.getPaginatedProductResultModel!.products!) {
                 if (!searchedProductsList.contains(element)) {
                   searchedProductsList.add(element);
+                  searchedProductsList[searchedProductsList.indexWhere((e) => element.id==e.id)].images?.insert(0, Images(image: element.mainImage));
                 }
               }
               for (var element in searchedProductsList) {
@@ -194,9 +192,6 @@ class ProductsCubit extends Cubit<ProductsState> {
               allSearchedProductsPageNumber++;
             }
           }
-          searchedProductsList.forEach((element) {
-            print(element.uploadedBy!.isFollowed);
-          });
           getSearchedProductsLoading = false;
           emit(GetAllProductsSuccessState());
         }
@@ -235,6 +230,7 @@ class ProductsCubit extends Cubit<ProductsState> {
               for (var element in r.getPaginatedProductResultModel!.products!) {
                 if (!favoriteProductsList.contains(element)) {
                   favoriteProductsList.add(element);
+                  favoriteProductsList[favoriteProductsList.indexWhere((e) => element.id==e.id)].images?.insert(0, Images(image: element.mainImage));
                 }
               }
               allFavoriteProductsPageNumber++;
@@ -268,6 +264,11 @@ class ProductsCubit extends Cubit<ProductsState> {
               r.getPaginatedProductResultModel!.lastPage!) {
             userFollowingProductsList
                 .addAll(r.getPaginatedProductResultModel!.products!);
+
+            for (var element in r.getPaginatedProductResultModel!.products!) {
+                userFollowingProductsList.add(element);
+                userFollowingProductsList[userFollowingProductsList.indexWhere((e) => element.id==e.id)].images?.insert(0, Images(image: element.mainImage));
+            }
             for (var element in userFollowingProductsList) {
               if (element.uploadedBy!.isFollowed != null) {
                 if (!followedVendors.containsKey(element.id!.toString())) {
@@ -429,12 +430,10 @@ class ProductsCubit extends Cubit<ProductsState> {
         await _productsRemoteDatasource.deleteProduct(id: productId);
     response.fold(
       (l) {
-        print(l);
         baseErrorModel = l.baseErrorModel;
         emit(DeleteProductErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
       (r) async {
-        print(r);
         showVendorProfile(id: int.parse(userId!.toString()));
         emit(DeleteProductSuccessState(baseResponseModel: r));
       },
@@ -485,7 +484,6 @@ class ProductsCubit extends Cubit<ProductsState> {
     );
     response.fold(
       (l) {
-        print(l);
         baseErrorModel = l.baseErrorModel;
         emit(UpdateProductErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
@@ -504,7 +502,6 @@ class ProductsCubit extends Cubit<ProductsState> {
     response.fold(
       (l) {
         favoriteProduct[id.toString()] = !favoriteProduct[id.toString()];
-        print(l);
         baseErrorModel = l.baseErrorModel;
         emit(WishProductErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
