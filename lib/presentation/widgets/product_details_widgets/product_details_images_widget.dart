@@ -1,16 +1,23 @@
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../core/app_theme/app_colors.dart';
+import '../../../core/assets_path/svg_path.dart';
+import '../../../core/constants/constants.dart';
+import '../../../core/enums/user_type_enum.dart';
 import '../../../data/models/products_model/product_model.dart';
+import '../../../domain/controllers/products_cubit/products_cubit.dart';
+import '../../../domain/controllers/products_cubit/products_state.dart';
 import '../shared_widget/custom_circle_button.dart';
 
 class ProductDetailsImagesWidget extends StatefulWidget {
   final List<Images> imagesList;
-
-  const ProductDetailsImagesWidget({super.key, required this.imagesList});
+  final int? id;
+  const ProductDetailsImagesWidget({super.key, required this.imagesList, this.id});
 
   @override
   State<ProductDetailsImagesWidget> createState() =>
@@ -56,14 +63,26 @@ class _ProductDetailsImagesWidgetState
               const CustomSizedBox(
                 width: 10,
               ),
-              CustomCircleButton(
-                iconPath: Icons.favorite,
-                onPressed: () {},
-                iconColor: AppColors.favoriteRedColor,
-                iconSize: 14.r,
-                width: 25.w,
-                elevation: 0,
-                height: 25.h,
+              if (token != null && userType == UserTypeEnum.user.name)BlocConsumer<ProductsCubit, ProductsState>(
+                listener: (context, state) {
+                  // TODO: implement listener
+                },
+                builder: (context, state) {
+                  var cubit = ProductsCubit.get(context);
+                  return IconButton(
+                    onPressed: () {
+                      cubit.changeFavorite(id: widget.id!);
+                    },
+                    padding: EdgeInsets.zero,
+                    icon: SvgPicture.asset(
+                      cubit.favoriteProduct[widget.id.toString()]
+                          ? SvgPath.redLike
+                          : SvgPath.like,
+                      width: 18.w,
+                      height: 18.h,
+                    ),
+                  );
+                },
               ),
             ],
           ),

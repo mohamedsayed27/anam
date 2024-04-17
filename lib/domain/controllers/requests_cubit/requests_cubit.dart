@@ -103,7 +103,6 @@ class RequestsCubit extends Cubit<RequestsState> {
 
   void changeCity(CountryModel? value) {
     chosenCity = value;
-    print(chosenCity);
     emit(ChangeCityState());
   }
 
@@ -117,7 +116,6 @@ class RequestsCubit extends Cubit<RequestsState> {
       },
       (r) {
         countriesList.addAll(r.countriesList!);
-        print(countriesList);
         emit(GetAllCountriesSuccessState());
       },
     );

@@ -1,6 +1,7 @@
 import 'package:anam/core/constants/dummy_data.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -9,10 +10,14 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../core/app_theme/app_colors.dart';
 import '../../../core/assets_path/svg_path.dart';
+import '../../../data/models/products_model/product_model.dart';
+import '../../../domain/controllers/products_cubit/products_cubit.dart';
+import '../../../domain/controllers/products_cubit/products_state.dart';
 import '../shared_widget/custom_sized_box.dart';
 
 class InfoWindowWidget extends StatefulWidget {
-  const InfoWindowWidget({super.key,});
+  final ProductDataModel productDataModel;
+  const InfoWindowWidget({super.key, required this.productDataModel,});
 
   @override
   State<InfoWindowWidget> createState() => _InfoWindowWidgetState();
@@ -52,7 +57,7 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
                     return CachedNetworkImage(
                       fit: BoxFit.cover,
                       imageUrl:
-                      "}",
+                      widget.productDataModel.images?[index].image??"",
                       placeholder: (context, url) => Shimmer.fromColors(
                         baseColor: Colors.grey[200]!,
                         highlightColor: Colors.grey[300]!,
@@ -92,15 +97,28 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
                 ),
               ).symmetricPadding(vertical: 9.38),
               PositionedDirectional(
-                start: 14.w,
-                top: 14.h,
-                child: InkWell(
-                  onTap: () {},
-                  child: SvgPicture.asset(
-                    SvgPath.like,
-                    width: 15.w,
-                    height: 13.h,
-                  ),
+                start: 4.w,
+                top: 4.h,
+                child: BlocConsumer<ProductsCubit, ProductsState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                  },
+                  builder: (context, state) {
+                    var cubit = ProductsCubit.get(context);
+                    return IconButton(
+                      onPressed: () {
+                        cubit.changeFavorite(id: widget.productDataModel.id!);
+                      },
+                      padding: EdgeInsets.zero,
+                      icon: SvgPicture.asset(
+                        cubit.favoriteProduct[widget.productDataModel.id.toString()]
+                            ? SvgPath.redLike
+                            : SvgPath.like,
+                        width: 18.w,
+                        height: 18.h,
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
@@ -112,7 +130,7 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "",
+                    widget.productDataModel.name??"",
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       fontSize: 10.sp,
                       color: AppColors.blackColor,
@@ -121,7 +139,7 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
                   Row(
                     children: [
                       Text(
-                        "2.0",
+                        "${widget.productDataModel.rate}",
                         style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                           fontSize: 10.sp,
                           color: AppColors.blackColor,
@@ -140,7 +158,7 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
                 height: 2,
               ),
               Text(
-                "نص تلقائي  نص تلقائي",
+                widget.productDataModel.location??"",
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   fontSize: 10.sp,
                 ),
@@ -149,7 +167,7 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
                 height: 2,
               ),
               Text(
-                "2,900 ريال",
+                "${widget.productDataModel.regularPrice} ريال",
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                   fontSize: 10.sp,
                   color: AppColors.blackColor,

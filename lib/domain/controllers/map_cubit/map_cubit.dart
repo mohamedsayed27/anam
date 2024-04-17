@@ -14,16 +14,13 @@ import 'map_state.dart';
 class MapCubit extends Cubit<MapState> {
   MapCubit() : super(MapInitial());
 
+  static MapCubit get(context) => BlocProvider.of(context);
 
   List<Marker> markers = [];
   BitmapDescriptor currentIcon = BitmapDescriptor.defaultMarker;
-  final Completer<GoogleMapController> googleMapController =
-  Completer<GoogleMapController>();
-  final CustomInfoWindowController customInfoWindowController =
-  CustomInfoWindowController();
 
   void getDataOnMap()async{
-
+    
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {

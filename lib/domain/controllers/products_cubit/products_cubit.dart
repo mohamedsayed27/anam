@@ -506,6 +506,8 @@ class ProductsCubit extends Cubit<ProductsState> {
         emit(WishProductErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
       (r) {
+        print(r);
+        print(token);
         emit(WishProductSuccessState());
       },
     );

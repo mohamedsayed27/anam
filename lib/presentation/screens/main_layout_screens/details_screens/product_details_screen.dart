@@ -40,6 +40,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               children: [
                 ProductDetailsImagesWidget(
                   imagesList: widget.productDataModel.images!,
+                    id:widget.productDataModel.id,
                 ),
                 const CustomSizedBox(
                   height: 25,

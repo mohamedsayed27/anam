@@ -9,111 +9,101 @@ import '../../../domain/controllers/products_cubit/products_state.dart';
 import '../shared_widget/custom_sized_box.dart';
 import '../shared_widget/product_item_component.dart';
 
-class AllProductsListViewWidget extends StatefulWidget {
+class AllProductsListViewWidget extends StatelessWidget {
   const AllProductsListViewWidget({super.key});
 
   @override
-  State<AllProductsListViewWidget> createState() =>
-      _AllProductsListViewWidgetState();
-}
-
-class _AllProductsListViewWidgetState extends State<AllProductsListViewWidget> {
-  ScrollController scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    var cubit = ProductsCubit.get(context);
-    scrollController.addListener(() {
-      if (scrollController.position.maxScrollExtent ==
-          scrollController.offset) {
-        cubit.getAllProducts();
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProductsCubit, ProductsState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+    return BlocBuilder<ProductsCubit, ProductsState>(
       builder: (context, state) {
         ProductsCubit cubit = ProductsCubit.get(context);
         return (cubit.getCategory && cubit.showCategoryModel == null) ||
                 (cubit.getAllProductsLoading)
             ? const ProductShimmerListWidget()
-            : ListView.separated(
-                controller:
-                    cubit.showCategoryModel == null ? scrollController : null,
-                separatorBuilder: (_, index) {
-                  return const CustomSizedBox(
-                    height: 16,
-                  );
+            : NotificationListener<ScrollNotification>(
+                onNotification: (notification) {
+                  if (notification is ScrollEndNotification) {
+                    if (notification.metrics.pixels ==
+                        notification.metrics.maxScrollExtent) {
+                      cubit.getAllProducts();
+                    }
+                  }
+                  return true;
                 },
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                  vertical: 12.h,
+                child: ListView.separated(
+                  // controller:
+                  //     cubit.showCategoryModel == null ? scrollController : null,
+                  separatorBuilder: (_, index) {
+                    return const CustomSizedBox(
+                      height: 16,
+                    );
+                  },
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 12.h,
+                  ),
+                  itemCount: cubit.selectedCategoryIndex == null &&
+                          cubit.showCategoryModel == null
+                      ? cubit.productsList.length
+                      : cubit.selectedSubCategoryIndex == null
+                          ? cubit.showCategoryModel!.products!.length
+                          : cubit
+                              .showCategoryModel!
+                              .subCategories![cubit.selectedSubCategoryIndex!]
+                              .productsList!
+                              .length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ProductItemComponent(
+                      isFavorite: cubit.productsList[index].isFavorite ?? false,
+                      onPressed: () {
+                        ProductsCubit.get(context).getProductReview(
+                          productId: cubit.selectedCategoryIndex == null &&
+                                  cubit.showCategoryModel == null
+                              ? cubit.productsList[index].id!.toString()
+                              : cubit.selectedSubCategoryIndex == null
+                                  ? cubit
+                                      .showCategoryModel!.products![index].id!
+                                      .toString()
+                                  : cubit
+                                      .showCategoryModel!
+                                      .subCategories![
+                                          cubit.selectedSubCategoryIndex!]
+                                      .productsList![index]
+                                      .id!
+                                      .toString(),
+                        );
+                        Navigator.pushNamed(
+                          context,
+                          ScreenName.productDetailsScreen,
+                          arguments: cubit.selectedCategoryIndex == null &&
+                                  cubit.showCategoryModel == null
+                              ? cubit.productsList[index]
+                              : cubit.selectedSubCategoryIndex == null
+                                  ? cubit.showCategoryModel!.products![index]
+                                  : cubit
+                                      .showCategoryModel!
+                                      .subCategories![
+                                          cubit.selectedSubCategoryIndex!]
+                                      .productsList![index],
+                        );
+                      },
+                      productDataModel: cubit.selectedCategoryIndex == null &&
+                              cubit.showCategoryModel == null
+                          ? cubit.productsList[index]
+                          : cubit.selectedSubCategoryIndex == null
+                              ? cubit.showCategoryModel!.products![index]
+                              : cubit
+                                  .showCategoryModel!
+                                  .subCategories![
+                                      cubit.selectedSubCategoryIndex!]
+                                  .productsList![index],
+                    );
+                  },
                 ),
-                itemCount: cubit.selectedCategoryIndex == null &&
-                        cubit.showCategoryModel == null
-                    ? cubit.productsList.length
-                    : cubit.selectedSubCategoryIndex == null
-                        ? cubit.showCategoryModel!.products!.length
-                        : cubit
-                            .showCategoryModel!
-                            .subCategories![cubit.selectedSubCategoryIndex!]
-                            .productsList!
-                            .length,
-                itemBuilder: (BuildContext context, int index) {
-                  print(cubit.productsList[index].isFavorite);
-                  return ProductItemComponent(
-                    isFavorite: cubit.productsList[index].isFavorite ?? false,
-                    onPressed: () {
-                      ProductsCubit.get(context).getProductReview(
-                        productId: cubit.selectedCategoryIndex == null &&
-                                cubit.showCategoryModel == null
-                            ? cubit.productsList[index].id!.toString()
-                            : cubit.selectedSubCategoryIndex == null
-                                ? cubit.showCategoryModel!.products![index].id!
-                                    .toString()
-                                : cubit
-                                    .showCategoryModel!
-                                    .subCategories![
-                                        cubit.selectedSubCategoryIndex!]
-                                    .productsList![index]
-                                    .id!
-                                    .toString(),
-                      );
-                      Navigator.pushNamed(
-                        context,
-                        ScreenName.productDetailsScreen,
-                        arguments: cubit.selectedCategoryIndex == null &&
-                                cubit.showCategoryModel == null
-                            ? cubit.productsList[index]
-                            : cubit.selectedSubCategoryIndex == null
-                                ? cubit.showCategoryModel!.products![index]
-                                : cubit
-                                    .showCategoryModel!
-                                    .subCategories![
-                                        cubit.selectedSubCategoryIndex!]
-                                    .productsList![index],
-                      );
-                    },
-                    productDataModel: cubit.selectedCategoryIndex == null &&
-                            cubit.showCategoryModel == null
-                        ? cubit.productsList[index]
-                        : cubit.selectedSubCategoryIndex == null
-                            ? cubit.showCategoryModel!.products![index]
-                            : cubit
-                                .showCategoryModel!
-                                .subCategories![cubit.selectedSubCategoryIndex!]
-                                .productsList![index],
-                  );
-                },
               );
       },
     );
   }
 }
+
 // 01103073714
