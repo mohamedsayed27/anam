@@ -55,12 +55,9 @@ class ProductsCubit extends Cubit<ProductsState> {
   String? mapCoordinates;
   final TextEditingController addProductReviewName = TextEditingController();
   final TextEditingController addProductReviewEmail = TextEditingController();
-  final TextEditingController addProductReviewDescription =
-      TextEditingController();
+  final TextEditingController addProductReviewDescription = TextEditingController();
   final TextEditingController addProductReviewAge = TextEditingController();
-  final TextEditingController addProductReviewLocation =
-      TextEditingController();
-
+  final TextEditingController addProductReviewLocation = TextEditingController();
   final TextEditingController productNameAr = TextEditingController();
   final TextEditingController productNameEn = TextEditingController();
   final TextEditingController locationAr = TextEditingController();
@@ -232,10 +229,20 @@ class ProductsCubit extends Cubit<ProductsState> {
                   favoriteProductsList.add(element);
                   favoriteProductsList[favoriteProductsList.indexWhere((e) => element.id==e.id)].images?.insert(0, Images(image: element.mainImage));
                 }
+                if (element.isFavorite != null) {
+                  if (!favoriteProduct.containsKey(element.id!.toString())) {
+                    favoriteProduct
+                        .addAll({element.id.toString(): element.isFavorite});
+                  }
+                }
               }
+
               allFavoriteProductsPageNumber++;
             }
+
           }
+          favoriteProductsList?.forEach((element) {print(element?.isFavorite);});
+
           emit(GetFavoriteProductsSuccessState());
         }
       },
@@ -495,6 +502,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   void changeFavorite({required int id}) async {
     favoriteProduct[id.toString()] = !favoriteProduct[id.toString()];
+    print(favoriteProduct);
     emit(WishProductLoadingState());
     final response = await _productsRemoteDatasource.addToFavorite(
       id: id,
@@ -506,8 +514,6 @@ class ProductsCubit extends Cubit<ProductsState> {
         emit(WishProductErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
       (r) {
-        print(r);
-        print(token);
         emit(WishProductSuccessState());
       },
     );

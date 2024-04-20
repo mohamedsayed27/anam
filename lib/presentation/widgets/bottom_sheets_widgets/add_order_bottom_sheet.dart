@@ -43,6 +43,9 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
               showToast(errorType: 1, message: state.error,);
             }
             if(state is SendRequestSuccessState){
+              print("object");
+              print("objects");
+              Navigator.pop(context);
               Navigator.pop(context);
               cubit.previousRequestsPageNumber = 1;
               cubit.previousRequestList.clear();

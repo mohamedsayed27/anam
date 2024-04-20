@@ -37,7 +37,7 @@ class AccountSettingsComponent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (token != null)
+        if (CacheHelper.getData(key: CacheKeys.token) != null)
           Text(
             LocaleKeys.accountSettings.tr(),
             style: Theme.of(context)
@@ -45,7 +45,7 @@ class AccountSettingsComponent extends StatelessWidget {
                 .headlineMedium!
                 .copyWith(fontSize: 20.sp, height: 1),
           ),
-        if (token != null && userType != UserTypeEnum.vendor.name)
+        if (CacheHelper.getData(key: CacheKeys.token) != null && userType != UserTypeEnum.vendor.name)
           AccountSettingItemWidget(
             onPressed: () {
               RequestsCubit.get(context).getPreviousRequests();
@@ -54,7 +54,7 @@ class AccountSettingsComponent extends StatelessWidget {
             iconPath: SvgPath.oldOrders,
             title: "الطلبات السابقة",
           ),
-        if (token != null && userType == UserTypeEnum.user.name)
+        if (CacheHelper.getData(key: CacheKeys.token) != null && userType == UserTypeEnum.user.name)
           AccountSettingItemWidget(
             onPressed: () {
               Navigator.pushNamed(context, ScreenName.followingScreen);
@@ -62,7 +62,7 @@ class AccountSettingsComponent extends StatelessWidget {
             iconPath: SvgPath.followersList,
             title: "قائمة المتابعة",
           ),
-        if (token != null && userType == UserTypeEnum.vendor.name)
+        if (CacheHelper.getData(key: CacheKeys.token) != null && userType == UserTypeEnum.vendor.name)
           AccountSettingItemWidget(
             onPressed: () {
               Navigator.pushNamed(context, ScreenName.followersScreen);
@@ -70,7 +70,7 @@ class AccountSettingsComponent extends StatelessWidget {
             iconPath: SvgPath.followersList,
             title: "قائمة المتابعين",
           ),
-        if (token != null && userType == UserTypeEnum.vendor.name)
+        if (CacheHelper.getData(key: CacheKeys.token) != null && userType == UserTypeEnum.vendor.name)
           AccountSettingItemWidget(
             onPressed: () {
               Navigator.pushNamed(context, ScreenName.productControlScreen);
@@ -78,7 +78,7 @@ class AccountSettingsComponent extends StatelessWidget {
             iconPath: SvgPath.controllSetting,
             title: "لوحة التحكم",
           ),
-        if (token != null)
+        if (CacheHelper.getData(key: CacheKeys.token) != null)
           AccountSettingItemWidget(
             onPressed: () {
               Navigator.pushNamed(context, ScreenName.notificationsScreen);
@@ -91,7 +91,7 @@ class AccountSettingsComponent extends StatelessWidget {
           iconPath: SvgPath.help,
           title: "عن الشركة",
         ),
-        if (token != null)
+        if (CacheHelper.getData(key: CacheKeys.token) != null)
           AccountSettingItemWidget(
             onPressed: () {
               showProgressIndicator(context);

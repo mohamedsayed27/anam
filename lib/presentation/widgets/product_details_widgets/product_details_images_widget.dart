@@ -7,6 +7,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../core/app_theme/app_colors.dart';
 import '../../../core/assets_path/svg_path.dart';
+import '../../../core/cache_helper/cache_keys.dart';
+import '../../../core/cache_helper/shared_pref_methods.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/enums/user_type_enum.dart';
 import '../../../data/models/products_model/product_model.dart';
@@ -17,7 +19,9 @@ import '../shared_widget/custom_circle_button.dart';
 class ProductDetailsImagesWidget extends StatefulWidget {
   final List<Images> imagesList;
   final int? id;
-  const ProductDetailsImagesWidget({super.key, required this.imagesList, this.id});
+
+  const ProductDetailsImagesWidget(
+      {super.key, required this.imagesList, this.id});
 
   @override
   State<ProductDetailsImagesWidget> createState() =>
@@ -63,31 +67,33 @@ class _ProductDetailsImagesWidgetState
               const CustomSizedBox(
                 width: 10,
               ),
-              if (token != null && userType == UserTypeEnum.user.name)BlocConsumer<ProductsCubit, ProductsState>(
-                listener: (context, state) {
-                  // TODO: implement listener
-                },
-                builder: (context, state) {
-                  var cubit = ProductsCubit.get(context);
-                  return IconButton(
-                    onPressed: () {
-                      cubit.changeFavorite(id: widget.id!);
-                    },
-                    padding: EdgeInsets.zero,
-                    icon: SvgPicture.asset(
-                      cubit.favoriteProduct[widget.id.toString()]
-                          ? SvgPath.redLike
-                          : SvgPath.like,
-                      width: 18.w,
-                      height: 18.h,
-                    ),
-                  );
-                },
-              ),
+              if (CacheHelper.getData(key: CacheKeys.token) != null && userType == UserTypeEnum.user.name)
+                BlocConsumer<ProductsCubit, ProductsState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                  },
+                  builder: (context, state) {
+                    var cubit = ProductsCubit.get(context);
+                    return IconButton(
+                      onPressed: () {
+                        cubit.changeFavorite(id: widget.id!);
+                      },
+                      padding: EdgeInsets.zero,
+                      icon: SvgPicture.asset(
+                        cubit.favoriteProduct[widget.id.toString()]
+                            ? SvgPath.redLike
+                            : SvgPath.like,
+                        width: 18.w,
+                        height: 18.h,
+                      ),
+                    );
+                  },
+                ),
             ],
           ),
         ),
-        if(widget.imagesList.isNotEmpty)Positioned.fill(
+        if (widget.imagesList.isNotEmpty)
+          Positioned.fill(
             bottom: 14.h,
             child: Align(
               alignment: Alignment.bottomCenter,
@@ -104,7 +110,8 @@ class _ProductDetailsImagesWidgetState
                   activeDotColor: Colors.white,
                 ),
               ),
-            ),),
+            ),
+          ),
         PositionedDirectional(
           start: 30.w,
           top: 20.h,

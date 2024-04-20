@@ -91,7 +91,7 @@ class RequestsCubit extends Cubit<RequestsState> {
         if (previousRequestsPageNumber <= r.requestsPaginatedModel!.lastPage!) {
           if (r.requestsPaginatedModel!.currentPage! <=
               r.requestsPaginatedModel!.lastPage!) {
-            previousRequestList.addAll(r.requestsPaginatedModel!.requestModel!);
+            previousRequestList.addAll(r.requestsPaginatedModel!.requestModel??[]);
             previousRequestsPageNumber++;
           }
           getAllRequestsLoading = false;

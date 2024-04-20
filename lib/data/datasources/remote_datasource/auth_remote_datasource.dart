@@ -62,4 +62,38 @@ class AuthRemoteDataSource {
       }
     }
   }
+
+  Future<Either<ErrorException, LoginAndRegisterModel>> authLogin({
+    required String email,
+    required String socialId,
+    required String name,
+    required String socialType,
+    required String userType,
+  }) async {
+    try {
+      final response = await dioHelper.postData(
+        url: EndPoints.socialLogin,
+        data: FormData.fromMap({
+          "social_id": socialId,  // required
+          "social_type": socialType, // nullable
+          "name": name, // nullable
+          "email": email, // nullable, unique
+          "type": userType,  // user or vendor
+        }),
+      );
+      return Right(
+        LoginAndRegisterModel.fromJson(response.data),
+      );
+    } catch (e) {
+      if (e is DioException) {
+        return Left(
+          ErrorException(
+            baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
+          ),
+        );
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

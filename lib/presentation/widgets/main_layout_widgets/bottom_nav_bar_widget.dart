@@ -6,7 +6,6 @@ import '../../../core/app_theme/app_colors.dart';
 import '../../../core/assets_path/svg_path.dart';
 import '../../../core/cache_helper/cache_keys.dart';
 import '../../../core/cache_helper/shared_pref_methods.dart';
-import '../../../core/constants/constants.dart';
 import '../../../core/enums/user_type_enum.dart';
 
 class BottomNavBarWidget extends StatelessWidget {
@@ -81,7 +80,7 @@ class BottomNavBarWidget extends StatelessWidget {
                 height: 26.h,
               ),
             ),
-          if (userType == UserTypeEnum.user.name &&
+          if (CacheHelper.getData(key: CacheKeys.userType) == UserTypeEnum.user.name &&
               CacheHelper.getData(key: CacheKeys.token) != null)
             BottomNavigationBarItem(
               label: "",
@@ -93,7 +92,7 @@ class BottomNavBarWidget extends StatelessWidget {
                 height: 26.h,
               ),
             ),
-          if (userType == UserTypeEnum.vendor.name &&
+          if (CacheHelper.getData(key: CacheKeys.userType) == UserTypeEnum.vendor.name &&
               CacheHelper.getData(key: CacheKeys.token) != null)
             BottomNavigationBarItem(
               label: "",

@@ -10,6 +10,10 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../core/app_theme/app_colors.dart';
 import '../../../core/assets_path/svg_path.dart';
+import '../../../core/cache_helper/cache_keys.dart';
+import '../../../core/cache_helper/shared_pref_methods.dart';
+import '../../../core/constants/constants.dart';
+import '../../../core/enums/user_type_enum.dart';
 import '../../../data/models/products_model/product_model.dart';
 import '../../../domain/controllers/products_cubit/products_cubit.dart';
 import '../../../domain/controllers/products_cubit/products_state.dart';
@@ -17,7 +21,11 @@ import '../shared_widget/custom_sized_box.dart';
 
 class InfoWindowWidget extends StatefulWidget {
   final ProductDataModel productDataModel;
-  const InfoWindowWidget({super.key, required this.productDataModel,});
+
+  const InfoWindowWidget({
+    super.key,
+    required this.productDataModel,
+  });
 
   @override
   State<InfoWindowWidget> createState() => _InfoWindowWidgetState();
@@ -31,16 +39,15 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
-        borderRadius: BorderRadius.circular(9.r),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.blackColor.withOpacity(0.12),
-            blurRadius: 12.r,
-            offset: Offset(0, 4.h), // changes position of shadow
-          ),
-        ]
-      ),
+          color: AppColors.whiteColor,
+          borderRadius: BorderRadius.circular(9.r),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.blackColor.withOpacity(0.12),
+              blurRadius: 12.r,
+              offset: Offset(0, 4.h), // changes position of shadow
+            ),
+          ]),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -57,7 +64,7 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
                     return CachedNetworkImage(
                       fit: BoxFit.cover,
                       imageUrl:
-                      widget.productDataModel.images?[index].image??"",
+                          widget.productDataModel.images?[index].image ?? "",
                       placeholder: (context, url) => Shimmer.fromColors(
                         baseColor: Colors.grey[200]!,
                         highlightColor: Colors.grey[300]!,
@@ -71,7 +78,7 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
                         ),
                       ),
                       errorWidget: (context, url, error) =>
-                      const Icon(Icons.error),
+                          const Icon(Icons.error),
                     );
                     //   Image.asset(
                     //   DummyData.camelsDummyImages[index],
@@ -96,31 +103,30 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
                   ),
                 ),
               ).symmetricPadding(vertical: 9.38),
-              PositionedDirectional(
-                start: 4.w,
-                top: 4.h,
-                child: BlocConsumer<ProductsCubit, ProductsState>(
-                  listener: (context, state) {
-                    // TODO: implement listener
-                  },
-                  builder: (context, state) {
-                    var cubit = ProductsCubit.get(context);
-                    return IconButton(
-                      onPressed: () {
-                        cubit.changeFavorite(id: widget.productDataModel.id!);
-                      },
-                      padding: EdgeInsets.zero,
-                      icon: SvgPicture.asset(
-                        cubit.favoriteProduct[widget.productDataModel.id.toString()]
-                            ? SvgPath.redLike
-                            : SvgPath.like,
-                        width: 18.w,
-                        height: 18.h,
-                      ),
-                    );
-                  },
+              if (CacheHelper.getData(key: CacheKeys.token) != null && CacheHelper.getData(key: CacheKeys.userType) != UserTypeEnum.vendor.name)
+                PositionedDirectional(
+                  start: 4.w,
+                  top: 4.h,
+                  child: BlocBuilder<ProductsCubit, ProductsState>(
+                    builder: (context, state) {
+                      var cubit = ProductsCubit.get(context);
+                      return IconButton(
+                        onPressed: () {
+                          print(widget.productDataModel.id!);
+                          // cubit.changeFavorite(id: widget.productDataModel.id!);
+                        },
+                        padding: EdgeInsets.zero,
+                        icon: SvgPicture.asset(
+                          cubit.favoriteProduct[widget.productDataModel.id.toString()]
+                              ? SvgPath.redLike
+                              : SvgPath.like,
+                          width: 18.w,
+                          height: 18.h,
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
             ],
           ),
           Column(
@@ -130,20 +136,23 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.productDataModel.name??"",
+                    widget.productDataModel.name ?? "",
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      fontSize: 10.sp,
-                      color: AppColors.blackColor,
-                    ),
+                          fontSize: 10.sp,
+                          color: AppColors.blackColor,
+                        ),
                   ),
                   Row(
                     children: [
                       Text(
                         "${widget.productDataModel.rate}",
-                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                          fontSize: 10.sp,
-                          color: AppColors.blackColor,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                              fontSize: 10.sp,
+                              color: AppColors.blackColor,
+                            ),
                       ),
                       Icon(
                         Icons.star,
@@ -158,10 +167,10 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
                 height: 2,
               ),
               Text(
-                widget.productDataModel.location??"",
+                widget.productDataModel.location ?? "",
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  fontSize: 10.sp,
-                ),
+                      fontSize: 10.sp,
+                    ),
               ),
               const CustomSizedBox(
                 height: 2,
@@ -169,13 +178,12 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
               Text(
                 "${widget.productDataModel.regularPrice} ريال",
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  fontSize: 10.sp,
-                  color: AppColors.blackColor,
-
-                ),
+                      fontSize: 10.sp,
+                      color: AppColors.blackColor,
+                    ),
               ),
             ],
-          ).symmetricPadding(horizontal: 18,vertical: 5),
+          ).symmetricPadding(horizontal: 18, vertical: 5),
         ],
       ),
     );

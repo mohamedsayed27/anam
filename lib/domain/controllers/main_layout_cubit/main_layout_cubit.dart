@@ -21,8 +21,8 @@ class MainLayoutCubit extends Cubit<MainLayoutState> {
     const ProfileScreen(),
     if(CacheHelper.getData(key: CacheKeys.token)!=null)const ConversationsScreen(),
     const HomeScreen(),
-    if(userType==UserTypeEnum.user.name&&CacheHelper.getData(key: CacheKeys.token)!=null) const FavoritesScreen(),
-    if(userType==UserTypeEnum.vendor.name&&CacheHelper.getData(key: CacheKeys.token)!=null)const OrdersScreen(isPreviousOrders: false,),
+    if(CacheHelper.getData(key: CacheKeys.userType)==UserTypeEnum.user.name&&CacheHelper.getData(key: CacheKeys.token)!=null) const FavoritesScreen(),
+    if(CacheHelper.getData(key: CacheKeys.userType)==UserTypeEnum.vendor.name&&CacheHelper.getData(key: CacheKeys.token)!=null)const OrdersScreen(isPreviousOrders: false,),
   ];
 
   int currentIndex = CacheHelper.getData(key: CacheKeys.token)!=null?2:1;
@@ -33,14 +33,18 @@ class MainLayoutCubit extends Cubit<MainLayoutState> {
   }
 
   void handleAuthMethods() {
+    print("handleAuthMethods");
+    print(CacheHelper.getData(key: CacheKeys.userType));
+    print(CacheHelper.getData(key: CacheKeys.token));
     currentIndex = CacheHelper.getData(key: CacheKeys.token)!=null?2:1;
     screens = [
       const ProfileScreen(),
       if(CacheHelper.getData(key: CacheKeys.token)!=null)const ConversationsScreen(),
       const HomeScreen(),
-      if(userType==UserTypeEnum.user.name&&CacheHelper.getData(key: CacheKeys.token)!=null) const FavoritesScreen(),
-      if(userType==UserTypeEnum.vendor.name&&CacheHelper.getData(key: CacheKeys.token)!=null)const OrdersScreen(isPreviousOrders: false,),
+      if(CacheHelper.getData(key: CacheKeys.userType).toString()==UserTypeEnum.user.name&&CacheHelper.getData(key: CacheKeys.token)!=null) const FavoritesScreen(),
+      if(CacheHelper.getData(key: CacheKeys.userType).toString()==UserTypeEnum.vendor.name&&CacheHelper.getData(key: CacheKeys.token)!=null)const OrdersScreen(isPreviousOrders: false,),
     ];
-    emit(MainLayoutInitial());
+    print(screens.length);
+    emit(HandleAuthMethodsState());
   }
 }

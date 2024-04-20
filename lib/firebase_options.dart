@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -50,19 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCuP5Ij_7HqJ6enlgxLpiHAHr15KdL6UgM',
-    appId: '1:967115936825:android:3544b1efc9f204e010a9e8',
-    messagingSenderId: '967115936825',
-    projectId: 'anaam-751f6',
-    storageBucket: 'anaam-751f6.appspot.com',
+    apiKey: 'AIzaSyCNJcfQ4g-TM-uGt0-bCxz7Ch3f7bra9pg',
+    appId: '1:949152926855:android:2a0c6551345bd8757f7c22',
+    messagingSenderId: '949152926855',
+    projectId: 'anam-42579',
+    storageBucket: 'anam-42579.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDKMaOauuApYLAvY4lQpU8JrDDtoUjR8m4',
-    appId: '1:967115936825:ios:f1eb508465abe04710a9e8',
-    messagingSenderId: '967115936825',
-    projectId: 'anaam-751f6',
-    storageBucket: 'anaam-751f6.appspot.com',
+    apiKey: 'AIzaSyD0JXEpVHxMnzE2GQkLJGXyu0MyGS4p0Ak',
+    appId: '1:949152926855:ios:dfdcfcb6f9614c227f7c22',
+    messagingSenderId: '949152926855',
+    projectId: 'anam-42579',
+    storageBucket: 'anam-42579.appspot.com',
     iosBundleId: 'com.ocoda.anam',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCPa93HFoFjuHxtKL4iyz_6vUKu5wnzyhg',
+    appId: '1:949152926855:web:9c6db1983043ea8a7f7c22',
+    messagingSenderId: '949152926855',
+    projectId: 'anam-42579',
+    authDomain: 'anam-42579.firebaseapp.com',
+    storageBucket: 'anam-42579.appspot.com',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyD0JXEpVHxMnzE2GQkLJGXyu0MyGS4p0Ak',
+    appId: '1:949152926855:ios:dfdcfcb6f9614c227f7c22',
+    messagingSenderId: '949152926855',
+    projectId: 'anam-42579',
+    storageBucket: 'anam-42579.appspot.com',
+    iosBundleId: 'com.ocoda.anam',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyCPa93HFoFjuHxtKL4iyz_6vUKu5wnzyhg',
+    appId: '1:949152926855:web:b3b58fdb81df5bd97f7c22',
+    messagingSenderId: '949152926855',
+    projectId: 'anam-42579',
+    authDomain: 'anam-42579.firebaseapp.com',
+    storageBucket: 'anam-42579.appspot.com',
+  );
+
 }

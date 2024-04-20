@@ -1,3 +1,4 @@
+import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/domain/controllers/products_cubit/products_cubit.dart';
 import 'package:anam/presentation/widgets/home_screen_widgets/search_bar_and_services_buttons_widget.dart';
@@ -143,14 +144,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       FollowingAndFollowersTabBar(
                         tabController: _followersTabController,
                         onTap: (index) {
-                          if (index == 1) {
-                            isFollowingTap = false;
-                            expandController.forward();
-                          } else {
-                            isFollowingTap = true;
-                            expandController.reverse();
+                          if (token != null &&
+                              userType != UserTypeEnum.vendor.name) {
+                            if (index == 1) {
+                              isFollowingTap = false;
+                              expandController.forward();
+                            } else {
+                              isFollowingTap = true;
+                              expandController.reverse();
+                            }
+                            setState(() {});
                           }
-                          setState(() {});
                         },
                       ),
                       const CustomSizedBox(
@@ -158,15 +162,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ),
                       Expanded(
                         child: isMap
-                            ? isFollowingTap
-                                ? HomeGoogleMapsView(
-                                    productsList: ProductsCubit.get(context)
-                                        .userFollowingProductsList,
-                                  )
-                                : HomeGoogleMapsView(
-                                    productsList:
-                                        ProductsCubit.get(context).productsList,
-                                  )
+                            ? HomeGoogleMapsView(
+                          productsList:
+                          ProductsCubit.get(context).productsList,
+                        )
                             : isFollowingTap &&
                                     CacheHelper.getData(
                                             key: CacheKeys.userType) !=

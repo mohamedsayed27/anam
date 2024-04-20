@@ -37,8 +37,7 @@ class ServicesCubit extends Cubit<ServicesState> {
 
   final LaborersRemoteDatasource _laborerRemoteDatasource = sl();
   final MultiLangRemoteDataSource _multiLangRemoteDataSource = sl();
-  final CitiesAndCountriesRemoteDatasource _citiesAndCountriesRemoteDatasource =
-      sl();
+  final CitiesAndCountriesRemoteDatasource _citiesAndCountriesRemoteDatasource = sl();
   final VetServicesRemoteDatasource _vetServicesRemoteDatasource = sl();
   final StoresServicesRemoteDatasource _storesServicesRemoteDatasource = sl();
   final ServicesRemoteDataSource _servicesRemoteDataSource = sl();
@@ -186,7 +185,7 @@ class ServicesCubit extends Cubit<ServicesState> {
                 r.storePaginatedModel!.lastPage!) {
               if (userType == UserTypeEnum.user.name) {
                 userFollowingLaborersList
-                    .addAll(r.storePaginatedModel!.laborerList!);
+                    .addAll(r.storePaginatedModel!.laborerList??[]);
                 for (var element in userFollowingLaborersList) {
                   if (element.vendor!.isFollowed != null) {
                     if (!followedVendors.containsKey(element.id!.toString())) {
@@ -262,7 +261,6 @@ class ServicesCubit extends Cubit<ServicesState> {
             error: baseErrorModel?.errors?[0] ?? ""));
       },
       (r) async {
-        print(r);
         getMultiLangVetLoading = false;
         veterinarianMultiLangModel = r;
         emit(ShowVetMultiLangSuccessState());
@@ -333,7 +331,6 @@ class ServicesCubit extends Cubit<ServicesState> {
     );
     response.fold(
       (l) {
-        print(l);
         baseErrorModel = l.baseErrorModel;
         emit(UploadLaborerErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
@@ -376,20 +373,15 @@ class ServicesCubit extends Cubit<ServicesState> {
         if (allVetPageNumber <= r.storePaginatedModel!.lastPage!) {
           if (r.storePaginatedModel!.currentPage! <=
               r.storePaginatedModel!.lastPage!) {
-            vetsList.addAll(r.storePaginatedModel!.vetList!);
+            vetsList.addAll(r.storePaginatedModel!.vetList??[]);
             for (var element in vetsList) {
-              print("element.vendor!.isFollowed");
-              print(element.vendor!.isFollowed);
               if (element.vendor!.isFollowed != null) {
-                print("${element.vendor!.isFollowed}+\"2\"");
                 if (!followedVendors.containsKey(element.id!.toString())) {
-                  print("object");
                   followedVendors.addAll({
                     element.vendor!.id.toString(): element.vendor!.isFollowed
                   });
                 }
               }
-              print(followedVendors);
             }
             allVetPageNumber++;
           }
@@ -418,7 +410,7 @@ class ServicesCubit extends Cubit<ServicesState> {
             if (r.storePaginatedModel!.currentPage! <=
                 r.storePaginatedModel!.lastPage!) {
               if (userType == UserTypeEnum.user.name) {
-                userFollowingVetList.addAll(r.storePaginatedModel!.vetList!);
+                userFollowingVetList.addAll(r.storePaginatedModel!.vetList??[]);
                 for (var element in userFollowingVetList) {
                   if (element.vendor!.isFollowed != null) {
                     if (!followedVendors.containsKey(element.id!.toString())) {
@@ -495,7 +487,6 @@ class ServicesCubit extends Cubit<ServicesState> {
     );
     response.fold(
       (l) {
-        print(l);
         baseErrorModel = l.baseErrorModel;
         emit(UpdateVetErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
@@ -564,7 +555,7 @@ class ServicesCubit extends Cubit<ServicesState> {
                 r.storePaginatedModel!.lastPage!) {
               if (userType == UserTypeEnum.user.name) {
                 userFollowingStoreList
-                    .addAll(r.storePaginatedModel!.storeList!);
+                    .addAll(r.storePaginatedModel!.storeList??[]);
                 for (var element in userFollowingStoreList) {
                   if (element.vendor!.isFollowed != null) {
                     if (!followedVendors.containsKey(element.id!.toString())) {
@@ -615,7 +606,6 @@ class ServicesCubit extends Cubit<ServicesState> {
             error: baseErrorModel?.errors?[0] ?? ""));
       },
       (r) async {
-        print(r);
         emit(FollowVendorSuccessState());
       },
     );
@@ -634,7 +624,6 @@ class ServicesCubit extends Cubit<ServicesState> {
             error: baseErrorModel?.errors?[0] ?? ""));
       },
       (r) async {
-        print(r);
         emit(UnfollowSuccessState());
       },
     );
@@ -674,7 +663,6 @@ class ServicesCubit extends Cubit<ServicesState> {
   void updateStore({
     required StoreParameters vetParameters,
   }) async {
-    print(vetParameters);
     emit(UpdateStoreLoadingState());
     final response = await _storesServicesRemoteDatasource.update(
       parameters: vetParameters,
@@ -682,7 +670,6 @@ class ServicesCubit extends Cubit<ServicesState> {
     response.fold(
       (l) {
         baseErrorModel = l.baseErrorModel;
-        print(l);
         emit(UpdateStoreErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
       (r) {

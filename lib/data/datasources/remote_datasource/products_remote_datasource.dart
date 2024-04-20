@@ -49,20 +49,19 @@ class ProductsRemoteDatasource {
     required int pageNumber,
     required String value,
   }) async {
-    print(value);
+    print("${EndPoints.products}?search=$value&page=$pageNumber");
     try {
       final response = await dioHelper.getData(
         url: "${EndPoints.products}?search=$value&page=$pageNumber",
         // query: {
         //   "search": value,
         // },
-        token: token,
       );
       print(response);
       return Right(GetAllProductModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {
-        print(e);
+        print("${e}""error");
         return Left(
           ErrorException(
             baseErrorModel: BaseErrorModel.fromJson(e.response!.data),

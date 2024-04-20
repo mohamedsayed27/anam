@@ -11,6 +11,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/app_theme/app_colors.dart';
 import '../../../../core/assets_path/svg_path.dart';
+import '../../../../core/cache_helper/cache_keys.dart';
+import '../../../../core/cache_helper/shared_pref_methods.dart';
 import '../../../widgets/bottom_sheets_widgets/chat_bottom.dart';
 import '../../../widgets/bottom_sheets_widgets/login_bottom_sheet.dart';
 import '../../../widgets/services_widgets/vet_services_images_widget.dart';
@@ -73,7 +75,7 @@ class LaborersServiceDetailsScreen extends StatelessWidget {
                         title: "تواصل معنا",
                         onPressed: () {
                           print(token);
-                          if(token==null){
+                          if(CacheHelper.getData(key: CacheKeys.token)==null){
                             showModalBottomSheet(
                               context: context,
                               isScrollControlled: true,

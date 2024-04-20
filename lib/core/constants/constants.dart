@@ -33,6 +33,8 @@ void showToast({required int errorType, required String message}){
 }
 String? token = CacheHelper.getData(key: CacheKeys.token);
 String? onboarding = CacheHelper.getData(key: CacheKeys.onboarding);
+String? googleClientIdIos = "519171617357-ea5stt0mq1vavf89nvj9e15rgnc0ikjp.apps.googleusercontent.com";
+String? googleClientIdAndroid = "519171617357-qe40r7t19n1bdj7vo63hj4hmjhi6m4fq.apps.googleusercontent.com";
 String? userId = CacheHelper.getData(key: CacheKeys.userId).toString();
 String? userType = CacheHelper.getData(key: CacheKeys.userType);
 String? username = CacheHelper.getData(key: CacheKeys.userName);

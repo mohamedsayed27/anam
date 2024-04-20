@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "967115936825",
-    "project_id": "anaam-751f6",
-    "storage_bucket": "anaam-751f6.appspot.com"
+    "project_number": "949152926855",
+    "project_id": "anam-42579",
+    "storage_bucket": "anam-42579.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:967115936825:android:3544b1efc9f204e010a9e8",
+        "mobilesdk_app_id": "1:949152926855:android:2a0c6551345bd8757f7c22",
         "android_client_info": {
           "package_name": "com.ocoda.anam"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCuP5Ij_7HqJ6enlgxLpiHAHr15KdL6UgM"
+          "current_key": "AIzaSyCNJcfQ4g-TM-uGt0-bCxz7Ch3f7bra9pg"
         }
       ],
       "services": {

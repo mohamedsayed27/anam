@@ -135,8 +135,7 @@ class VendorDetailsComponent extends StatelessWidget {
                     iconSize: 25.r,
                     iconColor: Colors.white,
                     onPressed: () {
-                      token = CacheHelper.getData(key: CacheKeys.token);
-                      if(token!=null){
+                      if(CacheHelper.getData(key: CacheKeys.token)!=null){
                         print(cubit.followedVendors[
                         productDataModel.uploadedBy!.id!.toString()]);
                         if(!cubit.followedVendors[

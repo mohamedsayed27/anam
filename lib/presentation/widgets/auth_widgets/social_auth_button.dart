@@ -1,3 +1,4 @@
+import 'package:anam/core/app_theme/app_colors.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_outlined_button.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,8 @@ class SocialAuthButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomOutlinedButton(
       onPressed: onPressed,
-      height: 36.h,
+      foregroundColor: AppColors.searchBarBorderColor,
+      // height: 40,
       width : double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Row(

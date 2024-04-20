@@ -67,10 +67,9 @@ class LaborerServicesWidget extends StatelessWidget {
               start: 15.w,
               bottom: 18.h,
               child: InkWell(
+                
                 onTap: () {
-                  ProfileCubit.get(context)
-                      .showVendorProfile(id: laborerModel.vendor!.id!)
-                      .then(
+                  ProfileCubit.get(context).showVendorProfile(id: laborerModel.vendor!.id!).then(
                     (value) {
                       Navigator.pushNamed(
                           context, ScreenName.vendorDetailsScreen,

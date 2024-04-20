@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:anam/core/app_router/screens_name.dart';
 import 'package:anam/core/assets_path/images_path.dart';
+import 'package:anam/core/cache_helper/cache_keys.dart';
+import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/core/enums/user_type_enum.dart';
@@ -73,7 +75,8 @@ class _ItemImageWidgetState extends State<ItemImageWidget> {
             },
           ),
         ),
-        if (widget.productDataModel.images != null&&widget.productDataModel.images!.isNotEmpty)
+        if (widget.productDataModel.images != null &&
+            widget.productDataModel.images!.isNotEmpty)
           Align(
             alignment: Alignment.bottomCenter,
             child: SmoothPageIndicator(
@@ -130,7 +133,8 @@ class _ItemImageWidgetState extends State<ItemImageWidget> {
             ),
           ),
         ),
-        if (token != null && userType == UserTypeEnum.user.name)
+        if (CacheHelper.getData(key: CacheKeys.token) != null &&
+            userType == UserTypeEnum.user.name)
           PositionedDirectional(
             end: 18.w,
             top: 19.h,

@@ -136,60 +136,47 @@ class _RegisterBottomSheetState extends State<RegisterBottomSheet> {
                   const CustomSizedBox(
                     height: 17,
                   ),
-                  Row(
-                    children: [
-                      const Expanded(child: CustomDivider()),
-                      const CustomSizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        LocaleKeys.orText.tr(),
-                        style:
-                            Theme.of(context).textTheme.headlineMedium!.copyWith(
-                                  fontSize: 12.sp,
-                                ),
-                      ),
-                      const CustomSizedBox(
-                        width: 15,
-                      ),
-                      const Expanded(child: CustomDivider()),
-                    ],
-                  ),
-                  const CustomSizedBox(
-                    height: 17,
-                  ),
-                  SocialAuthButton(
-                    iconPath: SvgPath.google,
-                    title: "${LocaleKeys.continueUsing.tr()} Google",
-                    onPressed: () {},
-                  ),
-                  const CustomSizedBox(
-                    height: 13,
-                  ),
-                  SocialAuthButton(
-                    iconPath: SvgPath.facebook,
-                    title: "${LocaleKeys.continueUsing.tr()} Facebook",
-                    onPressed: () {},
-                  ),
-                  const CustomSizedBox(
-                    height: 13,
-                  ),
-                  SocialAuthButton(
-                    iconPath: SvgPath.appleLogo,
-                    title: "${LocaleKeys.continueUsing.tr()} Apple",
-                    onPressed: () {},
-                  ),
-                  const CustomSizedBox(
-                    height: 13,
-                  ),
-                  SocialAuthButton(
-                    iconPath: SvgPath.email,
-                    title: "${LocaleKeys.continueUsing.tr()} Gmail",
-                    onPressed: () {},
-                  ),
-                  const CustomSizedBox(
-                    height: 13,
-                  ),
+                  // Row(
+                  //   children: [
+                  //     const Expanded(child: CustomDivider()),
+                  //     const CustomSizedBox(
+                  //       width: 15,
+                  //     ),
+                  //     Text(
+                  //       LocaleKeys.orText.tr(),
+                  //       style:
+                  //           Theme.of(context).textTheme.headlineMedium!.copyWith(
+                  //                 fontSize: 12.sp,
+                  //               ),
+                  //     ),
+                  //     const CustomSizedBox(
+                  //       width: 15,
+                  //     ),
+                  //     const Expanded(child: CustomDivider()),
+                  //   ],
+                  // ),
+                  // const CustomSizedBox(
+                  //   height: 17,
+                  // ),
+                  // const CustomSizedBox(
+                  //   height: 13,
+                  // ),
+                  // SocialAuthButton(
+                  //   iconPath: SvgPath.appleLogo,
+                  //   title: "${LocaleKeys.continueUsing.tr()} Apple",
+                  //   onPressed: () {},
+                  // ),
+                  // const CustomSizedBox(
+                  //   height: 13,
+                  // ),
+                  // SocialAuthButton(
+                  //   iconPath: SvgPath.email,
+                  //   title: "${LocaleKeys.continueUsing.tr()} Gmail",
+                  //   onPressed: () {},
+                  // ),
+                  // const CustomSizedBox(
+                  //   height: 13,
+                  // ),
                 ],
               ),
             ),

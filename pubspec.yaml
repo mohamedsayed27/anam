@@ -51,7 +51,7 @@ dependencies:
   shimmer: ^3.0.0
   image_picker: ^1.0.4
   path: ^1.8.2
-  google_sign_in: ^6.1.5
+  google_sign_in: ^6.2.1
   carousel_slider: ^4.1.1
   cached_network_image: ^3.3.0
   rename: ^2.1.1
@@ -63,6 +63,7 @@ dependencies:
   lottie: ^2.4.0
   easy_localization: ^3.0.2
   fluttertoast: ^8.2.2
+  twitter_login: ^4.4.2
   geocoding: ^2.1.1
   google_maps_flutter: ^2.5.0
   geolocator: ^10.0.1
@@ -70,6 +71,7 @@ dependencies:
   custom_info_window: ^1.0.1
   flutter_facebook_auth: ^6.0.1
   pusher_channels_flutter: ^2.2.1
+  firebase_dynamic_links: ^5.5.2
 
 dev_dependencies:
   flutter_test:
