@@ -65,6 +65,7 @@ dependencies:
   fluttertoast: ^8.2.2
   twitter_login: ^4.4.2
   geocoding: ^2.1.1
+  sign_in_with_apple: ^6.1.0
   google_maps_flutter: ^2.5.0
   geolocator: ^10.0.1
   flutter_phoenix: ^1.1.1

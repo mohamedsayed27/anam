@@ -7,7 +7,7 @@ import '../../../core/app_theme/app_colors.dart';
 
 class TileAndBodyTextWidget extends StatelessWidget {
   final String titleText;
-  final String bodyText;
+  final String? bodyText;
   final double spaceBetweenTitleAndBody;
   final double titleFontSize;
   final double bodyFontSize;
@@ -18,7 +18,7 @@ class TileAndBodyTextWidget extends StatelessWidget {
   const TileAndBodyTextWidget({
     super.key,
     required this.titleText,
-    required this.bodyText,
+    this.bodyText,
     required this.titleFontSize,
     required this.bodyFontSize,
     required this.spaceBetweenTitleAndBody, this.horizontalPadding, this.titleMaxLines, this.bodyMaxLines,
@@ -40,8 +40,8 @@ class TileAndBodyTextWidget extends StatelessWidget {
         CustomSizedBox(
           height: spaceBetweenTitleAndBody,
         ),
-        Text(
-          bodyText,
+        if(bodyText!=null)Text(
+          bodyText??"",
           maxLines: bodyMaxLines??1,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.labelSmall!.copyWith(

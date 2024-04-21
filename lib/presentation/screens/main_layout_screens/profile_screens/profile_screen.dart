@@ -68,187 +68,198 @@ class _ProfileScreenState extends State<ProfileScreen> {
     token = CacheHelper.getData(key: CacheKeys.token);
     return Scaffold(
       body: SafeArea(
-        child: BlocConsumer<AuthCubit, AuthState>(
-          listener: (context, state) {
-            if (state is SocialLoginLoadingState) {
-              showProgressIndicator(context);
-            }
-            if (state is SocialLoginSuccessState) {
-              MainLayoutCubit.get(context).handleAuthMethods();
-              Navigator.pushNamedAndRemoveUntil(
-                  context, ScreenName.splashScreen, (route) => false);
-            }
-            if (state is SocialLoginErrorState) {
-              Navigator.pop(context);
-              showToast(errorType: 1, message: state.error);
-            }
-          },
-          builder: (context, state) {
-            AuthCubit.get(context);
-            return ListView(
-              children: [
-                const CustomSizedBox(
-                  height: 20,
-                ),
-                Text(
-                  LocaleKeys.profile.tr(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium!
-                      .copyWith(fontSize: 20.sp),
-                ).onlyDirectionalPadding(start: 28),
-                if (token == null)
-                  Text(
-                    LocaleKeys.loginToReserveProducts.tr(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .copyWith(fontSize: 12.sp),
-                  ).onlyDirectionalPadding(start: 28, end: 29),
-                const CustomSizedBox(
-                  height: 16,
-                ),
-                if (token == null)
-                  CustomElevatedButton(
-                    title: LocaleKeys.login.tr(),
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        builder: (_) {
-                          return const LoginBottomSheet();
-                        },
-                      );
-                    },
-                    buttonSize: Size(double.infinity, 45.h),
-                  ).symmetricPadding(horizontal: 27),
-                if (token == null)
-                  const CustomSizedBox(
-                    height: 16,
-                  ),
-                if (token == null)
-                  RichText(
-                    textAlign: TextAlign.start,
-                    text: TextSpan(
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(fontSize: 12.sp),
-                      text: "${LocaleKeys.donnotHaveAccount.tr()} ",
-                      children: [
-                        WidgetSpan(
-                          alignment: PlaceholderAlignment.middle,
-                          baseline: TextBaseline.alphabetic,
-                          child: InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (_) {
-                                  return const RegisterBottomSheet();
-                                },
-                              );
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const CustomSizedBox(
+              height: 20,
+            ),
+            Text(
+              LocaleKeys.profile.tr(),
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                fontSize: 20.sp,
+              ),
+            ).symmetricPadding(horizontal: 16),
+            const CustomSizedBox(
+              height: 15,
+            ),
+            const CustomDivider().symmetricPadding(horizontal: 16),
+            const CustomSizedBox(
+              height: 20,
+            ),
+            Expanded(child: BlocConsumer<AuthCubit, AuthState>(
+              listener: (context, state) {
+                if (state is SocialLoginLoadingState) {
+                  showProgressIndicator(context);
+                }
+                if (state is SocialLoginSuccessState) {
+                  MainLayoutCubit.get(context).handleAuthMethods();
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, ScreenName.splashScreen, (route) => false);
+                }
+                if (state is SocialLoginErrorState) {
+                  Navigator.pop(context);
+                  showToast(errorType: 1, message: state.error);
+                }
+              },
+              builder: (context, state) {
+                AuthCubit.get(context);
+                return ListView(
+                  children: [
+                    if (token == null)
+                      Text(
+                        LocaleKeys.loginToReserveProducts.tr(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall!
+                            .copyWith(fontSize: 12.sp),
+                      ).onlyDirectionalPadding(start: 28, end: 29),
+                    const CustomSizedBox(
+                      height: 16,
+                    ),
+                    if (token == null)
+                      CustomElevatedButton(
+                        title: LocaleKeys.login.tr(),
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (_) {
+                              return const LoginBottomSheet();
                             },
-                            child: Text(
-                              LocaleKeys.subscribe.tr(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineMedium!
-                                  .copyWith(
+                          );
+                        },
+                        buttonSize: Size(double.infinity, 45.h),
+                      ).symmetricPadding(horizontal: 27),
+                    if (token == null)
+                      const CustomSizedBox(
+                        height: 16,
+                      ),
+                    if (token == null)
+                      RichText(
+                        textAlign: TextAlign.start,
+                        text: TextSpan(
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(fontSize: 12.sp),
+                          text: "${LocaleKeys.donnotHaveAccount.tr()} ",
+                          children: [
+                            WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              baseline: TextBaseline.alphabetic,
+                              child: InkWell(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    builder: (_) {
+                                      return const RegisterBottomSheet();
+                                    },
+                                  );
+                                },
+                                child: Text(
+                                  LocaleKeys.subscribe.tr(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium!
+                                      .copyWith(
                                     fontSize: 12.sp,
                                     decoration: TextDecoration.underline,
                                     decorationColor: AppColors.blackColor,
                                   ),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ).onlyDirectionalPadding(start: 27),
-                if (token == null)
-                  const CustomSizedBox(
-                    height: 16,
-                  ),
-                if (token == null)
-                  Row(
-                    children: [
-                      const Expanded(child: CustomDivider()),
+                      ).onlyDirectionalPadding(start: 27),
+                    if (token == null)
                       const CustomSizedBox(
-                        width: 15,
+                        height: 16,
                       ),
-                      Text(
-                        LocaleKeys.orText.tr(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .copyWith(
+                    if (token == null)
+                      Row(
+                        children: [
+                          const Expanded(child: CustomDivider()),
+                          const CustomSizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            LocaleKeys.orText.tr(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .copyWith(
                               fontSize: 12.sp,
                             ),
-                      ),
+                          ),
+                          const CustomSizedBox(
+                            width: 15,
+                          ),
+                          const Expanded(child: CustomDivider()),
+                        ],
+                      ).symmetricPadding(horizontal: 27),
+                    if (token == null)
                       const CustomSizedBox(
-                        width: 15,
+                        height: 16,
                       ),
-                      const Expanded(child: CustomDivider()),
-                    ],
-                  ).symmetricPadding(horizontal: 27),
-                if (token == null)
-                  const CustomSizedBox(
-                    height: 16,
-                  ),
-                if (token == null)
-                  SocialAuthButton(
-                    iconPath: SvgPath.google,
-                    title: "${LocaleKeys.continueUsing.tr()} Google",
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (_) => const AuthRegisterTypeBottomSheet(),
-                      );
-                    },
-                  ).symmetricPadding(horizontal: 27),
+                    if (token == null)
+                      SocialAuthButton(
+                        iconPath: SvgPath.google,
+                        title: "${LocaleKeys.continueUsing.tr()} Google",
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (_) => const AuthRegisterTypeBottomSheet(),
+                          );
+                        },
+                      ).symmetricPadding(horizontal: 27),
 
-                if (token == null)
-                  const CustomSizedBox(
-                    height: 8,
-                  ),
-                if (token == null && Platform.isIOS)
-                  SocialAuthButton(
-                    iconPath: SvgPath.appleLogo,
-                    title: "${LocaleKeys.continueUsing.tr()} Apple",
-                    onPressed: () {
-                      sign();
-                    },
-                  ).symmetricPadding(horizontal: 27),
-                if (token != null)
-                  const IntroUserDetails()
-                      .onlyDirectionalPadding(start: 38, end: 29),
-                CustomDivider(
-                  isOnlyPadding: true,
-                  top: 10,
-                  dividerColor: AppColors.dividerColor.withOpacity(.4),
-                  start: 29,
-                  end: 27,
-                ),
-                if (token != null)
-                  const CustomSizedBox(
-                    height: 25,
-                  ),
-                // ShowYourProductContainer(
-                //   onPressed: () {
-                //     showModalBottomSheet(
-                //       isScrollControlled: true,
-                //       context: context,
-                //       builder: (_) => const RegisterAsAVendorBottomSheet(),
-                //     );
-                //   },
-                // ),
-                // const CustomSizedBox(
-                //   height: 16,
-                // ),
-                const AccountSettingsComponent(),
-              ],
-            );
-          },
+                    if (token == null)
+                      const CustomSizedBox(
+                        height: 8,
+                      ),
+                    if (token == null && Platform.isIOS)
+                      SocialAuthButton(
+                        iconPath: SvgPath.appleLogo,
+                        title: "${LocaleKeys.continueUsing.tr()} Apple",
+                        onPressed: () {
+                          sign();
+                        },
+                      ).symmetricPadding(horizontal: 27),
+                    if (token != null)
+                      const IntroUserDetails()
+                          .onlyDirectionalPadding(start: 38, end: 29),
+                    CustomDivider(
+                      isOnlyPadding: true,
+                      top: 10,
+                      dividerColor: AppColors.dividerColor.withOpacity(.4),
+                      start: 29,
+                      end: 27,
+                    ),
+                    if (token != null)
+                      const CustomSizedBox(
+                        height: 25,
+                      ),
+                    // ShowYourProductContainer(
+                    //   onPressed: () {
+                    //     showModalBottomSheet(
+                    //       isScrollControlled: true,
+                    //       context: context,
+                    //       builder: (_) => const RegisterAsAVendorBottomSheet(),
+                    //     );
+                    //   },
+                    // ),
+                    // const CustomSizedBox(
+                    //   height: 16,
+                    // ),
+                    const AccountSettingsComponent(),
+                  ],
+                );
+              },
+            ))
+          ],
         ),
       ),
     );

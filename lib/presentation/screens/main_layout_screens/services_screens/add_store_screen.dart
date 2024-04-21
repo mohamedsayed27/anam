@@ -35,8 +35,6 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
   void initState() {
     cubit = ServicesCubit.get(context);
     if (widget.storeMultiLangModel != null) {
-      print("coooordinates");
-      print(widget.storeMultiLangModel!.coordinates);
       cubit.storeNameAr.text = widget.storeMultiLangModel!.name?["ar"]??"";
       cubit.storeNameEn.text = widget.storeMultiLangModel!.name?["en"]??"";
       cubit.trunkTypeAr.text = widget.storeMultiLangModel!.truckType?["ar"]??"";

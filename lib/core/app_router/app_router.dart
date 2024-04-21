@@ -32,8 +32,10 @@ class AppRouter {
             page: const AddProductScreen(),
           );
         case ScreenName.chatScreen:
+
+          ChatScreenArgs args = settings.arguments as ChatScreenArgs;
           return SlideRightRoute(
-            page: const ChatScreen(),
+            page:  ChatScreen(chatScreenArgs: args,),
           );
         case ScreenName.oldOrdersScreen:
           return SlideRightRoute(

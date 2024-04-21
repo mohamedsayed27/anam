@@ -13,11 +13,8 @@ import 'requests_state.dart';
 class RequestsCubit extends Cubit<RequestsState> {
   RequestsCubit() : super(RequestsInitial());
   final RequestsRemoteDatasource _requestsRemoteDatasource = sl();
-  final CitiesAndCountriesRemoteDatasource citiesAndCountriesRemoteDatasource =
-      sl();
-
+  final CitiesAndCountriesRemoteDatasource citiesAndCountriesRemoteDatasource = sl();
   static RequestsCubit get(context) => BlocProvider.of(context);
-
   final TextEditingController notes = TextEditingController();
   final TextEditingController address = TextEditingController();
   final TextEditingController details = TextEditingController();
@@ -75,7 +72,9 @@ class RequestsCubit extends Cubit<RequestsState> {
   }
 
   void getPreviousRequests() async {
-    getAllRequestsLoading = true;
+    if(previousRequestsPageNumber==1) {
+      getAllRequestsLoading = true;
+    }
     emit(GetPreviousRequestsLoadingState());
     final response = await _requestsRemoteDatasource.getPreviousRequests(
       pageNumber: previousRequestsPageNumber,
@@ -83,7 +82,9 @@ class RequestsCubit extends Cubit<RequestsState> {
     response.fold(
       (l) {
         baseErrorModel = l.baseErrorModel;
-        getAllRequestsLoading = false;
+        if(previousRequestsPageNumber==1) {
+          getAllRequestsLoading = false;
+        }
         emit(GetPreviousRequestsErrorState(
             error: baseErrorModel?.message ?? ""));
       },
@@ -94,7 +95,10 @@ class RequestsCubit extends Cubit<RequestsState> {
             previousRequestList.addAll(r.requestsPaginatedModel!.requestModel??[]);
             previousRequestsPageNumber++;
           }
-          getAllRequestsLoading = false;
+
+          if(previousRequestsPageNumber==1) {
+            getAllRequestsLoading = false;
+          }
           emit(GetPreviousRequestsSuccessState());
         }
       },

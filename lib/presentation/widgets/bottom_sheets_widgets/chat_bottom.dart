@@ -39,11 +39,11 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
     super.initState();
   }
 
-  late final PusherMethods _pusherMethods;
   PusherChannelsFlutter pusher = PusherChannelsFlutter();
 
   @override
   void dispose() {
+    pusher.disconnect();
     super.dispose();
   }
 
@@ -156,7 +156,7 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
                       : ListView.separated(
                           reverse: true,
                           separatorBuilder: (BuildContext context, int index) {
-                            return CustomSizedBox(
+                            return const CustomSizedBox(
                               height: 16,
                             );
                           },

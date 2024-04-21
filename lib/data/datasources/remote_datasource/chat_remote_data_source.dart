@@ -7,6 +7,7 @@ import '../../../core/error/error_exception.dart';
 import '../../../core/network/api_end_points.dart';
 import '../../../core/network/dio_helper.dart';
 import '../../../core/network/error_message_model.dart';
+import '../../models/chat_models/chat_item_model.dart';
 import '../../models/chat_models/conversation_model.dart';
 
 class ChatRemoteDataSource {
@@ -26,6 +27,30 @@ class ChatRemoteDataSource {
       );
 
       return Right(GetChatConversationData.fromJson(response.data["result"],));
+    } catch (e) {
+      if (e is DioException) {
+        return Left(
+          ErrorException(
+            baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
+          ),
+        );
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+
+  Future<Either<ErrorException, GetAllChatListModel>> getChatList({
+    required int pageNumber
+}) async {
+    try {
+      final response = await dioHelper.getData(
+        url: "${EndPoints.userChats}?page=$pageNumber",
+        token: token,
+      );
+
+      return Right(GetAllChatListModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {
         return Left(

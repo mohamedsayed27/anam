@@ -197,6 +197,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     response.fold(
       (l) {
         baseErrorModel = l.baseErrorModel;
+        print(baseErrorModel);
         emit(
           UpdateProfileErrorState(
             error: baseErrorModel?.errors?[0] ?? "",

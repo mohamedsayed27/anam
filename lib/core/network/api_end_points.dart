@@ -31,5 +31,6 @@ static const cities ='/cities';
 static const countries ='/countries';
 static const notifications ='/notifications';
 static const chats ='/chats';
+static const userChats ='/user/chats';
 static const show ='$chats/show';
 }

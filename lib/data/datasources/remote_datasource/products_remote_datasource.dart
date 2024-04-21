@@ -74,10 +74,10 @@ class ProductsRemoteDatasource {
   }
 
   Future<Either<ErrorException, GetAllProductModel>> getFavoriteProducts(
-      {required int pageNumber}) async {
+      {required int pageNumber,}) async {
     try {
       final response = await dioHelper.getData(
-        url: EndPoints.wishList,
+        url: "${EndPoints.wishList}?page=$pageNumber",
         token: token,
       );
       return Right(GetAllProductModel.fromJson(response.data));

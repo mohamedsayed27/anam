@@ -1,8 +1,10 @@
+import 'package:anam/core/constants/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
 import '../../../core/services/services_locator.dart';
 import '../../../data/datasources/remote_datasource/chat_remote_data_source.dart';
+import '../../../data/models/chat_models/chat_item_model.dart';
 import '../../../data/models/chat_models/conversation_model.dart';
 
 part 'chat_state.dart';
@@ -15,6 +17,7 @@ class ChatCubit extends Cubit<ChatState> {
   final ChatRemoteDataSource _chatRemoteDataSource = sl();
 
   List<Conversation>? conversationsList;
+
   bool getChat = false;
   void getChats({required int receiverId}) async {
     getChat = true;
@@ -30,6 +33,42 @@ class ChatCubit extends Cubit<ChatState> {
       print(r);
       conversationsList = r.conversationList??[];
       print(conversationsList);
+      emit(GetChatSuccess());
+    });
+  }
+  List<ChatItemModel> chatsItemsList = [];
+  int allChatsItemsPageNumber = 1;
+  bool getChatItemsLoading = false;
+  void getChatList() async {
+    getChatItemsLoading = true;
+    if(allChatsItemsPageNumber==1){
+      chatsItemsList.clear();
+    }
+    emit(GetChatLoading());
+    final response = await _chatRemoteDataSource.getChatList(pageNumber: allChatsItemsPageNumber);
+    response.fold((l) {
+      getChatItemsLoading = false;
+      emit(GetChatError());
+    }, (r) {
+      getChatItemsLoading = false;
+      print(r);
+
+      if(r.chatPaginatedModel?.chatsList!=null){
+        if (allChatsItemsPageNumber <=
+            r.chatPaginatedModel!.lastPage!) {
+          if (r.chatPaginatedModel!.currentPage! <=
+              r.chatPaginatedModel!.lastPage!) {
+            r.chatPaginatedModel?.chatsList?.forEach((element) {
+              print(element.id.toString());
+              if(element.id.toString()!=userId) {
+                chatsItemsList.add(element);
+              }
+            });
+          }
+          allChatsItemsPageNumber++;
+        }
+      }
+      print(chatsItemsList);
       emit(GetChatSuccess());
     });
   }
