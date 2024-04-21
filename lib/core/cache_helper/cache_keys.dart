@@ -4,6 +4,8 @@ class CacheKeys{
   static String userId = 'user_id';
   static String userType = 'user_type';
   static String userName = 'userName';
+  static String userEmail = 'userEmail';
+  static String phone = 'phone';
   static String onboarding = 'onboarding';
   static String checkPublish = 'checkPublish';
 }

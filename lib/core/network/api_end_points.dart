@@ -14,6 +14,7 @@ static  String vendorFollowing({required String id }) =>'/vendors/$id/followers'
 static const following ='/following';
 static const register ='/register';
 static const login ='/login';
+static const packages ='/packages';
 static const socialLogin ='/user/social-login';
 static const profile ='/profile';
 static const vendorDetails ='/vendors';

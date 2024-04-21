@@ -65,6 +65,18 @@ class AuthCubit extends Cubit<AuthState> {
           value: r.loginAndRegisterDataModel!.token!,
         );
         await CacheHelper.saveData(
+          key: CacheKeys.userName,
+          value: r.loginAndRegisterDataModel!.user!.name.toString(),
+        );
+        await CacheHelper.saveData(
+          key: CacheKeys.userEmail,
+          value: r.loginAndRegisterDataModel!.user!.email.toString(),
+        );
+        await CacheHelper.saveData(
+          key: CacheKeys.phone,
+          value: r.loginAndRegisterDataModel!.user!.phone.toString(),
+        );
+        await CacheHelper.saveData(
           key: CacheKeys.userId,
           value: r.loginAndRegisterDataModel!.user!.id,
         );
@@ -126,6 +138,18 @@ class AuthCubit extends Cubit<AuthState> {
           key: CacheKeys.userType,
           value: r.loginAndRegisterDataModel!.user!.type,
         );
+        await CacheHelper.saveData(
+          key: CacheKeys.userName,
+          value: r.loginAndRegisterDataModel!.user!.name.toString(),
+        );
+        await CacheHelper.saveData(
+          key: CacheKeys.userEmail,
+          value: r.loginAndRegisterDataModel!.user!.email.toString(),
+        );
+        await CacheHelper.saveData(
+          key: CacheKeys.phone,
+          value: r.loginAndRegisterDataModel!.user!.phone.toString(),
+        );
         token = CacheHelper.getData(
           key: CacheKeys.token,
         );
@@ -165,6 +189,18 @@ class AuthCubit extends Cubit<AuthState> {
         await CacheHelper.saveData(
           key: CacheKeys.userId,
           value: r.loginAndRegisterDataModel!.user!.id.toString(),
+        );
+        await CacheHelper.saveData(
+          key: CacheKeys.userName,
+          value: r.loginAndRegisterDataModel!.user!.name.toString(),
+        );
+        await CacheHelper.saveData(
+          key: CacheKeys.userEmail,
+          value: r.loginAndRegisterDataModel!.user!.email.toString(),
+        );
+        await CacheHelper.saveData(
+          key: CacheKeys.phone,
+          value: r.loginAndRegisterDataModel!.user!.phone.toString(),
         );
         await CacheHelper.saveData(
           key: CacheKeys.userType,

@@ -241,7 +241,7 @@ class ProductsCubit extends Cubit<ProductsState> {
             }
 
           }
-          favoriteProductsList?.forEach((element) {print(element?.isFavorite);});
+          favoriteProductsList.forEach((element) {});
 
           emit(GetFavoriteProductsSuccessState());
         }
@@ -252,7 +252,9 @@ class ProductsCubit extends Cubit<ProductsState> {
   bool getUserFollowingList = false;
 
   void getUserFollowingProducts() async {
-    getUserFollowingList = true;
+    if(userFollowingProductsPageNumber==1){
+      getUserFollowingList = true;
+    }
     emit(GetUserFollowingProductsLoadingState());
     final response = await _productsRemoteDatasource.getUserFollowingProducts(
       pageNumber: userFollowingProductsPageNumber,
@@ -295,8 +297,9 @@ class ProductsCubit extends Cubit<ProductsState> {
             userFollowingProductsPageNumber++;
           }
           getUserFollowingList = false;
-          emit(GetUserFollowingProductsSuccessState());
+
         }
+        emit(GetUserFollowingProductsSuccessState());
       },
     );
   }
@@ -502,7 +505,6 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   void changeFavorite({required int id}) async {
     favoriteProduct[id.toString()] = !favoriteProduct[id.toString()];
-    print(favoriteProduct);
     emit(WishProductLoadingState());
     final response = await _productsRemoteDatasource.addToFavorite(
       id: id,

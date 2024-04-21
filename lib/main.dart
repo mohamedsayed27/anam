@@ -1,4 +1,5 @@
 import 'package:anam/bloc_observer.dart';
+import 'package:anam/presentation/screens/main_layout_screens/payment_screen/package_subscriptions_screen.dart';
 import 'package:anam/translations/codegen_loader.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,6 +19,7 @@ import 'domain/controllers/chat_cubit/chat_cubit.dart';
 import 'domain/controllers/home_cubit/home_cubit.dart';
 import 'domain/controllers/main_layout_cubit/main_layout_cubit.dart';
 import 'domain/controllers/map_cubit/map_cubit.dart';
+import 'domain/controllers/packages_cubit/packages_cubit.dart';
 import 'domain/controllers/products_cubit/products_cubit.dart';
 import 'domain/controllers/profile_cubit/profile_cubit.dart';
 import 'domain/controllers/requests_cubit/requests_cubit.dart';
@@ -71,6 +73,9 @@ class MyApp extends StatelessWidget {
               create: (context) => HomeCubit(),
             ),
             BlocProvider(
+              create: (context) => PackagesCubit(),
+            ),
+            BlocProvider(
               create: (context) => RequestsCubit()..getAllCountries(),
             ),
             BlocProvider(
@@ -111,9 +116,9 @@ class MyApp extends StatelessWidget {
             locale: context.locale,
             // O
             theme: AppTheme.lightTheme,
-            onGenerateRoute: AppRouter.generateRoute,
-            initialRoute: ScreenName.splashScreen,
-            // home: OrderProgressScreen(),
+            // onGenerateRoute: AppRouter.generateRoute,
+            // initialRoute: ScreenName.splashScreen,
+            home: PackageSubscriptionsScreen(),
           ),
         );
       },

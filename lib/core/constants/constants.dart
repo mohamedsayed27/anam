@@ -38,5 +38,7 @@ String? googleClientIdAndroid = "519171617357-qe40r7t19n1bdj7vo63hj4hmjhi6m4fq.a
 String? userId = CacheHelper.getData(key: CacheKeys.userId).toString();
 String? userType = CacheHelper.getData(key: CacheKeys.userType);
 String? username = CacheHelper.getData(key: CacheKeys.userName);
+String? userEmail = CacheHelper.getData(key: CacheKeys.userEmail);
+String? phone = CacheHelper.getData(key: CacheKeys.phone);
 String initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale)??"en";
 Size appBarSize = AppBar().preferredSize;

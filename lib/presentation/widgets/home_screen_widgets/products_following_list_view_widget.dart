@@ -22,28 +22,39 @@ class ProductsFollowingListViewWidget extends StatelessWidget {
         ProductsCubit cubit = ProductsCubit.get(context);
         return cubit.getUserFollowingList
             ? const ProductShimmerListWidget()
-            : ListView.separated(
-                separatorBuilder: (_, index) {
-                  return const CustomSizedBox(
-                    height: 16,
-                  );
-                },
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                  vertical: 12.h,
+            : NotificationListener<ScrollNotification>(
+          onNotification: (scrollNotification){
+            if (scrollNotification is ScrollEndNotification) {
+              if (scrollNotification.metrics.pixels ==
+                  scrollNotification.metrics.maxScrollExtent) {
+                cubit.getUserFollowingProducts();
+              }
+            }
+            return true;
+          },
+              child: ListView.separated(
+                  separatorBuilder: (_, index) {
+                    return const CustomSizedBox(
+                      height: 16,
+                    );
+                  },
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 12.h,
+                  ),
+                  itemCount: cubit.userFollowingProductsList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ProductItemComponent(
+                      isFavorite: false,
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, ScreenName.productDetailsScreen,arguments: cubit.userFollowingProductsList[index]);
+                      },
+                      productDataModel: cubit.userFollowingProductsList[index],
+                    );
+                  },
                 ),
-                itemCount: cubit.userFollowingProductsList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ProductItemComponent(
-                    isFavorite: false,
-                    onPressed: () {
-                      Navigator.pushNamed(
-                          context, ScreenName.productDetailsScreen,arguments: cubit.userFollowingProductsList[index]);
-                    },
-                    productDataModel: cubit.userFollowingProductsList[index],
-                  );
-                },
-              );
+            );
       },
     );
   }
