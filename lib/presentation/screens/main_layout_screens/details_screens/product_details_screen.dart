@@ -3,6 +3,8 @@ import 'package:anam/data/models/products_model/product_model.dart';
 import 'package:anam/presentation/widgets/bottom_sheets_widgets/add_review_bottom_sheet.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_divider.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
+import 'package:anam/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -54,7 +56,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   height: 24,
                 ),
                 TileAndBodyTextWidget(
-                  titleText: "وصف المنتج",
+                  titleText: LocaleKeys.productDescription.tr(),
                   bodyText: widget.productDataModel.description ?? "",
                   titleFontSize: 20,
                   horizontalPadding: 16,
@@ -71,7 +73,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   height: 19,
                 ),
                 TileAndBodyTextWidget(
-                  titleText: "المميزات",
+                  titleText: LocaleKeys.advantages.tr(),
                   bodyText: widget.productDataModel.advantages ?? "",
                   titleFontSize: 20,
                   bodyFontSize: 16,
@@ -87,7 +89,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   height: 19,
                 ),
                 TileAndBodyTextWidget(
-                  titleText: "العيوب",
+                  titleText: LocaleKeys.disadvantages.tr(),
                   bodyText: widget.productDataModel.defects ?? "",
                   titleFontSize: 20,
                   bodyFontSize: 16,
@@ -103,8 +105,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   height: 19,
                 ),
                 RatingComponentBuilder(
-                  componentTitle: 'اراء العملاء',
-                  buttonTitle: 'اضافة تقييم',
+                  componentTitle: LocaleKeys.customerReviews.tr(),
+                  buttonTitle: LocaleKeys.addReview.tr(),
                   onAddPressed: (){
                     showModalBottomSheet(
                       context: context,
@@ -122,7 +124,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   height: 19,
                 ),
                 Text(
-                  "روابط مرفقة",
+                  LocaleKeys.attachedLinks.tr(),
                   style: CustomThemes.darkGreyColorTextTheme(context).copyWith(
                     fontSize: 20.sp,
                     height: 1,
@@ -150,7 +152,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   height: 19,
                 ),
                 Text(
-                  "الموقع على الخريطة",
+                  LocaleKeys.locationOnMap.tr(),
                   style: CustomThemes.darkGreyColorTextTheme(context).copyWith(
                     fontSize: 20.sp,
                     height: 1,

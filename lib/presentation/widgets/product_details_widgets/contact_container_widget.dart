@@ -23,7 +23,7 @@ class ContactContainerWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "${price} ريال",
+              "${price} ${LocaleKeys.sar.tr()}",
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     fontSize: 24.sp,
                     color: AppColors.blackColor,

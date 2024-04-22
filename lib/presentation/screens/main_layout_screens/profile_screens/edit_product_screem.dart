@@ -24,7 +24,7 @@ class EditProductScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 26.w, vertical: 20.h),
           children: [
             Text(
-              "تعديل منتج",
+              LocaleKeys.editProduct.tr(),
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall!

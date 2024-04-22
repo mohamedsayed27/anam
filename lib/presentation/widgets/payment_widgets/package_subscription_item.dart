@@ -3,6 +3,8 @@ import 'package:anam/core/app_theme/custom_themes.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_check_box.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_outlined_button.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
+import 'package:anam/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -51,7 +53,7 @@ class PackageSubscriptionItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "${monthlyPackage?.price} ريال",
+                "${monthlyPackage?.price} ${LocaleKeys.sar.tr()}",
                 style: CustomThemes.primaryColorTextTheme(context)
                     .copyWith(fontSize: 18.sp, fontWeight: FontWeight.w400),
               ),

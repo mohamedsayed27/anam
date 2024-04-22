@@ -22,8 +22,8 @@ import '../../../widgets/shared_widget/custom_app_bar.dart';
 class ChatScreenArgs extends Equatable {
   final int receiverId;
   final String name;
-
-  const ChatScreenArgs({required this.receiverId, required this.name});
+  final String image;
+  const ChatScreenArgs({required this.receiverId, required this.name, required this.image,});
 
   @override
   // TODO: implement props
@@ -35,7 +35,11 @@ class ChatScreenArgs extends Equatable {
 
 class ChatScreen extends StatefulWidget {
   final ChatScreenArgs chatScreenArgs;
-  const ChatScreen({super.key, required this.chatScreenArgs,});
+
+  const ChatScreen({
+    super.key,
+    required this.chatScreenArgs,
+  });
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -70,7 +74,10 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void subscribeChannel() async {
-    final list = <int>[widget.chatScreenArgs.receiverId, int.parse(userId.toString())]..sort();
+    final list = <int>[
+      widget.chatScreenArgs.receiverId,
+      int.parse(userId.toString())
+    ]..sort();
     try {
       await pusher.init(
         apiKey: "d7e9da7b3bc9de6317b3",
@@ -111,54 +118,59 @@ class _ChatScreenState extends State<ChatScreen> {
       body: SafeArea(
         child: BlocConsumer<ChatCubit, ChatState>(
           listener: (context, state) {},
-  builder: (context, state) {
-    return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CustomDivider(),
-            const CustomSizedBox(
-              height: 15,
-            ),
-            Expanded(
-              child: cubit.getChat
-                  ? const Center(
-                child: CircularProgressIndicator.adaptive(),
-              )
-                  : ListView.separated(
-                reverse: true,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const CustomSizedBox(
-                    height: 16,
-                  );
-                },
-                itemCount: cubit.conversationsList!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return MessageItemWidget(
-                    isMyMessage:
-                    cubit.conversationsList![index].senderId ==
-                        int.parse(
-                          userId.toString(),
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const CustomDivider(),
+                const CustomSizedBox(
+                  height: 15,
+                ),
+                Expanded(
+                  child: cubit.getChat
+                      ? const Center(
+                          child: CircularProgressIndicator.adaptive(),
                         )
-                        ? true
-                        : false,
-                    text: cubit.conversationsList![index].message,
-                  );
-                },
-              ),
-            ),
-            ChatTextField(
-              controller: controller,
-              onTap: () {
-                // testPayCallTabs();
-                cubit.sendMessage(
-                    receiverId: widget.chatScreenArgs.receiverId,
-                    message: controller.text);
-              },
-            ),
-          ],
-        );
-  },
-).symmetricPadding(
+                      : ListView.separated(
+                          reverse: true,
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const CustomSizedBox(
+                              height: 16,
+                            );
+                          },
+                          itemCount: cubit.conversationsList!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return MessageItemWidget(
+                              isMyMessage:
+                                  cubit.conversationsList![index].senderId ==
+                                          int.parse(
+                                            userId.toString(),
+                                          )
+                                      ? true
+                                      : false,
+                              image: cubit.conversationsList![index].senderId ==
+                                  int.parse(
+                                    userId.toString(),
+                                  )
+                                  ?"":widget.chatScreenArgs.image,
+                              text: cubit.conversationsList![index].message,
+                            );
+                          },
+                        ),
+                ),
+                ChatTextField(
+                  controller: controller,
+                  onTap: () {
+                    // testPayCallTabs();
+                    cubit.sendMessage(
+                        receiverId: widget.chatScreenArgs.receiverId,
+                        message: controller.text);
+                  },
+                ),
+              ],
+            );
+          },
+        ).symmetricPadding(
           horizontal: 24,
           vertical: 13,
         ),

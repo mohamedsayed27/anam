@@ -1,7 +1,6 @@
 import 'package:anam/core/app_theme/custom_themes.dart';
 import 'package:anam/core/assets_path/images_path.dart';
 import 'package:anam/core/constants/constants.dart';
-import 'package:anam/core/constants/dummy_data.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/data/models/laborers_models/laborer_model.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_elevated_button.dart';
@@ -9,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../core/app_theme/app_colors.dart';
 import '../../../../core/assets_path/svg_path.dart';
 import '../../../../core/cache_helper/cache_keys.dart';
 import '../../../../core/cache_helper/shared_pref_methods.dart';

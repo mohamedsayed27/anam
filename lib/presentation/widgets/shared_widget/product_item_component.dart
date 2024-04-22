@@ -2,10 +2,12 @@ import 'package:anam/core/app_theme/app_colors.dart';
 import 'package:anam/core/constants/dummy_data.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../data/models/products_model/product_model.dart';
+import '../../../translations/locale_keys.g.dart';
 import 'product_image_widget.dart';
 
 class ProductItemComponent extends StatelessWidget {
@@ -72,7 +74,7 @@ class ProductItemComponent extends StatelessWidget {
             height: 4,
           ),
           Text(
-            "${productDataModel.regularPrice} ريال",
+            "${productDataModel.regularPrice} ${LocaleKeys.sar.tr()}",
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(
               fontSize: 16.sp,
 

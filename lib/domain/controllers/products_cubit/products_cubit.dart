@@ -148,6 +148,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       getSearchedProductsLoading = true;
       emit(GetAllProductsLoadingState());
     }
+    print(searchValue.text);
     final response = await _productsRemoteDatasource.getAllSearchedProducts(
       pageNumber: allSearchedProductsPageNumber,
       value: searchValue.text,

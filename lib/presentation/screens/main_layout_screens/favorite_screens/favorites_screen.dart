@@ -1,5 +1,6 @@
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,7 +39,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
               height: 20,
             ),
             Text(
-              "المفضلة",
+              LocaleKeys.favorite.tr(),
               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                     fontSize: 20.sp,
                   ),

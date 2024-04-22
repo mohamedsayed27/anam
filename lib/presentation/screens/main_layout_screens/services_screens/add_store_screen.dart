@@ -116,7 +116,7 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "اضافة شاحنه",
+                      LocaleKeys.addVan.tr(),
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!
@@ -198,7 +198,7 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                         : CustomDropDownButton<CityModel>(
                             height: 45,
                             onChanged: cubit.chooseCity,
-                            hint: "اختيار المدينه",
+                            hint: LocaleKeys.pleaseChooseYourCountry.tr(),
                             items: cubit.citiesList
                                 .map((e) => DropdownMenuItem(
                                       value: e,
@@ -215,11 +215,11 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الاسم بالعربيه",
+                      hintText: LocaleKeys.productNameAr.tr(),
                       controller: cubit.storeNameAr,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -228,11 +228,11 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الاسم بالانجليزيه",
+                      hintText: LocaleKeys.productNameEn.tr(),
                       controller: cubit.storeNameEn,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -241,11 +241,11 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "نوع الشاحنه بالعربيه",
+                      hintText: LocaleKeys.trunkTypeAr.tr(),
                       controller: cubit.trunkTypeAr,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -254,11 +254,11 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "نوع الشاحنه بالانجليزيه",
+                      hintText: LocaleKeys.trunkTypeEn.tr(),
                       controller: cubit.trunkTypeEn,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -267,12 +267,12 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الهاتف",
+                      hintText: LocaleKeys.phone.tr(),
                       controller: cubit.storePhone,
                       keyboardType: TextInputType.phone,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -281,12 +281,12 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "البريد الاليكتروني",
+                      hintText: LocaleKeys.email.tr(),
                       controller: cubit.storeEmail,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -352,7 +352,7 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                           size: 20.r,
                           color: AppColors.authBorderColor,
                         ),
-                        hintText: cubit.mapLocation ?? "اختر الموقع",
+                        hintText: cubit.mapLocation ?? LocaleKeys.chooseLocation.tr(),
                         enabled: false,
                         height: 45,
                       ),
@@ -361,23 +361,23 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                       height: 40,
                     ),
                     CustomElevatedButton(
-                      title: "ارفاق البيانات",
+                      title: LocaleKeys.uploadData.tr(),
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                           if(widget.storeMultiLangModel==null){
                             if (cubit.storeImage == null) {
                               showToast(
                                   errorType: 1,
-                                  message: "يجب اختيار صوره للمنتج");
+                                  message: LocaleKeys.imagesMustBeSelected.tr());
                             } else {
                               if (cubit.mapLocation == null) {
                                 showToast(
-                                    errorType: 1, message: "يجب اختيار الموقع");
+                                    errorType: 1, message: LocaleKeys.locationMustBeSelected.tr());
                               } else {
                                 if (cubit.storeImages.isEmpty) {
                                   showToast(
                                       errorType: 1,
-                                      message: "يجب اختيار صور للمنتج");
+                                      message: LocaleKeys.imagesMustBeSelected.tr());
                                 } else {
 
                                   cubit.uploadStore(

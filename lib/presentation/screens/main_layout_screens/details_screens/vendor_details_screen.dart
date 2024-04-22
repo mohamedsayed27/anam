@@ -2,11 +2,13 @@ import 'package:anam/data/models/vendor_data_model.dart';
 import 'package:anam/data/models/vendor_info_model.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_divider.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../domain/controllers/profile_cubit/profile_cubit.dart';
 import '../../../../domain/controllers/profile_cubit/profile_state.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../../widgets/vendor_details_widgets/about_vendor_widget.dart';
 import '../../../widgets/vendor_details_widgets/ads_component_builder.dart';
 import '../../../widgets/vendor_details_widgets/intro_details_container.dart';
@@ -58,9 +60,9 @@ class VendorDetailsScreen extends StatelessWidget {
                       const CustomSizedBox(
                         height: 15,
                       ),
-                      const RatingComponentBuilder(
-                        componentTitle: 'التقييمات',
-                        buttonTitle: 'اضافة تقييم',
+                       RatingComponentBuilder(
+                        componentTitle: LocaleKeys.ratings.tr(),
+                        buttonTitle: LocaleKeys.addReview.tr(),
                       ),
                       const CustomSizedBox(
                         height: 15,

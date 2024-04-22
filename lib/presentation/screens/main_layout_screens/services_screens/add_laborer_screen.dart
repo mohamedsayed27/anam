@@ -5,6 +5,7 @@ import 'package:anam/data/models/laborers_models/laborers_multi_lang.dart';
 import 'package:anam/domain/controllers/services_cubit/services_state.dart';
 import 'package:anam/presentation/screens/map_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +13,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/app_theme/app_colors.dart';
 import '../../../../domain/controllers/services_cubit/services_cubit.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../../widgets/auth_widgets/custom_text_field.dart';
 import '../../../widgets/shared_widget/custom_divider.dart';
 import '../../../widgets/shared_widget/custom_elevated_button.dart';
@@ -202,11 +204,11 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الاسم بالعربيه",
+                      hintText: LocaleKeys.productNameAr.tr(),
                       controller: cubit.laborerNameAr,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -215,11 +217,11 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الاسم بالانجليزيه",
+                      hintText: LocaleKeys.productNameEn.tr(),
                       controller: cubit.laborerNameEn,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -228,11 +230,11 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الجنسيه بالعربيه",
+                      hintText: LocaleKeys.nationalityAr.tr(),
                       controller: cubit.nationalityAr,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -241,11 +243,11 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الجنسيه بالانجليزيه",
+                      hintText: LocaleKeys.nationalityEn.tr(),
                       controller: cubit.nationalityEn,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -254,12 +256,12 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الهاتف",
+                      hintText: LocaleKeys.phone.tr(),
                       controller: cubit.laborerPhone,
                       keyboardType: TextInputType.phone,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -268,12 +270,12 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "البريد الاليكتروني",
+                      hintText: LocaleKeys.email.tr(),
                       controller: cubit.laborerEmail,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -282,12 +284,12 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "المهنه بالعربيه",
+                      hintText: LocaleKeys.professionAr.tr(),
                       controller: cubit.professionAr,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -296,12 +298,12 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "المهنه بالانجليزيه",
+                      hintText: LocaleKeys.professionEn.tr(),
                       controller: cubit.professionEn,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -325,7 +327,7 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                           size: 20.r,
                           color: AppColors.authBorderColor,
                         ),
-                        hintText: cubit.mapLocation ?? "اختر الموقع",
+                        hintText: cubit.mapLocation ?? LocaleKeys.chooseLocation.tr(),
                         enabled: false,
                         height: 45,
                       ),
@@ -334,12 +336,12 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "العنوان بالانجليزيه",
+                      hintText: LocaleKeys.addressAr.tr(),
                       controller: cubit.laborerAddressEn,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -348,12 +350,12 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "العنوان بالعربيه",
+                      hintText: LocaleKeys.addressEn.tr(),
                       controller: cubit.laborerAddressAr,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -365,18 +367,18 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                       height: 40,
                     ),
                     CustomElevatedButton(
-                      title: "ارفاق البيانات",
+                      title: LocaleKeys.uploadData.tr(),
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                          if(widget.laborerMultiLangModel==null){
                            if (cubit.laborerImage == null) {
                              showToast(
                                  errorType: 1,
-                                 message: "يجب اختيار صوره للمنتج");
+                                 message: LocaleKeys.imagesMustBeSelected.tr());
                            } else {
                              if (cubit.mapLocation == null) {
                                showToast(
-                                   errorType: 1, message: "يجب اختيار الموقع");
+                                   errorType: 1, message: LocaleKeys.locationMustBeSelected.tr());
                              } else {
                                cubit.uploadLaborer(
                                  productParameters: LaborerParameters(

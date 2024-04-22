@@ -80,7 +80,7 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
                                     receiverId:
                                         cubit.chatsItemsList[index].id ?? 0,
                                     name:
-                                        cubit.chatsItemsList[index].name ?? "",
+                                        cubit.chatsItemsList[index].name ?? "", image: cubit.chatsItemsList[index].image ?? "",
                                   ),
                                 );
                               },

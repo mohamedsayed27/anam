@@ -7,6 +7,8 @@ import 'package:anam/domain/controllers/products_cubit/products_cubit.dart';
 import 'package:anam/domain/controllers/products_cubit/products_state.dart';
 import 'package:anam/presentation/screens/main_layout_screens/profile_screens/add_product_screen.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_switch_button.dart';
+import 'package:anam/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,7 +49,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "قائمة المنتجات",
+                  LocaleKeys.productList.tr(),
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                         fontSize: 20.sp,
                       ),
@@ -89,7 +91,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             width: 8,
                           ),
                           Text(
-                            "اضافة منتج",
+                            LocaleKeys.addProduct.tr(),
                             style: CustomThemes.grey7DColorTextTheme(context)
                                 .copyWith(
                               fontSize: 16.sp,

@@ -1,11 +1,13 @@
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/domain/controllers/auth_cubit/auth_cubit.dart';
 import 'package:anam/domain/controllers/auth_cubit/auth_state.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/app_theme/app_colors.dart';
+import '../../../translations/locale_keys.g.dart';
 
 class PhoneComponent extends StatefulWidget {
   final String? Function(String?)? validator;
@@ -118,7 +120,7 @@ class _PhoneComponentState extends State<PhoneComponent> {
                     fontSize: 11.85.sp,
                   ),
               decoration: InputDecoration(
-                hintText: "رقم الهاتف",
+                hintText: LocaleKeys.phone.tr(),
                 hintStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       fontSize: 11.85.sp,
                     ),

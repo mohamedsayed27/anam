@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-// ignore_for_file: prefer_single_quotes
+// ignore_for_file: prefer_single_quotes, avoid_renaming_method_parameters
 
 import 'dart:ui';
 
@@ -97,7 +97,14 @@ class CodegenLoader extends AssetLoader{
   "pleaseEnterEmail": "Please enter an email address.",
   "pleaseEnterValidateEmail": "Please enter a valid email address.",
   "pleaseEnterFirstName": "Please enter your first name.",
-  "pleaseEnterSecondName": "Please enter your second name."
+  "pleaseEnterSecondName": "Please enter your second name.",
+  "productDescription": "Product Description",
+  "advantages": "Advantages",
+  "disadvantages": "Disadvantages",
+  "customerReviews": "Customer Reviews",
+  "addReview": "Add Review",
+  "attachedLinks": "Attached Links",
+  "favorite": "Favorite"
 };
 static const Map<String,dynamic> ar = {
   "lookGoodFeelGood": "تبدو جيد، أشعر أنني بحالة جيدة",
@@ -181,7 +188,14 @@ static const Map<String,dynamic> ar = {
   "validateConfirmPassword": "كلمات المرور غير متطابقة. يرجى المحاولة مرة أخرى",
   "pleaseEnterFirstName": "الرجاء إدخال الاسم الأول الخاص بك.",
   "pleaseEnterSecondName": "الرجاء إدخال الاسم الأخير الخاص بك.",
-  "pleaseEnterEmail": "الرجاء إدخال الايميل"
+  "pleaseEnterEmail": "الرجاء إدخال الايميل",
+  "productDescription": "وصف المنتج",
+  "advantages": "المميزات",
+  "disadvantages": "العيوب",
+  "customerReviews": "اراء العملاء",
+  "addReview": "اضافة تقييم",
+  "attachedLinks": "روابط مرفقة",
+  "favorite": "المفضلة"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};
 }

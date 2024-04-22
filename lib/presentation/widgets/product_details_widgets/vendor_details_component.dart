@@ -3,6 +3,7 @@ import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/data/models/products_model/product_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +14,7 @@ import '../../../domain/controllers/products_cubit/products_cubit.dart';
 import '../../../domain/controllers/products_cubit/products_state.dart';
 import '../../../domain/controllers/services_cubit/services_cubit.dart';
 import '../../../domain/controllers/services_cubit/services_state.dart';
+import '../../../translations/locale_keys.g.dart';
 import '../shared_widget/custom_sized_box.dart';
 import '../shared_widget/custom_circle_button.dart';
 
@@ -72,7 +74,7 @@ class VendorDetailsComponent extends StatelessWidget {
                     width: 8.6,
                   ),
                   Text(
-                    "آراء العملاء",
+                    "${LocaleKeys.customerReviews.tr()}",
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                           fontSize: 16.sp,
                           decoration: TextDecoration.underline,

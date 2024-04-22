@@ -1,5 +1,6 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,6 +17,7 @@ import '../../../data/models/stores_models/store_data_model.dart';
 import '../../../domain/controllers/profile_cubit/profile_cubit.dart';
 import '../../../domain/controllers/services_cubit/services_cubit.dart';
 import '../../../domain/controllers/services_cubit/services_state.dart';
+import '../../../translations/locale_keys.g.dart';
 import '../../screens/main_layout_screens/services_screens/add_store_screen.dart';
 import '../shared_widget/custom_elevated_button.dart';
 import '../shared_widget/custom_sized_box.dart';
@@ -168,8 +170,8 @@ class StoreServicesWidget extends StatelessWidget {
                       return CustomElevatedButton(
                         title: cubit.followedVendors[
                         storeDataModel.vendor!.id!.toString()]
-                            ? "الغاء المتابعة"
-                            : "متابعة",
+                            ? LocaleKeys.unFollow.tr()
+                            : LocaleKeys.follow.tr(),
                         onPressed: () {
                           print(cubit.followedVendors[
                           storeDataModel.vendor!.id!.toString()]);

@@ -2,6 +2,7 @@ import 'package:anam/core/assets_path/images_path.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,6 +11,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../core/app_theme/app_colors.dart';
 import '../../../data/models/requests/request_model.dart';
+import '../../../translations/locale_keys.g.dart';
 import '../order_widgets/order_type_container.dart';
 
 class OrderComponent extends StatelessWidget {
@@ -182,7 +184,7 @@ class OrderComponent extends StatelessWidget {
                           height: 2.18,
                         ),
                         Text(
-                          "${requestModel.price} ريال ",
+                          "${requestModel.price} ${LocaleKeys.sar.tr()} ",
                           style: Theme.of(context)
                               .textTheme
                               .headlineMedium!

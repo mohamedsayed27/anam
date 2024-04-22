@@ -116,9 +116,9 @@ class MyApp extends StatelessWidget {
             locale: context.locale,
             // O
             theme: AppTheme.lightTheme,
-            // onGenerateRoute: AppRouter.generateRoute,
-            // initialRoute: ScreenName.splashScreen,
-            home: PackageSubscriptionsScreen(),
+            onGenerateRoute: AppRouter.generateRoute,
+            initialRoute: ScreenName.splashScreen,
+            // home: PackageSubscriptionsScreen(),
           ),
         );
       },

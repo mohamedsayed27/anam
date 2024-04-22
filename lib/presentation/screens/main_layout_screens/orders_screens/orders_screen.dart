@@ -79,7 +79,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         width: 8,
                       ),
                       Text(
-                        "اضافة طلب",
+                        LocaleKeys.addOrder.tr(),
                         style:
                             CustomThemes.grey7DColorTextTheme(context).copyWith(
                           fontSize: 16.sp,

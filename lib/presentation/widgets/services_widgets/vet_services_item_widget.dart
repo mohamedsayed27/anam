@@ -6,6 +6,7 @@ import 'package:anam/presentation/screens/main_layout_screens/services_screens/a
 import 'package:anam/presentation/widgets/shared_widget/custom_elevated_button.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,6 +19,7 @@ import '../../../core/cache_helper/shared_pref_methods.dart';
 import '../../../core/constants/constants.dart';
 import '../../../domain/controllers/services_cubit/services_cubit.dart';
 import '../../../domain/controllers/services_cubit/services_state.dart';
+import '../../../translations/locale_keys.g.dart';
 
 class VetServicesWidget extends StatelessWidget {
   final VetModel vetModel;
@@ -139,7 +141,7 @@ class VetServicesWidget extends StatelessWidget {
                     builder: (context, state) {
                       var cubit = ServicesCubit.get(context);
                       return CustomElevatedButton(
-                        title: "تعديل",
+                        title: LocaleKeys.edit.tr(),
                         padding: EdgeInsets.zero,
                         onPressed: () {
                           cubit.getMultiLangVeterinarian(id: vetModel.id!);

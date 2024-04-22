@@ -241,6 +241,7 @@ class AuthCubit extends Cubit<AuthState> {
       clientId: Platform.isIOS ? googleClientIdIos : googleClientIdAndroid,
       scopes: scopes,
     );
+    print(googleSignIn.signInOption);
     try {
       final response = await googleSignIn.signIn();
       socialLogin(

@@ -58,9 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         // error
         break;
       default:
-        print(authResult);
     }
-    print(authResult.user);
   }
 
   @override
@@ -225,7 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         iconPath: SvgPath.appleLogo,
                         title: "${LocaleKeys.continueUsing.tr()} Apple",
                         onPressed: () {
-                          sign();
+                          // sign();
                         },
                       ).symmetricPadding(horizontal: 27),
                     if (token != null)

@@ -18,11 +18,11 @@ class DioHelper {
     required String url,
     Map<String, dynamic>? query,
     String? token,
-    String lang = 'ar',
+    String lang = 'en',
   }) async {
     dio.options.headers = {
       'Content-Type': 'application/json',
-      'lang': '',
+      // 'lang': '',
       if (token != null) "Authorization": "Bearer $token",
       'Accept': 'text/plain',
       "Content-Language":lang

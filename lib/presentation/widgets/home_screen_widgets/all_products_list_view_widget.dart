@@ -54,7 +54,20 @@ class AllProductsListViewWidget extends StatelessWidget {
                               .length,
                   itemBuilder: (BuildContext context, int index) {
                     return ProductItemComponent(
-                      isFavorite: cubit.productsList[index].isFavorite ?? false,
+                      isFavorite: cubit.selectedCategoryIndex == null &&
+                              cubit.showCategoryModel == null
+                          ? cubit.productsList[index].isFavorite ?? false
+                          : cubit.selectedSubCategoryIndex == null
+                              ? cubit.showCategoryModel!.products![index]
+                                      .isFavorite ??
+                                  false
+                              : cubit
+                                      .showCategoryModel!
+                                      .subCategories![
+                                          cubit.selectedSubCategoryIndex!]
+                                      .productsList![index]
+                                      .isFavorite ??
+                                  false,
                       onPressed: () {
                         ProductsCubit.get(context).getProductReview(
                           productId: cubit.selectedCategoryIndex == null &&

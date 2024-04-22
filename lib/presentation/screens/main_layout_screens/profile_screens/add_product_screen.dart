@@ -202,11 +202,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الاسم بالعربيه",
+                      hintText: LocaleKeys.productNameAr.tr(),
                       controller: cubit.productNameAr,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -215,11 +215,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الاسم بالانجليزيه",
+                      hintText: LocaleKeys.productNameEn.tr(),
                       controller: cubit.productNameEn,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -228,11 +228,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "العنوان بالعربيه",
+                      hintText: LocaleKeys.locationAr.tr(),
                       controller: cubit.locationAr,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -241,11 +241,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "العنوان بالانجليزيه",
+                      hintText: LocaleKeys.locationEn.tr(),
                       controller: cubit.locationEn,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -258,7 +258,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       controller: cubit.productPrice,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -267,14 +267,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الوصف بالعربيه",
+                      hintText: LocaleKeys.productDescriptionAr.tr(),
                       maxLines: 8,
                       controller: cubit.productDescriptionAr,
                       textAlignVertical: TextAlignVertical.top,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -283,14 +283,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الوصف بالانجليزيه",
+                      hintText: LocaleKeys.productDescriptionEn.tr(),
                       maxLines: 8,
                       controller: cubit.productDescriptionEn,
                       textAlignVertical: TextAlignVertical.top,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -374,7 +374,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       hintText: LocaleKeys.youtubeLink.tr(),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -383,14 +383,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "المميزات بالانجليزيه",
+                      hintText: LocaleKeys.productProsAr.tr(),
                       maxLines: 8,
                       controller: cubit.productProsEn,
                       textAlignVertical: TextAlignVertical.top,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -399,14 +399,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "المميزات بالعربيه",
+                      hintText: LocaleKeys.productProsEn.tr(),
                       maxLines: 8,
                       controller: cubit.productProsAr,
                       textAlignVertical: TextAlignVertical.top,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -415,14 +415,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "العيوب بالانجليزيه",
+                      hintText: LocaleKeys.productConsAr.tr(),
                       maxLines: 8,
                       controller: cubit.productConsEn,
                       textAlignVertical: TextAlignVertical.top,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -431,14 +431,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "العيوب بالعربيه",
+                      hintText: LocaleKeys.productConsEn.tr(),
                       controller: cubit.productConsAr,
                       maxLines: 8,
                       textAlignVertical: TextAlignVertical.top,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -454,24 +454,24 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             if (cubit.productImages.isEmpty) {
                               showToast(
                                   errorType: 1,
-                                  message: "يجب اختيار صور للمنتج");
+                                  message: LocaleKeys.imagesMustBeSelected.tr());
                             } else {
                               if (cubit.productCategory == null) {
                                 showToast(
                                     errorType: 1,
                                     message:
-                                        "يجب اختيار تصنيف المنتج الاساسي والفرعي");
+                                    LocaleKeys.categoriesMustBeSelected.tr());
                               } else {
                                 if (cubit.productSubCategory == null) {
                                   showToast(
                                       errorType: 1,
                                       message:
-                                          "يجب اختيار تصنيف المنتج الاساسي والفرعي");
+                                      LocaleKeys.categoriesMustBeSelected.tr());
                                 } else {
                                   if (cubit.mapLocation == null) {
                                     showToast(
                                         errorType: 1,
-                                        message: "يجب اختيار الموقع");
+                                        message: LocaleKeys.locationMustBeSelected.tr());
                                   } else {
                                     cubit.uploadProduct(
                                       productParameters: ProductParameters(

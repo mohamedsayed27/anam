@@ -120,7 +120,7 @@ class OrderDetailsScreen extends StatelessWidget {
                           height: 2.18,
                         ),
                         Text(
-                          "${requestModel.price} ريال ",
+                          "${requestModel.price} ${LocaleKeys.sar.tr()} ",
                           style: Theme.of(context)
                               .textTheme
                               .headlineSmall!
@@ -150,7 +150,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 height: 28,
               ),
               TileAndBodyTextWidget(
-                titleText: "الوصف",
+                titleText: LocaleKeys.description.tr(),
                 bodyText: requestModel.description??"",
                 titleFontSize: 24,
                 bodyFontSize: 16,
@@ -177,7 +177,7 @@ class OrderDetailsScreen extends StatelessWidget {
               //   height: 19,
               // ),
               Text(
-                "الموقع على الخريطة",
+                LocaleKeys.locationOnMap.tr(),
                 style: CustomThemes.darkGreyColorTextTheme(context).copyWith(
                   fontSize: 20.sp,
                   height: 1,

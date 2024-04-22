@@ -50,6 +50,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         onSearchClicked: () {
                           if (cubit.searchValue.text.isNotEmpty) {
                             cubit.allSearchedProductsPageNumber = 1;
+                            cubit.searchedProductsList.clear();
                             cubit.getAllSearchedProducts();
                           }
                         },

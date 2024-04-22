@@ -1,6 +1,7 @@
 import 'package:anam/core/app_theme/app_colors.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
 import 'package:anam/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -46,7 +47,7 @@ class SearchBarWidget extends StatelessWidget {
         enabledBorder: border,
         focusedBorder: border,
         disabledBorder: border,
-        hintText: "البحث",
+        hintText: "${LocaleKeys.search.tr()}",
         hintStyle: Theme.of(context).textTheme.titleSmall,
         floatingLabelBehavior: FloatingLabelBehavior.never,
         prefixIcon: IconButton(

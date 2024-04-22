@@ -4,6 +4,8 @@ import 'package:anam/core/parameters/vet_parameters.dart';
 import 'package:anam/data/models/multi_lang_models/veterian_multi_lang_model.dart';
 import 'package:anam/domain/controllers/services_cubit/services_state.dart';
 import 'package:anam/presentation/screens/map_screen.dart';
+import 'package:anam/translations/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -121,7 +123,7 @@ class _AddVetScreenState extends State<AddVetScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "اضافة بيطره",
+                      LocaleKeys.addVeterinarian.tr(),
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!
@@ -203,7 +205,7 @@ class _AddVetScreenState extends State<AddVetScreen> {
                         : CustomDropDownButton<CityModel>(
                             height: 45,
                             onChanged: cubit.chooseCity,
-                            hint: "اختيار المدينه",
+                            hint: LocaleKeys.pleaseChooseYourCountry.tr(),
                             items: cubit.citiesList
                                 .map((e) => DropdownMenuItem(
                                       value: e,
@@ -220,11 +222,11 @@ class _AddVetScreenState extends State<AddVetScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الاسم بالعربيه",
+                      hintText: LocaleKeys.productNameAr.tr(),
                       controller: cubit.vetNameAr,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -233,11 +235,11 @@ class _AddVetScreenState extends State<AddVetScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الاسم بالانجليزيه",
+                      hintText: LocaleKeys.productNameEn.tr(),
                       controller: cubit.vetNameEn,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -246,12 +248,12 @@ class _AddVetScreenState extends State<AddVetScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "الهاتف",
+                      hintText: LocaleKeys.phone.tr(),
                       controller: cubit.vetPhone,
                       keyboardType: TextInputType.phone,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -260,12 +262,12 @@ class _AddVetScreenState extends State<AddVetScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "البريد الاليكتروني",
+                      hintText: LocaleKeys.email.tr(),
                       controller: cubit.vetEmail,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -274,12 +276,12 @@ class _AddVetScreenState extends State<AddVetScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "المؤهل بالعربيه",
+                      hintText: LocaleKeys.professionAr.tr(),
                       controller: cubit.qualificationsAr,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -288,12 +290,12 @@ class _AddVetScreenState extends State<AddVetScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "المؤهل بالانجليزيه",
+                      hintText: LocaleKeys.professionEn.tr(),
                       controller: cubit.qualificationsEn,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -317,7 +319,7 @@ class _AddVetScreenState extends State<AddVetScreen> {
                           size: 20.r,
                           color: AppColors.authBorderColor,
                         ),
-                        hintText: cubit.mapLocation ?? "اختر الموقع",
+                        hintText: cubit.mapLocation ?? LocaleKeys.chooseLocation.tr(),
                         enabled: false,
                         height: 45,
                       ),
@@ -326,12 +328,12 @@ class _AddVetScreenState extends State<AddVetScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "العنوان بالانجليزيه",
+                      hintText: LocaleKeys.addressAr.tr(),
                       controller: cubit.vetAddressEn,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -340,12 +342,12 @@ class _AddVetScreenState extends State<AddVetScreen> {
                       height: 11,
                     ),
                     CustomTextField(
-                      hintText: "العنوان بالعربيه",
+                      hintText: LocaleKeys.addressEn.tr(),
                       controller: cubit.vetAddressAr,
                       keyboardType: TextInputType.multiline,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "يجب ادخال البيانات";
+                          return LocaleKeys.dataMustBeEntered.tr();
                         }
                         return null;
                       },
@@ -357,18 +359,18 @@ class _AddVetScreenState extends State<AddVetScreen> {
                       height: 40,
                     ),
                     CustomElevatedButton(
-                      title: "ارفاق البيانات",
+                      title: LocaleKeys.uploadData.tr(),
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                          if(widget.veterinarianMultiLangModel==null){
                            if (cubit.vetImage == null) {
                              showToast(
                                  errorType: 1,
-                                 message: "يجب اختيار صوره للبيطري");
+                                 message: LocaleKeys.imagesMustBeSelected.tr());
                            } else {
                              if (cubit.mapLocation == null) {
                                showToast(
-                                   errorType: 1, message: "يجب اختيار الموقع");
+                                   errorType: 1, message: LocaleKeys.locationMustBeSelected.tr());
                              } else {
                                cubit.uploadVet(
                                  vetParameters: VetParameters(

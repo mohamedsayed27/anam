@@ -79,7 +79,7 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
                                   ))
                               .toList(),
                           hint: Text(
-                            "اختر البلد",
+                            LocaleKeys.pleaseChooseYourCountry.tr(),
                             textAlign: TextAlign.start,
                             style: Theme.of(context)
                                 .textTheme
@@ -111,7 +111,7 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
                     height: 12,
                   ),
                   CustomTextField(
-                    hintText: "الملحوظات",
+                    hintText: LocaleKeys.notes.tr(),
                     textAlignVertical: TextAlignVertical.top,
                     controller: cubit.notes,
                     validator: (value) {
