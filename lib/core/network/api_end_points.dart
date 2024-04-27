@@ -2,6 +2,7 @@ class EndPoints{
 static const baseUrl ='https://ban3am.com/api/v2';
 static const imagesBaseUrl ='https://ban3am.com';
 static const products ='/products';
+static const deleteProductImages ='/products/images';
 static const wishList ='$users/wish-list';
 static const changeWishProduct ='$users/wish-list$products';
 static const changeProductStatus ='/products/toggle-status/';

@@ -448,7 +448,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     ),
                     CustomElevatedButton(
                       title: LocaleKeys.uploadYourProduct.tr(),
-                      onPressed: () {
+                      onPressed: ()
+                      // {
+                      //   print(widget.productMultiLangModel?.subCategoryId);
+                      // },
+                      {
                         if (formKey.currentState!.validate()) {
                           if (widget.productMultiLangModel == null) {
                             if (cubit.productImages.isEmpty) {

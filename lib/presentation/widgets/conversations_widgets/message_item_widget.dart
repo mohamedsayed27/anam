@@ -55,28 +55,35 @@ class MessageItemWidget extends StatelessWidget {
                 const CustomSizedBox(
                   width: 8,
                 ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 8.h,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadiusDirectional.only(
-                      topEnd: Radius.circular(16.r),
-                      topStart: Radius.circular(16.r),
-                      bottomEnd: Radius.circular(16.r),
+                Flexible(
+                  // Wrap Text widget with Flexible
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 8.h,
                     ),
-                    border: Border.all(
-                      color: AppColors.greyColor9D,
-                      width: 0.72.w,
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width *
+                          0.7, // Adjust the max width as needed
                     ),
-                  ),
-                  child: Text(
-                    text ?? "Test",
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelSmall!
-                        .copyWith(fontSize: 16.sp, height: 1.5.h),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadiusDirectional.only(
+                        topEnd: Radius.circular(16.r),
+                        topStart: Radius.circular(16.r),
+                        bottomEnd: Radius.circular(16.r),
+                      ),
+                      border: Border.all(
+                        color: AppColors.greyColor9D,
+                        width: 0.72.w,
+                      ),
+                    ),
+                    child: Text(
+                      text ?? "Test",
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelSmall!
+                          .copyWith(fontSize: 16.sp, height: 1.5.h),
+                    ),
                   ),
                 ),
               ],
@@ -88,26 +95,33 @@ class MessageItemWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadiusDirectional.only(
-                      topEnd: Radius.circular(16.r),
-                      topStart: Radius.circular(16.r),
-                      bottomStart: Radius.circular(16.r),
+                Flexible(
+                  // Wrap Text widget with Flexible
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width *
+                          0.7, // Adjust the max width as needed
                     ),
-                    border: Border.all(
-                      color: AppColors.greyColor9D,
-                      width: 0.72.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadiusDirectional.only(
+                        topEnd: Radius.circular(16.r),
+                        topStart: Radius.circular(16.r),
+                        bottomStart: Radius.circular(16.r),
+                      ),
+                      border: Border.all(
+                        color: AppColors.greyColor9D,
+                        width: 0.72.w,
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    text ?? "Test",
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelSmall!
-                        .copyWith(fontSize: 16.sp, height: 1.5.h),
+                    child: Text(
+                      text ?? "Test",
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelSmall!
+                          .copyWith(fontSize: 16.sp, height: 1.5.h),
+                    ),
                   ),
                 ),
                 const CustomSizedBox(

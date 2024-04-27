@@ -18,6 +18,7 @@ class PackagesRemoteDataSource{
         url: "${EndPoints.packages}/?is_paginated=false",
         token: token,
       );
+      print(response);
       return Right(
         GetAllPackagesModel.fromJson(response.data),
       );

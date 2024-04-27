@@ -77,6 +77,10 @@ class AuthCubit extends Cubit<AuthState> {
           value: r.loginAndRegisterDataModel!.user!.phone.toString(),
         );
         await CacheHelper.saveData(
+          key: CacheKeys.profileImage,
+          value: r.loginAndRegisterDataModel!.user!.image.toString(),
+        );
+        await CacheHelper.saveData(
           key: CacheKeys.userId,
           value: r.loginAndRegisterDataModel!.user!.id,
         );
@@ -116,7 +120,6 @@ class AuthCubit extends Cubit<AuthState> {
     response.fold(
       (l) {
         baseErrorModel = l.baseErrorModel;
-        print(l.baseErrorModel);
         emit(SocialLoginErrorState(
             error: l.baseErrorModel.errors != null
                 ? baseErrorModel!.errors![0]
@@ -133,6 +136,10 @@ class AuthCubit extends Cubit<AuthState> {
         await CacheHelper.saveData(
           key: CacheKeys.userId,
           value: r.loginAndRegisterDataModel!.user!.id,
+        );
+        await CacheHelper.saveData(
+          key: CacheKeys.profileImage,
+          value: r.loginAndRegisterDataModel!.user!.image.toString(),
         );
         await CacheHelper.saveData(
           key: CacheKeys.userType,
@@ -206,6 +213,10 @@ class AuthCubit extends Cubit<AuthState> {
           key: CacheKeys.userType,
           value: r.loginAndRegisterDataModel!.user!.type.toString(),
         );
+        await CacheHelper.saveData(
+          key: CacheKeys.profileImage,
+          value: r.loginAndRegisterDataModel!.user!.image.toString(),
+        );
         token = CacheHelper.getData(
           key: CacheKeys.token,
         );
@@ -227,7 +238,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   void changeCity(CountryModel? value) {
     chosenCity = value;
-    print(chosenCity);
     emit(ChangeCityState());
   }
 
@@ -238,10 +248,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> googleSignIn() async {
     GoogleSignIn googleSignIn = GoogleSignIn(
-      clientId: Platform.isIOS ? googleClientIdIos : googleClientIdAndroid,
+      clientId: Platform.isIOS ? googleClientIdIos : null,
       scopes: scopes,
     );
-    print(googleSignIn.signInOption);
     try {
       final response = await googleSignIn.signIn();
       socialLogin(
@@ -251,9 +260,7 @@ class AuthCubit extends Cubit<AuthState> {
         socialType: "google",
         userType: selectedRole ?? "",
       );
-      print(response);
     } catch (error) {
-      print(error);
     }
   }
 
@@ -267,7 +274,6 @@ class AuthCubit extends Cubit<AuthState> {
       },
       (r) {
         countriesList.addAll(r.countriesList!);
-        print(countriesList);
         emit(GetAllCountriesSuccessState());
       },
     );

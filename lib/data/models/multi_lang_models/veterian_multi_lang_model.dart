@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import 'image_multi_lang_model.dart';
+
 class VeterinarianMultiLangModel extends Equatable {
   final int? id;
   final Map<String, String>? name;
@@ -18,9 +20,10 @@ class VeterinarianMultiLangModel extends Equatable {
   final int? statusId;
   final String? createdAt;
   final String? updatedAt;
-
-  const VeterinarianMultiLangModel({
+  final List<MultiLangImageModel>? images;
+  const VeterinarianMultiLangModel( {
     this.id,
+    this.images,
     this.name,
     this.address,
     this.qualification,
@@ -71,6 +74,11 @@ class VeterinarianMultiLangModel extends Equatable {
       image: json['image'],
       coordinates: json['coordinates'],
       mapLocation: json['map_location'],
+      images:json['images'] != null&& json['images'].isNotEmpty
+          ? List<MultiLangImageModel>.from(
+        json['images'].map((e) => MultiLangImageModel.fromJson(e)),
+      )
+          : null,
       isApproved: json['is_approved'],
       cityId: json['city_id'],
       countryId: json['country_id'],

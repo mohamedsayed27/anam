@@ -63,6 +63,7 @@ class MultiLangRemoteDataSource{
         url: "${EndPoints.stores}/$id${EndPoints.multiLang}",
         token: token,
       );
+      print(response);
       return Right(
         StoreMultiLangModel.fromJson(response.data["result"]),
       );

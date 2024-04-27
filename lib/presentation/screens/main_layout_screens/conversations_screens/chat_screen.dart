@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:anam/core/app_theme/app_colors.dart';
 import 'package:anam/core/app_theme/custom_themes.dart';
+import 'package:anam/core/cache_helper/cache_keys.dart';
+import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -152,7 +154,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   int.parse(
                                     userId.toString(),
                                   )
-                                  ?"":widget.chatScreenArgs.image,
+                                  ?CacheHelper.getData(key: CacheKeys.profileImage):widget.chatScreenArgs.image,
                               text: cubit.conversationsList![index].message,
                             );
                           },

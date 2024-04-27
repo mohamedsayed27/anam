@@ -30,7 +30,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: AppBar().preferredSize,
-        child: CustomAppBar(title: LocaleKeys.followersList.tr()),
+        child: CustomAppBar(title: LocaleKeys.followersList),
       ),
       body: SafeArea(
         child: BlocConsumer<ProfileCubit, ProfileState>(

@@ -25,6 +25,7 @@ import '../../../data/datasources/remote_datasource/services_remote_data_source.
 import '../../../data/datasources/remote_datasource/stores_services_datasource.dart';
 import '../../../data/datasources/remote_datasource/vet_services_remote_datasource.dart';
 import '../../../data/models/city_model/city_model.dart';
+import '../../../data/models/multi_lang_models/image_multi_lang_model.dart';
 import '../../../data/models/services/services_model.dart';
 import '../../../data/models/stores_models/store_data_model.dart';
 import '../../../data/models/vet_models/vet_model.dart';
@@ -763,7 +764,7 @@ class ServicesCubit extends Cubit<ServicesState> {
   }
 
   CityModel? chosenCity;
-
+  List<MultiLangImageModel> storeUploadedImages = [];
   void chooseCity(CityModel? value) {
     chosenCity = value;
     emit(ChangeCategoryState());

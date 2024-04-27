@@ -31,7 +31,7 @@ class _FollowingScreenState extends State<FollowingScreen> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: AppBar().preferredSize,
-        child:  CustomAppBar(title: "${LocaleKeys.followingList.tr()}"),
+        child:  CustomAppBar(title: "${LocaleKeys.followingList}"),
       ),
       body: SafeArea(
         child: BlocConsumer<ProfileCubit, ProfileState>(

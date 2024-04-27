@@ -13,7 +13,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
-import '../../../core/pusher/pusher_methods.dart';
 import '../../../domain/controllers/chat_cubit/chat_cubit.dart';
 import '../conversations_widgets/chat_text_field.dart';
 import '../conversations_widgets/message_item_widget.dart';

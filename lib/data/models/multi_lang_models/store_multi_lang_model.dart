@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import 'image_multi_lang_model.dart';
+
 class StoreMultiLangModel extends Equatable {
   final int? id;
   final Map<String, String>? name;
@@ -17,6 +19,7 @@ class StoreMultiLangModel extends Equatable {
   final int? statusId;
   final String? createdAt;
   final String? updatedAt;
+  final List<MultiLangImageModel>? images;
 
   const StoreMultiLangModel({
     this.id,
@@ -33,6 +36,7 @@ class StoreMultiLangModel extends Equatable {
     this.vendorId,
     this.serviceId,
     this.statusId,
+    this.images,
     this.createdAt,
     this.updatedAt,
   });
@@ -72,6 +76,11 @@ class StoreMultiLangModel extends Equatable {
       countryId: json['country_id'],
       vendorId: json['vendor_id'],
       serviceId: json['service_id'],
+      images: json['images'].isNotEmpty && json['images'] != null
+          ? List<MultiLangImageModel>.from(
+        json['images'].map((e) => MultiLangImageModel.fromJson(e)),
+      )
+          : null,
       statusId: json['status_id'],
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],

@@ -1,14 +1,17 @@
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
+import 'package:anam/core/network/api_end_points.dart';
 import 'package:anam/core/parameters/store_parameters.dart';
 import 'package:anam/data/models/city_model/city_model.dart';
 import 'package:anam/data/models/multi_lang_models/store_multi_lang_model.dart';
 import 'package:anam/domain/controllers/services_cubit/services_state.dart';
 import 'package:anam/presentation/screens/map_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/app_theme/app_colors.dart';
 import '../../../../domain/controllers/services_cubit/services_cubit.dart';
@@ -21,6 +24,7 @@ import '../../../widgets/shared_widget/custom_sized_box.dart';
 
 class AddStoreScreen extends StatefulWidget {
   final StoreMultiLangModel? storeMultiLangModel;
+
   const AddStoreScreen({super.key, this.storeMultiLangModel});
 
   @override
@@ -33,26 +37,30 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
 
   @override
   void initState() {
+    super.initState();
     cubit = ServicesCubit.get(context);
     if (widget.storeMultiLangModel != null) {
-      cubit.storeNameAr.text = widget.storeMultiLangModel!.name?["ar"]??"";
-      cubit.storeNameEn.text = widget.storeMultiLangModel!.name?["en"]??"";
-      cubit.trunkTypeAr.text = widget.storeMultiLangModel!.truckType?["ar"]??"";
-      cubit.trunkTypeEn.text = widget.storeMultiLangModel!.truckType?["en"]??"";
-      cubit.storePhone.text = widget.storeMultiLangModel!.phone??"";
-      cubit.chosenCity = cubit.citiesList.firstWhere((element) => element.id==widget.storeMultiLangModel!.cityId);
+      cubit.storeNameAr.text = widget.storeMultiLangModel!.name?["ar"] ?? "";
+      cubit.storeNameEn.text = widget.storeMultiLangModel!.name?["en"] ?? "";
+      cubit.trunkTypeAr.text =
+          widget.storeMultiLangModel!.truckType?["ar"] ?? "";
+      cubit.trunkTypeEn.text =
+          widget.storeMultiLangModel!.truckType?["en"] ?? "";
+      cubit.storePhone.text = widget.storeMultiLangModel!.phone ?? "";
+      cubit.chosenCity = cubit.citiesList.firstWhere(
+          (element) => element.id == widget.storeMultiLangModel!.cityId);
       cubit.mapCoordinates = widget.storeMultiLangModel!.coordinates;
+      cubit.storeUploadedImages = widget.storeMultiLangModel!.images ?? [];
       cubit.mapLocation = widget.storeMultiLangModel!.mapLocation;
-      cubit.storeEmail.text = widget.storeMultiLangModel!.email??"";
+      cubit.storeEmail.text = widget.storeMultiLangModel!.email ?? "";
     }
-    super.initState();
   }
+
   @override
   void dispose() {
-
-
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -333,8 +341,72 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                         },
                       ),
                     ),
+                    const CustomSizedBox(
+                      height: 16,
+                    ),
                     CustomSizedBox(
-                      height: cubit.storeImages.isEmpty ? 0 : 11,
+                      height: cubit.storeUploadedImages.isEmpty ? 0 : 60,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: cubit.storeUploadedImages.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            height: 60.h,
+                            width: 60.w,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.r),
+                            ),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                CachedNetworkImage(
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  imageUrl: "${EndPoints
+                                  .imagesBaseUrl
+                                  }/${cubit.storeUploadedImages[index]
+                                      .imageArEn!}",
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) {
+                                    return Shimmer.fromColors(
+                                      baseColor: Colors.grey[200]!,
+                                      highlightColor: Colors.grey[300]!,
+                                      child: Container(
+                                        height: double.infinity,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: Colors.black,
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                ),
+                                Container(
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  color: AppColors.blackColor.withOpacity(0.1),
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: AppColors.whiteColor,
+                                    size: 22.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ).onlyDirectionalPadding(end: 5);
+                        },
+                      ),
+                    ),
+                    CustomSizedBox(
+                      height: cubit.storeImages.isEmpty&&cubit.storeUploadedImages.isEmpty ? 0 : 16,
                     ),
                     InkWell(
                       onTap: () async {
@@ -352,7 +424,8 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                           size: 20.r,
                           color: AppColors.authBorderColor,
                         ),
-                        hintText: cubit.mapLocation ?? LocaleKeys.chooseLocation.tr(),
+                        hintText:
+                            cubit.mapLocation ?? LocaleKeys.chooseLocation.tr(),
                         enabled: false,
                         height: 45,
                       ),
@@ -364,22 +437,25 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                       title: LocaleKeys.uploadData.tr(),
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          if(widget.storeMultiLangModel==null){
+                          if (widget.storeMultiLangModel == null) {
                             if (cubit.storeImage == null) {
                               showToast(
                                   errorType: 1,
-                                  message: LocaleKeys.imagesMustBeSelected.tr());
+                                  message:
+                                      LocaleKeys.imagesMustBeSelected.tr());
                             } else {
                               if (cubit.mapLocation == null) {
                                 showToast(
-                                    errorType: 1, message: LocaleKeys.locationMustBeSelected.tr());
+                                    errorType: 1,
+                                    message:
+                                        LocaleKeys.locationMustBeSelected.tr());
                               } else {
                                 if (cubit.storeImages.isEmpty) {
                                   showToast(
                                       errorType: 1,
-                                      message: LocaleKeys.imagesMustBeSelected.tr());
+                                      message:
+                                          LocaleKeys.imagesMustBeSelected.tr());
                                 } else {
-
                                   cubit.uploadStore(
                                     storeParameters: StoreParameters(
                                       image: cubit.storeImage!,
@@ -400,25 +476,25 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
                                 }
                               }
                             }
-                          }else {
-                            cubit.updateStore(vetParameters: StoreParameters(
-                            image: cubit.storeImage,
-                            id: widget.storeMultiLangModel!.id!.toString(),
-                            nameAr: cubit.storeNameAr.text,
-                            nameEn: cubit.storeNameEn.text,
-                            phone: cubit.storePhone.text,
-                            method: "PUT",
-                            countryId: cubit.chosenCity!.country!.id!
-                                .toString(),
-                            cityId: cubit.chosenCity!.id!.toString(),
-                            truckTypeEn: cubit.trunkTypeEn.text,
-                            images: cubit.storeImages,
-                            truckTypeAr: cubit.trunkTypeAr.text,
-                            coordinates: cubit.mapCoordinates,
-                            mapLocation: cubit.mapLocation,
-                            email: cubit.storeEmail.text,
-
-                          ));
+                          } else {
+                            cubit.updateStore(
+                                vetParameters: StoreParameters(
+                              image: cubit.storeImage,
+                              id: widget.storeMultiLangModel!.id!.toString(),
+                              nameAr: cubit.storeNameAr.text,
+                              nameEn: cubit.storeNameEn.text,
+                              phone: cubit.storePhone.text,
+                              method: "PUT",
+                              countryId:
+                                  cubit.chosenCity!.country!.id!.toString(),
+                              cityId: cubit.chosenCity!.id!.toString(),
+                              truckTypeEn: cubit.trunkTypeEn.text,
+                              images: cubit.storeImages,
+                              truckTypeAr: cubit.trunkTypeAr.text,
+                              coordinates: cubit.mapCoordinates,
+                              mapLocation: cubit.mapLocation,
+                              email: cubit.storeEmail.text,
+                            ));
                           }
                         }
                       },

@@ -33,7 +33,6 @@ class ProductsRemoteDatasource {
       return Right(GetAllProductModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {
-        print(e);
         return Left(
           ErrorException(
             baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
@@ -49,7 +48,6 @@ class ProductsRemoteDatasource {
     required int pageNumber,
     required String value,
   }) async {
-    print("${EndPoints.products}?search=$value&page=$pageNumber");
     try {
       final response = await dioHelper.getData(
         url: "${EndPoints.products}?search=$value&page=$pageNumber",
@@ -57,11 +55,36 @@ class ProductsRemoteDatasource {
         //   "search": value,
         // },
       );
-      print(response);
       return Right(GetAllProductModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {
-        print("${e}""error");
+        return Left(
+          ErrorException(
+            baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
+          ),
+        );
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<Either<ErrorException, BaseResponseModel>> deleteProductImages({
+    required int id,
+  }) async {
+    try {
+      final response = await dioHelper.deleteData(
+        url: EndPoints.deleteProductImages,
+        data:FormData.fromMap({
+          "ids":id,
+        }),
+        // query: {
+        //   "search": value,
+        // },
+      );
+      return Right(BaseResponseModel.fromJson(response.data));
+    } catch (e) {
+      if (e is DioException) {
         return Left(
           ErrorException(
             baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
@@ -83,7 +106,6 @@ class ProductsRemoteDatasource {
       return Right(GetAllProductModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {
-        print(e);
         return Left(
           ErrorException(
             baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
@@ -105,7 +127,6 @@ class ProductsRemoteDatasource {
       return Right(BaseResponseModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {
-        print(e);
         return Left(
           ErrorException(
             baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
@@ -132,7 +153,6 @@ class ProductsRemoteDatasource {
       return Right(BaseResponseModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {
-        print(e);
         return Left(
           ErrorException(
             baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
@@ -151,11 +171,9 @@ class ProductsRemoteDatasource {
         url: "${EndPoints.products}${EndPoints.following}?page=$pageNumber",
         token: token,
       );
-      print(response);
       return Right(GetAllProductModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {
-        print(e);
         return Left(
           ErrorException(
             baseErrorModel: BaseErrorModel.fromJson(e.response!.data),
@@ -292,7 +310,6 @@ class ProductsRemoteDatasource {
         ),
         token: token,
       );
-      print(response);
       return Right(
         UploadOrUpdateProductModel.fromJson(
           response.data,
@@ -300,7 +317,6 @@ class ProductsRemoteDatasource {
       );
     } catch (e) {
       if (e is DioException) {
-        print(e.response);
         return Left(
           ErrorException(
             baseErrorModel: BaseErrorModel.fromJson(

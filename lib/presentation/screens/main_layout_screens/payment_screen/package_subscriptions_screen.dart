@@ -1,5 +1,6 @@
-import 'package:anam/core/cache_helper/cache_keys.dart';
-import 'package:anam/core/cache_helper/shared_pref_methods.dart';
+
+import 'dart:convert';
+
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/data/models/packages_model/packages_model.dart';
@@ -31,14 +32,14 @@ class _PackageSubscriptionsScreenState
     extends State<PackageSubscriptionsScreen> {
   int? currentIndex;
   var billingDetails = BillingDetails(
-    CacheHelper.getData(key: CacheKeys.userName),
-    CacheHelper.getData(key: CacheKeys.userEmail),
+    "xfvxdvzx",
+    "email@email.com",
     "+97311111111",
     "st. 12",
     "sa",
     "saudi arabia",
     "saudi arabia",
-    "",
+    "12321",
   );
 
   late PaymentSdkConfigurationDetails configuration;
@@ -65,6 +66,7 @@ class _PackageSubscriptionsScreenState
     FlutterPaytabsBridge.startCardPayment(configuration, (event) {
       setState(() {
         print(event);
+        print("jsonDecodejsonDecodejsonDecodejsonDecodejsonDecode");
         if (event["status"] == "success") {
           // Handle transaction details here.
 
@@ -78,8 +80,12 @@ class _PackageSubscriptionsScreenState
             print("failed transaction");
           }
         } else if (event["status"] == "error") {
+          print(event["status"]);
+          print("event[status]error");
           // Handle error here.
         } else if (event["status"] == "event") {
+          print(event["status"]);
+          print("event[status] event");
           // Handle cancel events here.
         }
       });
