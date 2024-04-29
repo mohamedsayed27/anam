@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 
 import '../../presentation/screens/main_layout_screens/followers_screen/followers_screen.dart';
 import '../../presentation/screens/main_layout_screens/notification_screen/notification_screen.dart';
+import '../../presentation/screens/main_layout_screens/payment_screen/package_subscriptions_screen.dart';
 import '../../presentation/screens/main_layout_screens/profile_screens/personal_data_screen.dart';
 import '../../presentation/screens/main_layout_screens/profile_screens/products_screen.dart';
 
@@ -57,6 +58,10 @@ class AppRouter {
         case ScreenName.personalDataScreen:
           return SlideRightRoute(
             page: const PersonalDataScreen(),
+          );
+        case ScreenName.packageSubscriptionsScreen:
+          return SlideRightRoute(
+            page: const PackageSubscriptionsScreen(),
           );
         case ScreenName.productDetailsScreen:
           ProductDataModel productDataModel = settings.arguments as ProductDataModel;

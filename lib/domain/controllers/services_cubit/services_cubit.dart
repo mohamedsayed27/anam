@@ -488,6 +488,7 @@ class ServicesCubit extends Cubit<ServicesState> {
     );
     response.fold(
       (l) {
+        print(l);
         baseErrorModel = l.baseErrorModel;
         emit(UpdateVetErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
@@ -671,6 +672,7 @@ class ServicesCubit extends Cubit<ServicesState> {
     response.fold(
       (l) {
         baseErrorModel = l.baseErrorModel;
+        print(l);
         emit(UpdateStoreErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
       (r) {

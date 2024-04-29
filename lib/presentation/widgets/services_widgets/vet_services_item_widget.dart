@@ -165,8 +165,8 @@ class VetServicesWidget extends StatelessWidget {
                       return CustomElevatedButton(
                         title: cubit.followedVendors[
                                 vetModel.vendor!.id!.toString()]
-                            ? "الغاء المتابعة"
-                            : "متابعة",
+                            ? LocaleKeys.unFollow.tr()
+                            : LocaleKeys.follow.tr(),
                         onPressed: () {
                           print(cubit.followedVendors[
                           vetModel.vendor!.id!.toString()]);

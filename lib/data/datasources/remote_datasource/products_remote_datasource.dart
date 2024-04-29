@@ -75,9 +75,10 @@ class ProductsRemoteDatasource {
     try {
       final response = await dioHelper.deleteData(
         url: EndPoints.deleteProductImages,
-        data:FormData.fromMap({
-          "ids":id,
-        }),
+        // contentType: "application/x-www-form-urlencoded",
+        data: {
+          "ids": [id], // Pass id as a list
+        },
         // query: {
         //   "search": value,
         // },

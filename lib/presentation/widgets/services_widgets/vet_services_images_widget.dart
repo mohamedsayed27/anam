@@ -1,15 +1,8 @@
-import 'package:anam/core/app_theme/custom_themes.dart';
-import 'package:anam/core/assets_path/images_path.dart';
-import 'package:anam/core/assets_path/svg_path.dart';
-import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../core/app_theme/app_colors.dart';
 import '../shared_widget/custom_circle_button.dart';
 
 class ServicesDetailsIntroImageWidget extends StatelessWidget {

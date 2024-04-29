@@ -24,7 +24,7 @@ class VanComponentBuilder extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "نقل المواشي",
+          LocaleKeys.livestockTransportation.tr(),
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                 fontSize: 20.sp,
               ),

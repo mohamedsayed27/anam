@@ -7,6 +7,7 @@ import 'package:anam/translations/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/app_theme/app_colors.dart';
 import '../../../../core/app_theme/custom_themes.dart';
@@ -17,6 +18,7 @@ import '../../../widgets/product_details_widgets/product_details_images_widget.d
 import '../../../widgets/shared_widget/title_and_body_text_widget.dart';
 import '../../../widgets/product_details_widgets/vendor_details_component.dart';
 import '../../../widgets/vendor_details_widgets/rating_component_builder.dart';
+import '../google_maps_screens/open_current_loctaion_screen.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final ProductDataModel productDataModel;
@@ -162,12 +164,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 const CustomSizedBox(
                   height: 22,
                 ),
-                SizedBox(
-                  height: 193.h,
-                  width: double.infinity,
-                  child: Image.asset(
-                    ImagesPath.mapImage,
-                    fit: BoxFit.cover,
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (_)=>LocationOnMapScreen(initialLocation: LatLng(double.parse(widget.productDataModel.coordinates!.split(",").first), double.parse(widget.productDataModel.coordinates!.split(",").last.trim(),)),)));
+                  },
+                  child: SizedBox(
+                    height: 193.h,
+                    width: double.infinity,
+                    child: Image.asset(ImagesPath.mapImage,fit: BoxFit.cover,),
                   ),
                 ).symmetricPadding(horizontal: 16),
                 const CustomDivider(hPadding: 28),
@@ -179,7 +183,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
-                      builder: (_) => ChatBottomSheet(receiverId: widget.productDataModel.uploadedBy!.id!,),
+                      builder: (_) => ChatBottomSheet(receiverId: widget.productDataModel.uploadedBy!.id!, name: widget.productDataModel.uploadedBy!.name??'',image: widget.productDataModel.uploadedBy!.image??''),
                     );
                   }, price: widget.productDataModel.regularPrice?.toString()??"", rate: widget.productDataModel.rate!.toString(),
                 )

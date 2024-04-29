@@ -68,8 +68,8 @@ class _AddProductReviewBottomSheetState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const ScreenTitleTextWidget(
-                    title: "التقييم",
+                  ScreenTitleTextWidget(
+                    title: LocaleKeys.rating.tr(),
                   ),
                   const CustomSizedBox(
                     height: 1,
@@ -83,7 +83,7 @@ class _AddProductReviewBottomSheetState
                     controller: cubit.addProductReviewName,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "الرجاء إدخال البيانات في حقل النص.";
+                        return LocaleKeys.dataMustBeEntered.tr();
                       }
                       return null;
                     },
@@ -106,7 +106,7 @@ class _AddProductReviewBottomSheetState
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "التقييم",
+                          LocaleKeys.rating.tr(),
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                         RatingBar.builder(
@@ -134,7 +134,7 @@ class _AddProductReviewBottomSheetState
                     controller: cubit.addProductReviewEmail,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "الرجاء إدخال البيانات في حقل النص.";
+                        return LocaleKeys.dataMustBeEntered.tr();
                       }
                       return null;
                     },
@@ -143,11 +143,11 @@ class _AddProductReviewBottomSheetState
                     height: 14,
                   ),
                   CustomTextField(
-                    hintText: "النص",
+                    hintText: LocaleKeys.text.tr(),
                     controller: cubit.addProductReviewDescription,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "الرجاء إدخال البيانات في حقل النص.";
+                        return LocaleKeys.dataMustBeEntered.tr();
                       }
                       return null;
                     },
@@ -156,11 +156,11 @@ class _AddProductReviewBottomSheetState
                     height: 14,
                   ),
                   CustomTextField(
-                    hintText: "العنوان",
+                    hintText: LocaleKeys.address.tr(),
                     controller: cubit.addProductReviewLocation,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "الرجاء إدخال البيانات في حقل النص.";
+                        return LocaleKeys.dataMustBeEntered.tr();
                       }
                       return null;
                     },
@@ -169,12 +169,12 @@ class _AddProductReviewBottomSheetState
                     height: 14,
                   ),
                   CustomTextField(
-                    hintText: "العمر",
+                    hintText: LocaleKeys.age.tr(),
                     controller: cubit.addProductReviewAge,
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "الرجاء إدخال البيانات في حقل النص.";
+                        return LocaleKeys.dataMustBeEntered.tr();
                       }
                       return null;
                     },
@@ -183,7 +183,7 @@ class _AddProductReviewBottomSheetState
                     height: 14,
                   ),
                   CustomElevatedButton(
-                    title: "اضافة التقييم",
+                    title: LocaleKeys.addReview.tr(),
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         cubit.addProductReview(

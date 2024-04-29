@@ -70,7 +70,7 @@ class _PhoneComponentState extends State<PhoneComponent> {
                 child: Stack(
                   children: [
                     Text(
-                      "البلد / المنطقة",
+                      LocaleKeys.countryRegion.tr(),
                       textAlign: TextAlign.start,
                       style: Theme.of(context)
                           .textTheme
@@ -85,7 +85,7 @@ class _PhoneComponentState extends State<PhoneComponent> {
                               ))
                           .toList(),
                       hint: Text(
-                        "اختر البلد",
+                        LocaleKeys.chooseCountry.tr(),
                         textAlign: TextAlign.start,
                         style: Theme.of(context)
                             .textTheme

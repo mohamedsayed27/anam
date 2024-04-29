@@ -54,9 +54,10 @@ class DioHelper {
     dynamic data,
     String lang = 'ar',
     String? token,
+    String? contentType,
   }) async {
     dio.options.headers = {
-      'Content-Type': 'application/json',
+      'Content-Type': contentType??'application/json',
       'lang': '',
       if (token != null) "Authorization": "Bearer $token",
       'Accept': 'text/plain',

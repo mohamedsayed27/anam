@@ -38,6 +38,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    if(CacheHelper.getData(key: CacheKeys.userType)==UserTypeEnum.user.name){
+      ProductsCubit.get(context).userFollowingProductsPageNumber==1;
+      ProductsCubit.get(context).getUserFollowingProducts();
+    }
+    ProductsCubit.get(context).allProductsPageNumber == 1;
+    ProductsCubit.get(context).getAllProducts();
     _itemsTypeTabController = TabController(
       length: 2,
       vsync: this,
@@ -80,10 +86,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    _itemsTypeTabController.dispose();
-    _followersTabController.dispose();
-    _followersServicesTabController.dispose();
-    expandController.dispose();
+    // _itemsTypeTabController.dispose();
+    // _followersTabController.dispose();
+    // _followersServicesTabController.dispose();
+    // expandController.dispose();
     super.dispose();
   }
 

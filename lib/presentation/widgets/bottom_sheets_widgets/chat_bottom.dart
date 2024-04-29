@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:anam/core/app_theme/app_colors.dart';
 import 'package:anam/core/assets_path/fonts_path.dart';
 import 'package:anam/core/assets_path/svg_path.dart';
+import 'package:anam/core/cache_helper/cache_keys.dart';
+import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/data/models/chat_models/conversation_model.dart';
@@ -19,8 +21,9 @@ import '../conversations_widgets/message_item_widget.dart';
 
 class ChatBottomSheet extends StatefulWidget {
   final int receiverId;
-
-  const ChatBottomSheet({super.key, required this.receiverId});
+  final String name;
+  final String image;
+  const ChatBottomSheet({super.key, required this.receiverId, required this.name, required this.image});
 
   @override
   State<ChatBottomSheet> createState() => _ChatBottomSheetState();
@@ -132,7 +135,7 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
                       ),
                       Expanded(
                         child: Text(
-                          "احمد خالد",
+                          widget.name,
                           style: TextStyle(
                             fontSize: 17.sp,
                             color: AppColors.whiteColor,
@@ -170,6 +173,11 @@ class _ChatBottomSheetState extends State<ChatBottomSheet> {
                                       ? true
                                       : false,
                               text: cubit.conversationsList![index].message,
+                              image: cubit.conversationsList![index].senderId ==
+                                  int.parse(
+                                    userId.toString(),
+                                  )
+                                  ?CacheHelper.getData(key: CacheKeys.profileImage):widget.image,
                             );
                           },
                         ),

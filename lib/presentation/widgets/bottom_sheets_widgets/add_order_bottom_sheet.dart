@@ -116,7 +116,7 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
                     controller: cubit.notes,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "يجب ادخال البيانات";
+                        return LocaleKeys.dataMustBeEntered.tr();
                       }
                       return null;
                     },
@@ -126,12 +126,12 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
                     height: 12,
                   ),
                   CustomTextField(
-                    hintText: "العنوان",
+                    hintText: LocaleKeys.address.tr(),
                     textAlignVertical: TextAlignVertical.top,
                     controller: cubit.address,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "يجب ادخال البيانات";
+                        return LocaleKeys.dataMustBeEntered.tr();
                       }
                       return null;
                     },
@@ -145,7 +145,7 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
                     controller: cubit.details,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "يجب ادخال البيانات";
+                        return LocaleKeys.dataMustBeEntered.tr();
                       }
                       return null;
                     },
@@ -174,7 +174,7 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
                       ),
                       controller:
                           TextEditingController(text: cubit.mapLocation),
-                      hintText: cubit.mapLocation ?? "اختر الموقع",
+                      hintText: cubit.mapLocation ?? LocaleKeys.locationMustBeSelected.tr(),
                       enabled: false,
                       height: 45,
                     ),
@@ -187,7 +187,7 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
                     controller: cubit.price,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "يجب ادخال البيانات";
+                        return LocaleKeys.dataMustBeEntered.tr();
                       }
                       return null;
                     },
@@ -201,9 +201,9 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
                     onPressed: () {
                       if(formKey.currentState!.validate()){
                         if(cubit.chosenCity==null){
-                          showToast(errorType: 1, message: "اختر كود الدوله",);
+                          showToast(errorType: 1, message: LocaleKeys.chooseCountryCode.tr(),);
                         }else if(cubit.mapLocation==null){
-                          showToast(errorType: 1, message: "اختر المدينه",);
+                          showToast(errorType: 1, message: LocaleKeys.chooseCountry.tr(),);
                         }
                         else {
                           cubit.sendRequest(

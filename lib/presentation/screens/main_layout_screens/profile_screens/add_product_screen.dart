@@ -6,12 +6,15 @@ import 'package:anam/data/models/categories/sub_categories_model.dart';
 import 'package:anam/data/models/multi_lang_models/product_multi_lang_model.dart';
 import 'package:anam/presentation/screens/map_screen.dart';
 import 'package:anam/translations/locale_keys.g.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/app_theme/app_colors.dart';
+import '../../../../core/network/api_end_points.dart';
 import '../../../../domain/controllers/products_cubit/products_cubit.dart';
 import '../../../../domain/controllers/products_cubit/products_state.dart';
 import '../../../widgets/auth_widgets/custom_drop_down_button.dart';
@@ -73,6 +76,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
           listener: (context, state) {
             if (state is UploadProductLoadingState) {
               showProgressIndicator(context);
+            }
+            if (state is DeleteProductImagesSuccessState) {
+              Navigator.pop(context);
+              widget.productMultiLangModel!.images!.removeWhere((element) => element.id==state.imageId);
+              showToast(errorType: 0, message: "Deleted");
+            }
+            if (state is DeleteProductImagesErrorState) {
+              Navigator.pop(context);
+              print(state.error);
+              showToast(errorType: 1, message: "Error");
             }
             if (state is UploadProductSuccessState) {
               Navigator.pop(context);
@@ -356,6 +369,80 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             child: Image.file(
                               cubit.productImages[index],
                               fit: BoxFit.cover,
+                            ),
+                          ).onlyDirectionalPadding(end: 5);
+                        },
+                      ),
+                    ),
+                    if(widget.productMultiLangModel!=null&&widget.productMultiLangModel!.images!=null&&widget.productMultiLangModel!.images!.isNotEmpty)Text(
+                      LocaleKeys.attachedImages.tr(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(fontSize: 16.sp),
+                    ),
+                    if(widget.productMultiLangModel!=null&&widget.productMultiLangModel!.images!=null&&widget.productMultiLangModel!.images!.isNotEmpty)const CustomSizedBox(
+                      height: 11,
+                    ),
+                    if(widget.productMultiLangModel!=null&&widget.productMultiLangModel!.images!=null&&widget.productMultiLangModel!.images!.isNotEmpty)CustomSizedBox(
+                      height: widget.productMultiLangModel!.images!.isEmpty ? 0 : 40,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: widget.productMultiLangModel!.images!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            height: 60.h,
+                            width: 60.w,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.r),
+                            ),
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                CachedNetworkImage(
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  imageUrl: "${EndPoints
+                                      .imagesBaseUrl
+                                  }/${widget.productMultiLangModel!.images![index]
+                                      .imageAr!}",
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) {
+                                    return Shimmer.fromColors(
+                                      baseColor: Colors.grey[200]!,
+                                      highlightColor: Colors.grey[300]!,
+                                      child: Container(
+                                        height: double.infinity,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: Colors.black,
+                                          borderRadius:
+                                          BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                                ),
+                                Container(
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  color: AppColors.blackColor.withOpacity(0.1),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    cubit.deleteProductImages(id: widget.productMultiLangModel!.images![index].id!);
+                                    showProgressIndicator(context);
+                                  },
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: AppColors.whiteColor,
+                                    size: 22.sp,
+                                  ),
+                                ),
+                              ],
                             ),
                           ).onlyDirectionalPadding(end: 5);
                         },

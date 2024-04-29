@@ -23,7 +23,7 @@ class VetComponentBuilder extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "البيطرة",
+          LocaleKeys.veterinaryServices.tr(),
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
             fontSize: 20.sp,
           ),

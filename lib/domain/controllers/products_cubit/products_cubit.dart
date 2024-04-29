@@ -91,6 +91,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   void getAllProducts() async {
     if (allProductsPageNumber == 1) {
       getAllProductsLoading = true;
+      productsList.clear();
       emit(GetAllProductsLoadingState());
     }
     final response = await _productsRemoteDatasource.getAllProducts(
@@ -148,7 +149,6 @@ class ProductsCubit extends Cubit<ProductsState> {
       getSearchedProductsLoading = true;
       emit(GetAllProductsLoadingState());
     }
-    print(searchValue.text);
     final response = await _productsRemoteDatasource.getAllSearchedProducts(
       pageNumber: allSearchedProductsPageNumber,
       value: searchValue.text,
@@ -242,7 +242,6 @@ class ProductsCubit extends Cubit<ProductsState> {
             }
 
           }
-          favoriteProductsList.forEach((element) {});
 
           emit(GetFavoriteProductsSuccessState());
         }
@@ -254,9 +253,12 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   void getUserFollowingProducts() async {
     if(userFollowingProductsPageNumber==1){
+
       getUserFollowingList = true;
+      userFollowingProductsList.clear();
+      emit(GetUserFollowingProductsLoadingState());
     }
-    emit(GetUserFollowingProductsLoadingState());
+
     final response = await _productsRemoteDatasource.getUserFollowingProducts(
       pageNumber: userFollowingProductsPageNumber,
     );
@@ -518,6 +520,23 @@ class ProductsCubit extends Cubit<ProductsState> {
       },
       (r) {
         emit(WishProductSuccessState());
+      },
+    );
+  }
+
+  void deleteProductImages({required int id}) async {
+    emit(DeleteProductImagesLoadingState());
+    final response = await _productsRemoteDatasource.deleteProductImages(
+      id: id,
+    );
+    response.fold(
+      (l) {
+        baseErrorModel = l.baseErrorModel;
+        print(l);
+        emit(DeleteProductImagesErrorState(error: baseErrorModel?.errors?[0] ?? ""));
+      },
+      (r) {
+        emit(DeleteProductImagesSuccessState(imageId: id));
       },
     );
   }

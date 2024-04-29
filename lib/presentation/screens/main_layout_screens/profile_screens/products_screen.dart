@@ -110,7 +110,33 @@ class _ProductsScreenState extends State<ProductsScreen> {
             ),
             BlocConsumer<ProductsCubit, ProductsState>(
               listener: (context, state) {
-                // TODO: implement listener
+                ProductsCubit cubit = ProductsCubit.get(context);
+                if (state is DeleteProductSuccessState) {
+                  Navigator.pop(context);
+                  ProductsCubit.get(context)
+                      .showVendorProfile(id: int.parse(userId!.toString()));
+                  showToast(errorType: 1, message: "Deleted Successfully");
+                }
+                if (state is DeleteProductErrorState) {
+                  Navigator.pop(context);
+                  ProductsCubit.get(context)
+                      .showVendorProfile(id: int.parse(userId!.toString()));
+                  showToast(errorType: 0, message: "Deleted Successfully");
+                }
+                if (state is ShowProductMultiLangErrorState) {
+                  Navigator.pop(context);
+                }
+                if (state is ShowProductMultiLangSuccessState) {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => AddProductScreen(
+                        productMultiLangModel: cubit.productMultiLangModel,
+                      ),
+                    ),
+                  );
+                }
               },
               builder: (context, state) {
                 ProductsCubit cubit = ProductsCubit.get(context);
@@ -161,28 +187,7 @@ class ProductElement extends StatelessWidget {
     return BlocConsumer<ProductsCubit, ProductsState>(
       listener: (context, state) {
         ProductsCubit cubit = ProductsCubit.get(context);
-        if (state is DeleteProductSuccessState) {
-          Navigator.pop(context);
-          showToast(errorType: 1, message: "Deleted Successfully");
-        }
-        if (state is DeleteProductErrorState) {
-          Navigator.pop(context);
-          showToast(errorType: 0, message: "Error");
-        }
-        if (state is ShowProductMultiLangErrorState) {
-          Navigator.pop(context);
-        }
-        if (state is ShowProductMultiLangSuccessState) {
-          Navigator.pop(context);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => AddProductScreen(
-                productMultiLangModel: cubit.productMultiLangModel,
-              ),
-            ),
-          );
-        }
+
       },
       builder: (context, state) {
         ProductsCubit cubit = ProductsCubit.get(context);

@@ -14,6 +14,7 @@ class ProductsFollowingListViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("userFollowing");
     return BlocConsumer<ProductsCubit, ProductsState>(
       listener: (context, state) {
         // TODO: implement listener
@@ -23,16 +24,16 @@ class ProductsFollowingListViewWidget extends StatelessWidget {
         return cubit.getUserFollowingList
             ? const ProductShimmerListWidget()
             : NotificationListener<ScrollNotification>(
-          onNotification: (scrollNotification){
-            if (scrollNotification is ScrollEndNotification) {
-              if (scrollNotification.metrics.pixels ==
-                  scrollNotification.metrics.maxScrollExtent) {
-                cubit.getUserFollowingProducts();
-              }
-            }
-            return true;
-          },
-              child: ListView.separated(
+                onNotification: (scrollNotification) {
+                  if (scrollNotification is ScrollEndNotification) {
+                    if (scrollNotification.metrics.pixels ==
+                        scrollNotification.metrics.maxScrollExtent) {
+                      cubit.getUserFollowingProducts();
+                    }
+                  }
+                  return true;
+                },
+                child: ListView.separated(
                   separatorBuilder: (_, index) {
                     return const CustomSizedBox(
                       height: 16,
@@ -48,13 +49,14 @@ class ProductsFollowingListViewWidget extends StatelessWidget {
                       isFavorite: false,
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, ScreenName.productDetailsScreen,arguments: cubit.userFollowingProductsList[index]);
+                            context, ScreenName.productDetailsScreen,
+                            arguments: cubit.userFollowingProductsList[index]);
                       },
                       productDataModel: cubit.userFollowingProductsList[index],
                     );
                   },
                 ),
-            );
+              );
       },
     );
   }

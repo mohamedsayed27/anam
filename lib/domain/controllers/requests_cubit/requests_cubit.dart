@@ -45,8 +45,10 @@ class RequestsCubit extends Cubit<RequestsState> {
         mapLocation: locationName, coordinates: coordinates));
   }
 
-  void getAllServices() async {
-    getAllRequestsLoading = true;
+  void getAllRequests() async {
+    if(allRequestsPageNumber==1){
+      getAllRequestsLoading = true;
+    }
     emit(GetAllRequestsLoadingState());
     final response = await _requestsRemoteDatasource.getAllRequests(
       pageNumber: allRequestsPageNumber,

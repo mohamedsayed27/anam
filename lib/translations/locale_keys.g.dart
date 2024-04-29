@@ -131,5 +131,31 @@ abstract class  LocaleKeys {
   static const unFollow = 'unFollow';
   static const search = 'search';
   static const addVeterinarian = 'addVeterinarian';
+  static const previousOrders = 'previousOrders';
+  static const controlPanel = 'controlPanel';
+  static const subscriptions = 'subscriptions';
+  static const notifications = 'notifications';
+  static const storeName = 'storeName';
+  static const contactUs = 'contactUs';
+  static const share = 'share';
+  static const mapLocation = 'mapLocation';
+  static const countryRegion = 'countryRegion';
+  static const chooseCountry = 'chooseCountry';
+  static const address = 'address';
+  static const chooseCountryCode = 'chooseCountryCode';
+  static const rating = 'rating';
+  static const age = 'age';
+  static const text = 'text';
+  static const productsTab = 'productsTab';
+  static const servicesTab = 'servicesTab';
+  static const travelEssentials = 'travelEssentials';
+  static const offer = 'offer';
+  static const attachedPhotos = 'attachedPhotos';
+  static const followersCount = 'followersCount';
+  static const workforce = 'workforce';
+  static const livestockTransportation = 'livestockTransportation';
+  static const veterinaryServices = 'veterinaryServices';
+  static const attachedImages = 'attachedImages';
+  static const lang = 'lang';
 
 }

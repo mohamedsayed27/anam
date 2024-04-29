@@ -1,5 +1,6 @@
 import 'package:anam/core/constants/dummy_data.dart';
 import 'package:anam/core/constants/extensions.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,6 +18,7 @@ import '../../../core/enums/user_type_enum.dart';
 import '../../../data/models/products_model/product_model.dart';
 import '../../../domain/controllers/products_cubit/products_cubit.dart';
 import '../../../domain/controllers/products_cubit/products_state.dart';
+import '../../../translations/locale_keys.g.dart';
 import '../shared_widget/custom_sized_box.dart';
 
 class InfoWindowWidget extends StatefulWidget {
@@ -58,7 +60,7 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
                 height: 165.h,
                 width: 255.w,
                 child: PageView.builder(
-                  itemCount: DummyData.camelsDummyImages.length,
+                  itemCount: widget.productDataModel.images?.length,
                   controller: controller,
                   itemBuilder: (BuildContext context, int index) {
                     return CachedNetworkImage(
@@ -176,7 +178,7 @@ class _InfoWindowWidgetState extends State<InfoWindowWidget> {
                 height: 2,
               ),
               Text(
-                "${widget.productDataModel.regularPrice} ريال",
+                "${widget.productDataModel.regularPrice} ${LocaleKeys.sar.tr()}",
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       fontSize: 10.sp,
                       color: AppColors.blackColor,

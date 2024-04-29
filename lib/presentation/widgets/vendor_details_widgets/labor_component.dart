@@ -23,7 +23,7 @@ class LaborsComponentBuilder extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "اليد العاملة",
+   LocaleKeys.workforce.tr(),
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
             fontSize: 20.sp,
           ),

@@ -44,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // Registered Callback URLs in TwitterApp
       // Android is a deeplink
       // iOS is a URLScheme
-      redirectURI: 'https://ban3am.com/auth/twitter/callback',
+      redirectURI: 'mainLayoutScreen://',
     );
     final authResult = await twitterLogin.login();
     switch (authResult.status) {
@@ -223,7 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         iconPath: SvgPath.appleLogo,
                         title: "${LocaleKeys.continueUsing.tr()} Apple",
                         onPressed: () {
-                          // sign();
+                          sign();
                         },
                       ).symmetricPadding(horizontal: 27),
                     if (token != null)

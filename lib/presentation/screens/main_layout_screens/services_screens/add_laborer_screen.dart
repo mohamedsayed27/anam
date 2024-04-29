@@ -126,7 +126,7 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "اضافة ايدي عاملة",
+                      LocaleKeys.addWorker.tr(),
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!

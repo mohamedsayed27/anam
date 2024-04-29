@@ -29,12 +29,27 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
+  ScrollController previousScrollController  = ScrollController();
+  ScrollController scrollController  = ScrollController();
   @override
   void initState() {
-    if(widget.isPreviousOrders==false){
-      RequestsCubit.get(context).getAllServices();
-    }
     super.initState();
+    if(widget.isPreviousOrders==false){
+      RequestsCubit.get(context).getAllRequests();
+      RequestsCubit.get(context).allRequestsPageNumber = 1;
+    }
+    previousScrollController.addListener(() {
+      if (previousScrollController.position.maxScrollExtent ==
+          previousScrollController.offset) {
+        RequestsCubit.get(context).getPreviousRequests();
+      }
+    });
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent ==
+          scrollController.offset) {
+        RequestsCubit.get(context).getAllRequests();
+      }
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -110,6 +125,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         )
                       : widget.isPreviousOrders
                           ? ListView.separated(
+                    controller: previousScrollController,
                               padding: EdgeInsets.symmetric(
                                 horizontal: 16.w,
                                 vertical: 12.h,
@@ -143,6 +159,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                               },
                             )
                           : ListView.separated(
+                    controller: scrollController,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 16.w, vertical: 12.h),
                               separatorBuilder: (_, index) =>

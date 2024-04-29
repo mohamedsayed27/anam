@@ -6,6 +6,7 @@ class ScreenName{
   static const addProductScreen = "add_product_screen";
   static const editProfileScreen = "edit_profile_screen";
   static const personalDataScreen = "personal_data_screen";
+  static const packageSubscriptionsScreen = "packageSubscriptionsScreen";
   static const mainLayoutScreen = "main_layout_screen";
   static const splashScreen = "splash_screen";
   static const followersScreen = "followersScreen";

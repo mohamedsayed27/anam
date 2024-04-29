@@ -4,15 +4,19 @@ import 'package:anam/core/constants/dummy_data.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/data/models/vet_models/vet_model.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_elevated_button.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/app_theme/app_colors.dart';
 import '../../../../core/assets_path/svg_path.dart';
+import '../../../../translations/locale_keys.g.dart';
 import '../../../widgets/bottom_sheets_widgets/chat_bottom.dart';
 import '../../../widgets/services_widgets/vet_services_images_widget.dart';
 import '../../../widgets/shared_widget/custom_sized_box.dart';
+import '../google_maps_screens/open_current_loctaion_screen.dart';
 
 class VetServiceDetailsScreen extends StatelessWidget {
   final VetModel vetModel;
@@ -74,11 +78,11 @@ class VetServiceDetailsScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: CustomElevatedButton(
-                        title: "تواصل معنا",
+                        title: LocaleKeys.mapLocation.tr(),
                         onPressed: () {showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
-                          builder: (_) => ChatBottomSheet(receiverId:vetModel.vendor!.id!,),
+                          builder: (_) => ChatBottomSheet(receiverId:vetModel.vendor!.id!, name: vetModel.vendor!.name??'',image: vetModel.vendor!.image??'',),
                         );
                         },
                         titleSize: 16,
@@ -87,7 +91,7 @@ class VetServiceDetailsScreen extends StatelessWidget {
                     const CustomSizedBox(width: 16,),
                     Expanded(
                       child: CustomElevatedButton(
-                        title: "مشاركة",
+                        title: LocaleKeys.share.tr(),
                         onPressed: () {},
                         titleSize: 16,
                       ),
@@ -96,18 +100,23 @@ class VetServiceDetailsScreen extends StatelessWidget {
                 ),
                 const CustomSizedBox(height: 24,),
                 Text(
-                  "الموقع على الخريطة",
+                  LocaleKeys.mapLocation.tr(),
                   style: CustomThemes.darkGreyColorTextTheme(context).copyWith(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 const CustomSizedBox(height: 24,),
-                SizedBox(
-                  height: 193.h,
-                  width: double.infinity,
-                  child: Image.asset(ImagesPath.mapImage,fit: BoxFit.cover,),
-                ),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (_)=>LocationOnMapScreen(initialLocation: LatLng(double.parse(vetModel.coordinates!.split(",").first), double.parse(vetModel.coordinates!.split(",").last.trim(),)),)));
+                  },
+                  child: SizedBox(
+                    height: 193.h,
+                    width: double.infinity,
+                    child: Image.asset(ImagesPath.mapImage,fit: BoxFit.cover,),
+                  ),
+                )
               ],
             ).symmetricPadding(horizontal: 16)
           ],

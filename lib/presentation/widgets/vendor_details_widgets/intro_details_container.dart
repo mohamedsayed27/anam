@@ -3,13 +3,11 @@ import 'package:anam/data/models/vendor_data_model.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_divider.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
 import 'package:anam/presentation/widgets/vendor_details_widgets/vendor_details_image_widget.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shimmer/shimmer.dart';
 
-import '../../../core/assets_path/images_path.dart';
-import '../shared_widget/custom_circle_button.dart';
+import '../../../translations/locale_keys.g.dart';
 
 class IntroDetailsContainer extends StatelessWidget {
   final VendorProfileModel vendorProfileModel;
@@ -65,7 +63,7 @@ class IntroDetailsContainer extends StatelessWidget {
               children: [
                 titleBodyWidgets(
                   context,
-                  body: 'التقييمات',
+                  body: LocaleKeys.ratings.tr(),
                   title: vendorProfileModel.reviewsNumber!.toString(),
                 ),
                 const CustomSizedBox(
@@ -77,7 +75,7 @@ class IntroDetailsContainer extends StatelessWidget {
                 ),
                 titleBodyWidgets(
                   context,
-                  body: 'التقييمات',
+                  body: LocaleKeys.ratings.tr(),
                   isTitleWidget: true,
                   titleWidget: Row(
                     // mainAxisAlignment: MainAxisAlignment.start,
@@ -110,7 +108,7 @@ class IntroDetailsContainer extends StatelessWidget {
                 ),
                 titleBodyWidgets(
                   context,
-                  body: 'عدد المتابعات',
+                  body: LocaleKeys.attachedPhotos.tr(),
                   title: vendorProfileModel.followersCount.toString(),
                 ),
                 const CustomSizedBox(

@@ -1,4 +1,5 @@
 import 'package:anam/bloc_observer.dart';
+import 'package:anam/core/cache_helper/cache_keys.dart';
 import 'package:anam/presentation/screens/main_layout_screens/payment_screen/package_subscriptions_screen.dart';
 import 'package:anam/translations/codegen_loader.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -12,6 +13,7 @@ import 'core/app_router/app_router.dart';
 import 'core/app_router/screens_name.dart';
 import 'core/app_theme/app_theme.dart';
 import 'core/cache_helper/shared_pref_methods.dart';
+import 'core/constants/constants.dart';
 import 'core/network/dio_helper.dart';
 import 'core/services/services_locator.dart';
 import 'domain/controllers/auth_cubit/auth_cubit.dart';
@@ -47,7 +49,7 @@ void main() async {
             'ar',
           ),
         ],
-        startLocale: const Locale("ar"),
+        startLocale:  Locale(CacheHelper.getData(key: CacheKeys.initialLocale)??"ar"),
         path: 'assets/translations',
         assetLoader: const CodegenLoader(),
         child: const MyApp(),
@@ -89,8 +91,7 @@ class MyApp extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) => ProductsCubit()
-                ..getAllProducts()
-                ..getUserFollowingProducts()
+
                 ..getAllCategories(),
             ),
             BlocProvider(

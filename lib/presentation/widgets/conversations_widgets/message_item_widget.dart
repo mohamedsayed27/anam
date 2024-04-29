@@ -32,7 +32,7 @@ class MessageItemWidget extends StatelessWidget {
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   decoration: const BoxDecoration(shape: BoxShape.circle),
                   child: CachedNetworkImage(
-                    imageUrl: image!,
+                    imageUrl: image??"",
                     fit: BoxFit.cover,
                     placeholder: (context, url) {
                       return Shimmer.fromColors(

@@ -7,7 +7,7 @@ class MultiLangImageModel extends Equatable {
   final String? updatedAt;
   final String? imageArEn;
 
-  MultiLangImageModel({
+  const MultiLangImageModel({
     this.id,
     this.imageArEn,
     this.productId,
@@ -27,7 +27,39 @@ class MultiLangImageModel extends Equatable {
 
   @override
   List<Object?> get props =>
-      [id,  imageArEn, productId, createdAt, updatedAt];
+      [id,  imageArEn, productId, createdAt, updatedAt,];
+}
+class ProductMultiLangImageModel extends Equatable {
+  final int? id;
+  final int? productId;
+  final String? createdAt;
+  final String? updatedAt;
+  final String? imageAr;
+  final String? imageEn;
+
+  const ProductMultiLangImageModel({
+    this.id,
+    this.imageAr,
+    this.imageEn,
+    this.productId,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory ProductMultiLangImageModel.fromJson(Map<String, dynamic> json) {
+    return ProductMultiLangImageModel(
+      id: json['id'],
+      imageAr: json['image']["ar"],
+      imageEn: json['image']["en"],
+      productId: json['product_id'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
+    );
+  }
+
+  @override
+  List<Object?> get props =>
+      [id,  imageAr,imageEn, productId, createdAt, updatedAt,];
 }
 class MultiLangImageArEn extends Equatable{
 

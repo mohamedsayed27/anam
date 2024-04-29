@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:anam/core/cache_helper/cache_keys.dart';
+import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/parameters/change_password_parameters.dart';
 import 'package:anam/core/parameters/update_profile_parameters.dart';
@@ -76,6 +78,8 @@ class ProfileCubit extends Cubit<ProfileState> {
         profileModel = r;
         print(profileModel);
         getProfileData = false;
+
+        CacheHelper.saveData(key: CacheKeys.profileImage, value: r.image);
         emit(ShowProfileSuccessState());
       },
     );
@@ -208,7 +212,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         baseResponseModel = r;
         profileImage = null;
         showProfile();
-        emit(UpdateProfileSuccessState());
+        emit(UpdateProfileSuccessState( ));
       },
     );
   }
@@ -216,7 +220,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   void updatePassword({
     required ChangePasswordParameters changePasswordParameters,
   }) async {
-    emit(UpdateProfileLoadingState());
+    emit(UpdatePasswordLoadingState());
     final response = await profileRemoteDatasource.changePassword(
       changePasswordParameters: changePasswordParameters,
     );
@@ -224,14 +228,14 @@ class ProfileCubit extends Cubit<ProfileState> {
       (l) {
         baseErrorModel = l.baseErrorModel;
         emit(
-          UpdateProfileErrorState(
+          UpdatePasswordErrorState(
             error: baseErrorModel?.errors?[0] ?? "",
           ),
         );
       },
       (r) async {
         baseResponseModel = r;
-        emit(UpdateProfileSuccessState());
+        emit(UpdatePasswordSuccessState());
       },
     );
   }

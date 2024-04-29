@@ -19,7 +19,7 @@ class ProductMultiLangModel extends Equatable {
   final String? mapLocation;
   final int? uploadedById;
   final int? categoryId;
-  final List<MultiLangImageModel>? images;
+  final List<ProductMultiLangImageModel>? images;
   final int? subCategoryId;
   final int? statusId;
   final String? createdAt;
@@ -100,8 +100,8 @@ class ProductMultiLangModel extends Equatable {
       inStock: json['in_stock'],
       coordinates: json['coordinates'],
       images: json['images'].isNotEmpty && json['images'] != null
-          ? List<MultiLangImageModel>.from(
-              json['images'].map((e) => MultiLangImageModel.fromJson(e)),
+          ? List<ProductMultiLangImageModel>.from(
+              json['images'].map((e) => ProductMultiLangImageModel.fromJson(e)),
             )
           : null,
       mapLocation: json['map_location'],

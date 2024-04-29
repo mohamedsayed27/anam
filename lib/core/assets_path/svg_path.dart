@@ -30,6 +30,7 @@ class SvgPath {
   static const settings = "assets/svg/settingsIcon.svg";
   static const person = "assets/svg/person.svg";
   static const logout = "assets/svg/logout.svg";
+  static const lang = "assets/svg/lang.svg";
   static const sheep = "assets/svg/sheep.svg";
   static const technician = "assets/svg/technician.svg";
   static const tent = "assets/svg/tent.svg";

@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/app_theme/app_colors.dart';
 import '../../../core/app_theme/custom_themes.dart';
+import '../../../translations/locale_keys.g.dart';
 
 class HomeTabBarWidget extends StatelessWidget {
   final TabController tabController;
@@ -48,12 +50,12 @@ class HomeTabBarWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(4.r),
           color: AppColors.primaryColor,
         ),
-        tabs: const [
+        tabs: [
           Tab(
-            text: "منتجاتنا",
+            text: LocaleKeys.productsTab.tr(),
           ),
           Tab(
-            text: "خدماتنا",
+            text: LocaleKeys.servicesTab.tr(),
           ),
         ],
         controller: tabController,

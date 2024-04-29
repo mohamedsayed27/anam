@@ -147,7 +147,7 @@ class StoreServicesWidget extends StatelessWidget {
                     builder: (context, state) {
                       var cubit = ServicesCubit.get(context);
                       return CustomElevatedButton(
-                        title: "تعديل",
+                        title: LocaleKeys.edit.tr(),
                         padding: EdgeInsets.zero,
                         onPressed: () {
                           cubit.getMultiLangStore(id: storeDataModel.id!);

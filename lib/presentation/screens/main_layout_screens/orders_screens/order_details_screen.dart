@@ -1,4 +1,5 @@
 import 'package:anam/core/constants/extensions.dart';
+import 'package:anam/presentation/screens/map_screen.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_divider.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_elevated_button.dart';
 import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
@@ -7,6 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/app_theme/app_colors.dart';
@@ -14,9 +16,11 @@ import '../../../../core/app_theme/custom_themes.dart';
 import '../../../../core/assets_path/images_path.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../data/models/requests/request_model.dart';
+import '../../../widgets/bottom_sheets_widgets/chat_bottom.dart';
 import '../../../widgets/order_widgets/order_type_container.dart';
 import '../../../widgets/shared_widget/custom_app_bar.dart';
 import '../../../widgets/shared_widget/title_and_body_text_widget.dart';
+import '../google_maps_screens/open_current_loctaion_screen.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
   final RequestModel requestModel;
@@ -185,17 +189,28 @@ class OrderDetailsScreen extends StatelessWidget {
                 ),
               ).symmetricPadding(horizontal: 16),
               const CustomSizedBox(height: 22,),
-              SizedBox(
-                height: 193.h,
-                width: double.infinity,
-                child: Image.asset(ImagesPath.mapImage,fit: BoxFit.cover,),
+              InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (_)=>LocationOnMapScreen(initialLocation: LatLng(double.parse(requestModel.coordinates!.split(",").first), double.parse(requestModel.coordinates!.split(",").last.trim(),)),)));
+                },
+                child: SizedBox(
+                  height: 193.h,
+                  width: double.infinity,
+                  child: Image.asset(ImagesPath.mapImage,fit: BoxFit.cover,),
+                ),
               ).symmetricPadding(horizontal: 16),
               const CustomSizedBox(
                 height: 40,
               ),
               CustomElevatedButton(
                 title: LocaleKeys.contact.tr(),
-                onPressed: () {},
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (_) => ChatBottomSheet(receiverId: requestModel.userInformation!.id!, name: requestModel.userInformation!.name??'',image: requestModel.userInformation!.image??''),
+                  );
+                },
                 radius: 9.r,
                 buttonSize: Size(double.infinity, 48.h),
               )

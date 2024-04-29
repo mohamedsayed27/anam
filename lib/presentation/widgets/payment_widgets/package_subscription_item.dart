@@ -58,7 +58,7 @@ class PackageSubscriptionItem extends StatelessWidget {
                     .copyWith(fontSize: 18.sp, fontWeight: FontWeight.w400),
               ),
               Text(
-                "${monthlyPackage?.productsCount} عرض",
+                "${monthlyPackage?.productsCount} ${LocaleKeys.offer.tr()}",
                 style: CustomThemes.primaryColorTextTheme(context)
                     .copyWith(fontSize: 18.sp, fontWeight: FontWeight.w400),
               ),

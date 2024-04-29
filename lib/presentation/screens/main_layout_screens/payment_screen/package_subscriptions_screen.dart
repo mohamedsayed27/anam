@@ -1,6 +1,5 @@
-
-import 'dart:convert';
-
+import 'package:anam/core/cache_helper/cache_keys.dart';
+import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
 import 'package:anam/data/models/packages_model/packages_model.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_paytabs_bridge/BaseBillingShippingInfo.dart';
 import 'package:flutter_paytabs_bridge/PaymentSdkConfigurationDetails.dart';
 import 'package:flutter_paytabs_bridge/PaymentSdkLocale.dart';
+import 'package:flutter_paytabs_bridge/PaymentSdkTransactionType.dart';
 import 'package:flutter_paytabs_bridge/flutter_paytabs_bridge.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -32,32 +32,33 @@ class _PackageSubscriptionsScreenState
     extends State<PackageSubscriptionsScreen> {
   int? currentIndex;
   var billingDetails = BillingDetails(
-    "xfvxdvzx",
-    "email@email.com",
-    "+97311111111",
-    "st. 12",
+    CacheHelper.getData(key: CacheKeys.userName) ?? "Not Found",
+    CacheHelper.getData(key: CacheKeys.userEmail) ?? "email@email.com",
+    CacheHelper.getData(key: CacheKeys.phone) ?? "+97311111111",
+    "st. 12 street",
     "sa",
     "saudi arabia",
     "saudi arabia",
-    "12321",
+    "52472",
   );
 
   late PaymentSdkConfigurationDetails configuration;
 
   void init() {
     configuration = PaymentSdkConfigurationDetails(
-      profileId: "108520",
-      serverKey: "S6JN6RNND9-JHR69NT2MJ-6R26LT6B69",
-      clientKey: "CBKMVH-2BDG6H-RGPQ7M-6KKVKT",
+      profileId: "104890",
+      serverKey: "STJN6RNNDG-JHD2LZRKTJ-TBD9H6BZLR",
+      clientKey: "CPKMVH-2BBD6H-DMB9RK-6TRB6K",
       cartId: "${monthlyPackage?.id}",
       cartDescription: "user with id $userId subscribed in package that its id is ${monthlyPackage?.id}",
       screentTitle: "Pay with Card",
       merchantCountryCode: "SA",
+      transactionType: PaymentSdkTransactionType.SALE,
       currencyCode: "SAR",
       billingDetails: billingDetails,
       amount: monthlyPackage?.price??0.0,
       locale:
-      PaymentSdkLocale.AR, //PaymentSdkLocale.AR or PaymentSdkLocale.DEFAULT
+      PaymentSdkLocale.EN, //PaymentSdkLocale.AR or PaymentSdkLocale.DEFAULT
     );
     testPayCallTabs();
   }

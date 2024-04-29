@@ -3,14 +3,10 @@ import 'dart:async';
 import 'package:anam/core/cache_helper/cache_keys.dart';
 import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/constants/extensions.dart';
-import 'package:anam/domain/controllers/main_layout_cubit/main_layout_cubit.dart';
 import 'package:anam/domain/controllers/requests_cubit/requests_cubit.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import '../../../../domain/controllers/profile_cubit/profile_cubit.dart';
-import '../../../../domain/controllers/profile_cubit/profile_state.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/app_router/screens_name.dart';
@@ -18,13 +14,6 @@ import '../../../core/assets_path/svg_path.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/enums/user_type_enum.dart';
 import '../../../translations/locale_keys.g.dart';
-import '../../screens/main_layout_screens/conversations_screens/conversations_screen.dart';
-import '../../screens/main_layout_screens/favorite_screens/favorites_screen.dart';
-import '../../screens/main_layout_screens/home_screen/home_screen.dart';
-import '../../screens/main_layout_screens/orders_screens/orders_screen.dart';
-import '../../screens/main_layout_screens/profile_screens/profile_screen.dart';
-import '../bottom_sheets_widgets/add_order_bottom_sheet.dart';
-import '../shared_widget/custom_sized_box.dart';
 import 'account_seetings_item_widget.dart';
 
 class AccountSettingsComponent extends StatelessWidget {
@@ -52,7 +41,7 @@ class AccountSettingsComponent extends StatelessWidget {
               Navigator.pushNamed(context, ScreenName.oldOrdersScreen);
             },
             iconPath: SvgPath.oldOrders,
-            title: "الطلبات السابقة",
+            title: LocaleKeys.previousOrders.tr(),
           ),
         if (CacheHelper.getData(key: CacheKeys.token) != null && userType == UserTypeEnum.user.name)
           AccountSettingItemWidget(
@@ -60,7 +49,7 @@ class AccountSettingsComponent extends StatelessWidget {
               Navigator.pushNamed(context, ScreenName.followingScreen);
             },
             iconPath: SvgPath.followersList,
-            title: "قائمة المتابعة",
+            title: LocaleKeys.followingList.tr(),
           ),
         if (CacheHelper.getData(key: CacheKeys.token) != null && userType == UserTypeEnum.vendor.name)
           AccountSettingItemWidget(
@@ -68,7 +57,7 @@ class AccountSettingsComponent extends StatelessWidget {
               Navigator.pushNamed(context, ScreenName.followersScreen);
             },
             iconPath: SvgPath.followersList,
-            title: "قائمة المتابعين",
+            title: LocaleKeys.followersList.tr(),
           ),
         if (CacheHelper.getData(key: CacheKeys.token) != null && userType == UserTypeEnum.vendor.name)
           AccountSettingItemWidget(
@@ -76,7 +65,15 @@ class AccountSettingsComponent extends StatelessWidget {
               Navigator.pushNamed(context, ScreenName.productControlScreen);
             },
             iconPath: SvgPath.controllSetting,
-            title: "لوحة التحكم",
+            title: LocaleKeys.controlPanel.tr(),
+          ),
+        if (CacheHelper.getData(key: CacheKeys.token) != null && userType == UserTypeEnum.vendor.name)
+          AccountSettingItemWidget(
+            onPressed: () {
+              Navigator.pushNamed(context, ScreenName.packageSubscriptionsScreen);
+            },
+            iconPath: SvgPath.choices,
+            title: LocaleKeys.subscriptions.tr(),
           ),
         if (CacheHelper.getData(key: CacheKeys.token) != null)
           AccountSettingItemWidget(
@@ -84,17 +81,44 @@ class AccountSettingsComponent extends StatelessWidget {
               Navigator.pushNamed(context, ScreenName.notificationsScreen);
             },
             iconPath: SvgPath.notification,
-            title: "الاشعارات",
+            title: LocaleKeys.notifications.tr(),
           ),
+        // AccountSettingItemWidget(
+        //   onPressed: () {},
+        //   iconPath: SvgPath.help,
+        //   title: "عن الشركة",
+        // ),
+
         AccountSettingItemWidget(
-          onPressed: () {},
-          iconPath: SvgPath.help,
-          title: "عن الشركة",
+          onPressed: () {
+            showProgressIndicator(context);
+            if(CacheHelper.getData(key: CacheKeys.initialLocale)=="ar"||CacheHelper.getData(key: CacheKeys.initialLocale)==null){
+              EasyLocalization.of(context)?.setLocale(Locale('en'));
+              CacheHelper.saveData(key: CacheKeys.initialLocale, value: "en");
+            }else{
+              EasyLocalization.of(context)?.setLocale(Locale('ar'));
+              CacheHelper.saveData(key: CacheKeys.initialLocale, value: "ar");
+            }
+            Timer(
+              const Duration(seconds: 1),
+                  () async {
+                    // MainLayoutCubit.get(context).handleAuthMethods();
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, ScreenName.splashScreen, (route) => false);
+              },
+            );
+            // print(token);
+          },
+          iconPath: SvgPath.lang,
+          isBordered: true,
+          title: LocaleKeys.lang,
         ),
         if (CacheHelper.getData(key: CacheKeys.token) != null)
           AccountSettingItemWidget(
             onPressed: () {
               showProgressIndicator(context);
+
+
               Timer(
                 const Duration(seconds: 1),
                 () async {

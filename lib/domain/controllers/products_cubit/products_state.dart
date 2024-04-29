@@ -137,6 +137,19 @@ class WishProductErrorState extends ProductsState {
 
   WishProductErrorState({required this.error});
 }
+class DeleteProductImagesLoadingState extends ProductsState {}
+
+class DeleteProductImagesSuccessState extends ProductsState {
+  final int imageId;
+
+  DeleteProductImagesSuccessState({required this.imageId});
+}
+
+class DeleteProductImagesErrorState extends ProductsState {
+  final String error;
+
+  DeleteProductImagesErrorState({required this.error});
+}
 
 
 

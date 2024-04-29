@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../translations/locale_keys.g.dart';
 import '../shared_widget/title_and_body_text_widget.dart';
 
 class PersonalDataItemWidget extends StatelessWidget {
@@ -31,7 +32,7 @@ class PersonalDataItemWidget extends StatelessWidget {
         TextButton(
           onPressed: () {},
           child: Text(
-            "تعديل",
+            LocaleKeys.edit.tr(),
             style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                   fontSize: 12.sp,
                   decoration: TextDecoration.underline,

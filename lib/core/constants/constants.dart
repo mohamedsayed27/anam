@@ -40,5 +40,5 @@ String? userType = CacheHelper.getData(key: CacheKeys.userType);
 String? username = CacheHelper.getData(key: CacheKeys.userName);
 String? userEmail = CacheHelper.getData(key: CacheKeys.userEmail);
 String? phone = CacheHelper.getData(key: CacheKeys.phone);
-String initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale)??"en";
+String? initialLocale = CacheHelper.getData(key: CacheKeys.initialLocale)??"ar";
 Size appBarSize = AppBar().preferredSize;

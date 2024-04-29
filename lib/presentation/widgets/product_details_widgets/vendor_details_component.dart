@@ -2,6 +2,7 @@ import 'package:anam/core/cache_helper/cache_keys.dart';
 import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/constants/constants.dart';
 import 'package:anam/core/constants/extensions.dart';
+import 'package:anam/core/enums/user_type_enum.dart';
 import 'package:anam/data/models/products_model/product_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -117,7 +118,7 @@ class VendorDetailsComponent extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            Positioned(
+            if(CacheHelper.getData(key: CacheKeys.userType)!=UserTypeEnum.vendor.name)Positioned(
               top: 48.h,
               child: BlocConsumer<ServicesCubit, ServicesState>(
                 listener: (context, state) {

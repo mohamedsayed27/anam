@@ -1,25 +1,33 @@
-
 import 'dart:io';
 
 abstract class ProfileState {}
 
 class ProfileInitial extends ProfileState {}
+
 class LoginStatus extends ProfileState {}
+
 class LogoutStatus extends ProfileState {}
 
 class LoadingState extends ProfileState {}
+
 class SuccessState extends ProfileState {}
+
 class ErrorState extends ProfileState {}
 
 class ShowProfileLoadingState extends ProfileState {}
+
 class ShowProfileSuccessState extends ProfileState {}
+
 class ShowProfileErrorState extends ProfileState {
   final String error;
 
   ShowProfileErrorState({required this.error});
 }
+
 class GetNotificationsLoadingState extends ProfileState {}
+
 class GetNotificationsSuccessState extends ProfileState {}
+
 class GetNotificationsErrorState extends ProfileState {
   final String error;
 
@@ -27,7 +35,9 @@ class GetNotificationsErrorState extends ProfileState {
 }
 
 class GetUserFollowingLoadingState extends ProfileState {}
+
 class GetUserFollowingSuccessState extends ProfileState {}
+
 class GetUserFollowingErrorState extends ProfileState {
   final String error;
 
@@ -35,7 +45,9 @@ class GetUserFollowingErrorState extends ProfileState {
 }
 
 class GetVendorFollowingLoadingState extends ProfileState {}
+
 class GetVendorFollowingSuccessState extends ProfileState {}
+
 class GetVendorFollowingErrorState extends ProfileState {
   final String error;
 
@@ -43,7 +55,9 @@ class GetVendorFollowingErrorState extends ProfileState {
 }
 
 class ShowVendorProfileLoadingState extends ProfileState {}
+
 class ShowVendorProfileSuccessState extends ProfileState {}
+
 class ShowVendorProfileErrorState extends ProfileState {
   final String error;
 
@@ -51,7 +65,11 @@ class ShowVendorProfileErrorState extends ProfileState {
 }
 
 class UpdateProfileLoadingState extends ProfileState {}
-class UpdateProfileSuccessState extends ProfileState {}
+
+class UpdateProfileSuccessState extends ProfileState {
+  UpdateProfileSuccessState();
+}
+
 class UpdateProfileErrorState extends ProfileState {
   final String error;
 
@@ -59,14 +77,18 @@ class UpdateProfileErrorState extends ProfileState {
 }
 
 class UpdatePasswordLoadingState extends ProfileState {}
+
 class GetPickedImageErrorState extends ProfileState {}
+
 class UpdatePasswordSuccessState extends ProfileState {}
+
 class UpdatePasswordErrorState extends ProfileState {
   final String error;
 
-  UpdatePasswordErrorState({required this.error});
+  UpdatePasswordErrorState({
+    required this.error,
+  });
 }
-
 
 class GetPickedImageSuccessState extends ProfileState {
   GetPickedImageSuccessState();

@@ -24,7 +24,7 @@ class StoreImagesComponentBuilder extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "صور مرفقه",
+          LocaleKeys.attachedPhotos.tr(),
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
             fontSize: 20.sp,
           ),
