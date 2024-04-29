@@ -1,21 +1,18 @@
-import 'package:anam/data/models/vendor_data_model.dart';
-import 'package:anam/data/models/vendor_info_model.dart';
-import 'package:anam/presentation/widgets/shared_widget/custom_divider.dart';
-import 'package:anam/presentation/widgets/shared_widget/custom_sized_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../data/models/vendor_data_model.dart';
 import '../../../../domain/controllers/profile_cubit/profile_cubit.dart';
 import '../../../../domain/controllers/profile_cubit/profile_state.dart';
 import '../../../../translations/locale_keys.g.dart';
+import '../../../widgets/shared_widget/custom_divider.dart';
+import '../../../widgets/shared_widget/custom_sized_box.dart';
 import '../../../widgets/vendor_details_widgets/about_vendor_widget.dart';
-import '../../../widgets/vendor_details_widgets/ads_component_builder.dart';
 import '../../../widgets/vendor_details_widgets/intro_details_container.dart';
 import '../../../widgets/vendor_details_widgets/labor_component.dart';
 import '../../../widgets/vendor_details_widgets/rating_component_builder.dart';
 import '../../../widgets/vendor_details_widgets/van_compopnent.dart';
-import '../../../widgets/vendor_details_widgets/vendor_orders_component.dart';
 import '../../../widgets/vendor_details_widgets/vet_component.dart';
 
 class VendorDetailsScreen extends StatelessWidget {

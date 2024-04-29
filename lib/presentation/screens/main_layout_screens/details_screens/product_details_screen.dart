@@ -12,6 +12,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../../core/app_theme/app_colors.dart';
 import '../../../../core/app_theme/custom_themes.dart';
 import '../../../../core/assets_path/images_path.dart';
+import '../../../../core/cache_helper/cache_keys.dart';
+import '../../../../core/cache_helper/shared_pref_methods.dart';
 import '../../../widgets/bottom_sheets_widgets/chat_bottom.dart';
 import '../../../widgets/product_details_widgets/contact_container_widget.dart';
 import '../../../widgets/product_details_widgets/product_details_images_widget.dart';
@@ -178,7 +180,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 const CustomSizedBox(
                   height: 19,
                 ),
-                ContactContainerWidget(
+                if(CacheHelper.getData(key: CacheKeys.token)!=null)ContactContainerWidget(
                   onPressed: () {
                     showModalBottomSheet(
                       context: context,

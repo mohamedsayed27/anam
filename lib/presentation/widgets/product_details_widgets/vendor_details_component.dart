@@ -118,7 +118,7 @@ class VendorDetailsComponent extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            if(CacheHelper.getData(key: CacheKeys.userType)!=UserTypeEnum.vendor.name)Positioned(
+            if(CacheHelper.getData(key: CacheKeys.userType)!=UserTypeEnum.vendor.name&&CacheHelper.getData(key: CacheKeys.token)!=null)Positioned(
               top: 48.h,
               child: BlocConsumer<ServicesCubit, ServicesState>(
                 listener: (context, state) {

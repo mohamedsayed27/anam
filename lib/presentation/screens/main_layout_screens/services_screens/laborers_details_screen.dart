@@ -71,25 +71,15 @@ class LaborersServiceDetailsScreen extends StatelessWidget {
                 const CustomSizedBox(height: 48,),
                 Row(
                   children: [
-                    Expanded(
+                    if(CacheHelper.getData(key: CacheKeys.token)!=null)Expanded(
                       child: CustomElevatedButton(
                         title: LocaleKeys.contactUs.tr(),
                         onPressed: () {
-                          if(CacheHelper.getData(key: CacheKeys.token)==null){
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              builder: (_) {
-                                return const LoginBottomSheet();
-                              },
-                            );
-                          }else {
-                            showModalBottomSheet(
+                          showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
                             builder: (_) => ChatBottomSheet(receiverId:laborerModel.vendor!.id!, name: laborerModel.vendor!.name??"",image: laborerModel.vendor!.image??''),
                           );
-                          }
                         },
                         titleSize: 16,
                       ),

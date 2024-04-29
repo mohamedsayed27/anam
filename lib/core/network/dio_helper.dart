@@ -1,3 +1,5 @@
+import 'package:anam/core/cache_helper/cache_keys.dart';
+import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:dio/dio.dart';
 import 'api_end_points.dart';
 
@@ -25,7 +27,7 @@ class DioHelper {
       // 'lang': '',
       if (token != null) "Authorization": "Bearer $token",
       'Accept': 'text/plain',
-      "Content-Language":lang
+      "Content-Language":CacheHelper.getData(key: CacheKeys.initialLocale)
     };
     return await dio.get(url, queryParameters: query,);
   }

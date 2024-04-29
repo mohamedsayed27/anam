@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:anam/core/cache_helper/cache_keys.dart';
 import 'package:anam/core/cache_helper/shared_pref_methods.dart';
@@ -166,6 +165,8 @@ class AuthCubit extends Cubit<AuthState> {
         userType = CacheHelper.getData(
           key: CacheKeys.userType.toString(),
         );
+        print("printtteddToken");
+        print(CacheHelper.getData(key: CacheKeys.token));
         emit(SocialLoginSuccessState());
       },
     );
@@ -248,11 +249,13 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> googleSignIn() async {
     GoogleSignIn googleSignIn = GoogleSignIn(
-      clientId: Platform.isIOS ? googleClientIdIos : null,
+      // clientId: Platform.isIOS ? googleClientIdIos : null,
       scopes: scopes,
     );
+    await googleSignIn.signOut();
     try {
       final response = await googleSignIn.signIn();
+      print(response);
       socialLogin(
         email: response?.email ?? "",
         socialId: response?.id ?? "",
@@ -261,6 +264,7 @@ class AuthCubit extends Cubit<AuthState> {
         userType: selectedRole ?? "",
       );
     } catch (error) {
+      print(error);
     }
   }
 

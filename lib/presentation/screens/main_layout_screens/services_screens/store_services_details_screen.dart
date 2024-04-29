@@ -10,6 +10,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/assets_path/svg_path.dart';
+import '../../../../core/cache_helper/cache_keys.dart';
+import '../../../../core/cache_helper/shared_pref_methods.dart';
 import '../../../../translations/locale_keys.g.dart';
 import '../../../widgets/bottom_sheets_widgets/chat_bottom.dart';
 import '../../../widgets/services_widgets/store_images_list_widget.dart';
@@ -75,7 +77,7 @@ class StoreServiceDetailsScreen extends StatelessWidget {
                 const CustomSizedBox(height: 48,),
                 Row(
                   children: [
-                    Expanded(
+                    if(CacheHelper.getData(key: CacheKeys.token)!=null) Expanded(
                       child: CustomElevatedButton(
                         title: LocaleKeys.contactUs.tr(),
                         onPressed: () {
