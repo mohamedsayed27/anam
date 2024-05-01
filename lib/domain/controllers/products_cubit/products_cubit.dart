@@ -91,13 +91,11 @@ class ProductsCubit extends Cubit<ProductsState> {
   void getAllProducts() async {
     if (allProductsPageNumber == 1) {
       getAllProductsLoading = true;
-      productsList.clear();
       emit(GetAllProductsLoadingState());
     }
     final response = await _productsRemoteDatasource.getAllProducts(
       pageNumber: allProductsPageNumber,
-    );
-    response.fold(
+    );response.fold(
       (l) {
         baseErrorModel = l.baseErrorModel;
         getAllProductsLoading = false;
@@ -108,7 +106,7 @@ class ProductsCubit extends Cubit<ProductsState> {
             r.getPaginatedProductResultModel!.lastPage!) {
           if (r.getPaginatedProductResultModel!.currentPage! <=
               r.getPaginatedProductResultModel!.lastPage!) {
-            if (r.getPaginatedProductResultModel!.products!.isNotEmpty) {
+            if ((r.getPaginatedProductResultModel?.products ?? []).isNotEmpty) {
               for (var element in r.getPaginatedProductResultModel!.products!) {
                 if (!productsList.contains(element)) {
                   productsList.add(element);
@@ -116,18 +114,19 @@ class ProductsCubit extends Cubit<ProductsState> {
                 }
               }
               for (var element in productsList) {
-                if (element.uploadedBy!.isFollowed != null) {
-                  if (!followedVendors.containsKey(element.id!.toString())) {
+                if (element.uploadedBy?.isFollowed != null) {
+                  if (!followedVendors.containsKey((element.id ?? 0).toString())) {
                     followedVendors.addAll({
-                      element.uploadedBy!.id.toString():
+                      (element.uploadedBy?.id ?? 0).toString():
                           element.uploadedBy!.isFollowed
                     });
                   }
+
+
                 }
                 if (element.isFavorite != null) {
                   if (!favoriteProduct.containsKey(element.id!.toString())) {
-                    favoriteProduct
-                        .addAll({element.id.toString(): element.isFavorite});
+                    favoriteProduct.addAll({element.id.toString(): element.isFavorite});
                   }
                 }
               }
@@ -253,9 +252,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   void getUserFollowingProducts() async {
     if(userFollowingProductsPageNumber==1){
-
       getUserFollowingList = true;
-      userFollowingProductsList.clear();
       emit(GetUserFollowingProductsLoadingState());
     }
 
@@ -289,6 +286,7 @@ class ProductsCubit extends Cubit<ProductsState> {
                         element.uploadedBy!.isFollowed
                   });
                 }
+
                 if (element.isFavorite != null) {
                   if (!favoriteProduct.containsKey(element.id!.toString())) {
                     favoriteProduct
@@ -532,7 +530,6 @@ class ProductsCubit extends Cubit<ProductsState> {
     response.fold(
       (l) {
         baseErrorModel = l.baseErrorModel;
-        print(l);
         emit(DeleteProductImagesErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
       (r) {

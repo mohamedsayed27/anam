@@ -93,18 +93,19 @@ class AccountSettingsComponent extends StatelessWidget {
           onPressed: () {
             showProgressIndicator(context);
             if(CacheHelper.getData(key: CacheKeys.initialLocale)=="ar"||CacheHelper.getData(key: CacheKeys.initialLocale)==null){
-              EasyLocalization.of(context)?.setLocale(Locale('en'));
+              EasyLocalization.of(context)?.setLocale(const Locale('en'));
               CacheHelper.saveData(key: CacheKeys.initialLocale, value: "en");
             }else{
-              EasyLocalization.of(context)?.setLocale(Locale('ar'));
+              EasyLocalization.of(context)?.setLocale(const Locale('ar'));
               CacheHelper.saveData(key: CacheKeys.initialLocale, value: "ar");
             }
             Timer(
               const Duration(seconds: 1),
                   () async {
+                Navigator.pop(context);
                     // MainLayoutCubit.get(context).handleAuthMethods();
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, ScreenName.splashScreen, (route) => false);
+                    // Navigator.pushNamedAndRemoveUntil(
+                    //     context, ScreenName.splashScreen, (route) => false);
               },
             );
             // print(token);

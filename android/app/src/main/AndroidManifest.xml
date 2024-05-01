@@ -39,9 +39,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "example://gizmos” -->
-                <!-- Registered Callback URLs in TwitterApp -->
-                <data android:scheme="mainLayoutScreen" /> <!-- host is option -->
+                <data android:scheme="mainlayoutscreen" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

@@ -68,6 +68,7 @@ class SvgPath {
   static const visa = "assets/svg/visa.svg";
   static const controllSetting = "assets/svg/controllSetting.svg";
   static const nationality = "assets/svg/nationality.svg";
+  static const twitter = "assets/svg/twitter.svg";
 
   SvgPath._();
 

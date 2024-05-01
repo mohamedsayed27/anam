@@ -115,6 +115,7 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
               showToast(errorType: 1, message: state.error);
             }
             if (state is GetPickedImageSuccessState) {
+              print(cubit.laborerImage);
               cubit.laborerImage = state.pickedImage;
             }
           },

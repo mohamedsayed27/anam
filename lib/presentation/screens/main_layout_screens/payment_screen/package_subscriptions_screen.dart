@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:anam/core/cache_helper/cache_keys.dart';
 import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/constants/constants.dart';
@@ -50,15 +53,17 @@ class _PackageSubscriptionsScreenState
       serverKey: "STJN6RNNDG-JHD2LZRKTJ-TBD9H6BZLR",
       clientKey: "CPKMVH-2BBD6H-DMB9RK-6TRB6K",
       cartId: "${monthlyPackage?.id}",
-      cartDescription: "user with id $userId subscribed in package that its id is ${monthlyPackage?.id}",
+      cartDescription:
+          "user with id $userId subscribed in package that its id is ${monthlyPackage?.id}",
       screentTitle: "Pay with Card",
       merchantCountryCode: "SA",
-      transactionType: PaymentSdkTransactionType.SALE,
+      // transactionType: PaymentSdkTransactionType.SALE,
       currencyCode: "SAR",
       billingDetails: billingDetails,
-      amount: monthlyPackage?.price??0.0,
+      amount: monthlyPackage?.price ?? 0.0,
+
       locale:
-      PaymentSdkLocale.EN, //PaymentSdkLocale.AR or PaymentSdkLocale.DEFAULT
+          PaymentSdkLocale.EN, //PaymentSdkLocale.AR or PaymentSdkLocale.DEFAULT
     );
     testPayCallTabs();
   }
@@ -71,12 +76,17 @@ class _PackageSubscriptionsScreenState
         if (event["status"] == "success") {
           // Handle transaction details here.
 
-
           var transactionDetails = event["data"];
-          print(transactionDetails);
 
           if (transactionDetails["isSuccess"]) {
+            PackagesCubit.get(context).subscribeAPackage(
+              tranRef: transactionDetails["transactionReference"],
+              packageId: transactionDetails["cartID"],
+            );
             print("successful transaction");
+            print(transactionDetails["paymentResult"]);
+            // log(transactionDetails);
+            log(jsonEncode(transactionDetails));
           } else {
             print("failed transaction");
           }
@@ -94,10 +104,11 @@ class _PackageSubscriptionsScreenState
   }
 
   MonthlyPackage? monthlyPackage;
+
   @override
   void initState() {
     // init();
-    PackagesCubit.get(context).getAllProducts();
+    PackagesCubit.get(context).getAllPackages();
     super.initState();
   }
 
@@ -134,26 +145,32 @@ class _PackageSubscriptionsScreenState
             builder: (context, state) {
               PackagesCubit cubit = PackagesCubit.get(context);
               return Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  itemBuilder: (_, index) {
-                    return PackageSubscriptionItem(
-                      isChecked: currentIndex == index,
-                      onPressed: () {
-                        setState(() {
-                          currentIndex = index;
-                          monthlyPackage = cubit.monthlyPackage?[index];
-                        });
-                      }, monthlyPackage: cubit.monthlyPackage?[index],
-                    );
-                  },
-                  separatorBuilder: (_, index) {
-                    return const CustomSizedBox(
-                      height: 16,
-                    );
-                  },
-                  itemCount: cubit.monthlyPackage?.length??0,
-                ),
+                child: state is GetAllPackagesLoadingState
+                    ? const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      )
+                    : ListView.separated(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.w, vertical: 16.h),
+                        itemBuilder: (_, index) {
+                          return PackageSubscriptionItem(
+                            isChecked: currentIndex == index,
+                            onPressed: () {
+                              setState(() {
+                                currentIndex = index;
+                                monthlyPackage = cubit.monthlyPackage?[index];
+                              });
+                            },
+                            monthlyPackage: cubit.monthlyPackage?[index],
+                          );
+                        },
+                        separatorBuilder: (_, index) {
+                          return const CustomSizedBox(
+                            height: 16,
+                          );
+                        },
+                        itemCount: cubit.monthlyPackage?.length ?? 0,
+                      ),
               );
             },
           ),
@@ -162,7 +179,10 @@ class _PackageSubscriptionsScreenState
             onPressed: () {
               init();
             },
-            buttonSize: const Size(double.infinity, 48,),
+            buttonSize: const Size(
+              double.infinity,
+              48,
+            ),
           ).symmetricPadding(horizontal: 16),
           const CustomSizedBox(
             height: 32,

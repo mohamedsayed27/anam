@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:anam/core/cache_helper/cache_keys.dart';
 import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/constants/constants.dart';
@@ -9,6 +11,7 @@ import 'package:anam/data/models/auth_models/login_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:twitter_login/twitter_login.dart';
 import '../../../core/services/services_locator.dart';
 import '../../../data/datasources/remote_datasource/cities_and_countries_remote_datasource.dart';
 import '../../../data/models/country_model/country_model.dart';
@@ -165,8 +168,8 @@ class AuthCubit extends Cubit<AuthState> {
         userType = CacheHelper.getData(
           key: CacheKeys.userType.toString(),
         );
-        print("printtteddToken");
-        print(CacheHelper.getData(key: CacheKeys.token));
+        print("userTypeuserTypeuserType");
+        print(userType);
         emit(SocialLoginSuccessState());
       },
     );
@@ -249,13 +252,14 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> googleSignIn() async {
     GoogleSignIn googleSignIn = GoogleSignIn(
-      // clientId: Platform.isIOS ? googleClientIdIos : null,
+      clientId: Platform.isIOS ? googleClientIdIos : null,
       scopes: scopes,
     );
-    await googleSignIn.signOut();
+    // if(googleSignIn.currentUser!=null){
+    //   await googleSignIn.signOut();
+    // }
     try {
       final response = await googleSignIn.signIn();
-      print(response);
       socialLogin(
         email: response?.email ?? "",
         socialId: response?.id ?? "",
@@ -266,6 +270,40 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (error) {
       print(error);
     }
+  }
+
+  Future<void> twitterSignIn() async {
+    final twitterLogin = TwitterLogin(
+      // Consumer API keys
+      apiKey: 'd8u6VdPmV7QPRSCXjxYmKln8J',
+      // Consumer API Secret keys
+      apiSecretKey: 'gA89LiVHwJH5k0l4zZkfqjNS0YoFd88WYIeoTgfjPA5ZDuMHsN',
+      // Registered Callback URLs in TwitterApp
+      // Android is a deeplink
+      // iOS is a URLScheme
+      redirectURI: 'mainLayoutScreen://',
+    );
+    final authResult = await twitterLogin.login();
+    switch (authResult.status) {
+      case TwitterLoginStatus.loggedIn:
+      // success
+        socialLogin(
+          email: authResult.user?.email ?? "",
+          socialId: authResult.user?.id.toString() ?? "",
+          name: authResult.user?.name ?? "",
+          socialType: "twitter",
+          userType: selectedRole ?? "",
+        );
+        break;
+      case TwitterLoginStatus.cancelledByUser:
+      // cancel
+        break;
+      case TwitterLoginStatus.error:
+      // error
+        break;
+      default:
+    }
+
   }
 
   void getAllCountries() async {

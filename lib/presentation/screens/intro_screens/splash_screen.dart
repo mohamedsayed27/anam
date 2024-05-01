@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:anam/core/app_router/screens_name.dart';
 import 'package:anam/core/assets_path/images_path.dart';
+import 'package:anam/core/cache_helper/cache_keys.dart';
+import 'package:anam/core/cache_helper/shared_pref_methods.dart';
+import 'package:anam/domain/controllers/products_cubit/products_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +29,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     animation = Tween<double>(begin: 0,end: 1).animate(controller);
     controller.forward();
     _loading();
+    // if(CacheHelper.getData(key: CacheKeys.token) != null) {
+    //   ProductsCubit.get(context)..allProductsPageNumber = 1..getAllProducts();
+    // }
     super.initState();
   }
 

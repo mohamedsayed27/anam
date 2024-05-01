@@ -10,7 +10,8 @@ import '../shared_widget/custom_sized_box.dart';
 import '../shared_widget/product_item_component.dart';
 
 class AllProductsListViewWidget extends StatelessWidget {
-  const AllProductsListViewWidget({super.key});
+  final bool isGetAll;
+  const AllProductsListViewWidget({super.key, required this.isGetAll});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,9 @@ class AllProductsListViewWidget extends StatelessWidget {
                   if (notification is ScrollEndNotification) {
                     if (notification.metrics.pixels ==
                         notification.metrics.maxScrollExtent) {
-                      cubit.getAllProducts();
+                      if(isGetAll&&cubit.allProductsPageNumber>1) {
+                        cubit.getAllProducts();
+                      }
                     }
                   }
                   return true;

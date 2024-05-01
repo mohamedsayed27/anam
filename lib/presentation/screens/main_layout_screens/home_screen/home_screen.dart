@@ -38,12 +38,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    if(CacheHelper.getData(key: CacheKeys.userType)==UserTypeEnum.user.name){
-      ProductsCubit.get(context).userFollowingProductsPageNumber==1;
-      ProductsCubit.get(context).getUserFollowingProducts();
-    }
-    ProductsCubit.get(context).allProductsPageNumber == 1;
-    ProductsCubit.get(context).getAllProducts();
+    super.initState();
     _itemsTypeTabController = TabController(
       length: 2,
       vsync: this,
@@ -65,7 +60,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       vsync: this,
     );
     prepareAnimations();
-    super.initState();
+    if(CacheHelper.getData(key: CacheKeys.userType)==UserTypeEnum.user.name){
+      ProductsCubit.get(context).userFollowingProductsPageNumber==1;
+      ProductsCubit.get(context).getUserFollowingProducts();
+    }
+    ProductsCubit.get(context).allProductsPageNumber = 1;
+    print("home page number :${ProductsCubit.get(context).allProductsPageNumber}");
+    ProductsCubit.get(context).getAllProducts();
   }
 
   void prepareAnimations() {
@@ -133,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             alignment: Alignment.bottomCenter,
             children: [
               TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
                 controller: _itemsTypeTabController,
                 children: [
                   Column(
@@ -179,8 +181,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     CacheHelper.getData(
                                             key: CacheKeys.userType) ==
                                         UserTypeEnum.user.name
-                                ? const ProductsFollowingListViewWidget()
-                                : const AllProductsListViewWidget(),
+                                ?  ProductsFollowingListViewWidget(isGetAll: isFollowingTap,)
+                                :  AllProductsListViewWidget(isGetAll: !isFollowingTap,),
                       )
                     ],
                   ),

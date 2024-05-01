@@ -72,7 +72,9 @@ class ProductDataModel extends Equatable {
           : null,
       category:
           json['category'] != null ? Category.fromJson(json['category']) : null,
-      subCategoryId: json['sub_category_id']!=null?SubCategoryModel.fromJson(json['sub_category_id']):null,
+      subCategoryId: json['sub_category_id'] != null
+          ? SubCategoryModel.fromJson(json['sub_category_id'])
+          : null,
       images: List<Images>.from(json["images"].map((e) => Images.fromJson(e))),
       createdAt: json['created_at'],
       updatedAt: json['updated_at'],
@@ -123,6 +125,7 @@ class ProductDataModel extends Equatable {
         coordinates,
         youtubeLink,
         advantages,
+        isFavorite,
         defects,
         location,
         mainImage,
@@ -196,6 +199,7 @@ class UploadedBy extends Equatable {
     data['phone'] = phone;
     data['location'] = location;
     data['address'] = address;
+    data['is_followed'] = isFollowed;
     data['social_id'] = socialId;
     data['social_type'] = socialType;
     data['vendor_page'] = vendorPage;
@@ -207,20 +211,21 @@ class UploadedBy extends Equatable {
   @override
   // TODO: implement props
   List<Object?> get props => [
-    id,
-    name,
-    image,
-    email,
-    phone,
-    location,
-    address,
-    socialId,
-    socialType,
-    vendorPage,
-    createdAt,
-    isFollowed,
-    updatedAt
-  ];
+        id,
+        name,
+        image,
+        email,
+        phone,
+        location,
+        address,
+        isFollowed,
+        socialId,
+        socialType,
+        vendorPage,
+        createdAt,
+        isFollowed,
+        updatedAt
+      ];
 }
 
 class Category extends Equatable {

@@ -1,3 +1,8 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:anam/core/cache_helper/cache_keys.dart';
+import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:anam/core/parameters/review_product_parameters.dart';
 import 'package:anam/data/models/base_model.dart';
 import 'package:anam/data/models/products_model/product_model.dart';
@@ -27,9 +32,10 @@ class ProductsRemoteDatasource {
     try {
       final response = await dioHelper.getData(
         url: "${EndPoints.products}?page=$pageNumber",
-        query: {},
-        token: token,
       );
+      for(var element in response.data["result"]["data"]){
+      }
+      // log('All Product log response ${jsonEncode(response.data)}');
       return Right(GetAllProductModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {
@@ -172,6 +178,9 @@ class ProductsRemoteDatasource {
         url: "${EndPoints.products}${EndPoints.following}?page=$pageNumber",
         token: token,
       );
+      for(var element in response.data["result"]["data"]){
+      }
+      // log('All User Following log response ${jsonEncode(response.data)}');
       return Right(GetAllProductModel.fromJson(response.data));
     } catch (e) {
       if (e is DioException) {

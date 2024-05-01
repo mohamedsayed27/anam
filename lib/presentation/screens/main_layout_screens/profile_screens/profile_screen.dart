@@ -12,8 +12,10 @@ import '../../../../core/app_router/screens_name.dart';
 import '../../../../core/cache_helper/cache_keys.dart';
 import '../../../../core/cache_helper/shared_pref_methods.dart';
 import '../../../../core/constants/extensions.dart';
+import '../../../../core/enums/user_type_enum.dart';
 import '../../../../domain/controllers/auth_cubit/auth_state.dart';
 import '../../../../domain/controllers/main_layout_cubit/main_layout_cubit.dart';
+import '../../../../domain/controllers/products_cubit/products_cubit.dart';
 import '../../../../presentation/widgets/bottom_sheets_widgets/login_bottom_sheet.dart';
 import '../../../../presentation/widgets/bottom_sheets_widgets/register_bottom_sheet.dart';
 import '../../../../core/app_theme/app_colors.dart';
@@ -47,6 +49,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       redirectURI: 'mainLayoutScreen://',
     );
     final authResult = await twitterLogin.login();
+    print(authResult.user?.id);
+    print(authResult.user?.name);
     switch (authResult.status) {
       case TwitterLoginStatus.loggedIn:
         // success
@@ -94,6 +98,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   MainLayoutCubit.get(context).handleAuthMethods();
                   Navigator.pushNamedAndRemoveUntil(
                       context, ScreenName.splashScreen, (route) => false);
+
+                  /*if(CacheHelper.getData(key: CacheKeys.userType)==UserTypeEnum.user.name){
+                    ProductsCubit.get(context).userFollowingProductsPageNumber==1;
+                    ProductsCubit.get(context).getUserFollowingProducts();
+                  }
+                  ProductsCubit.get(context).allProductsPageNumber == 1;
+                  ProductsCubit.get(context).getAllProducts();*/
                 }
                 if (state is SocialLoginErrorState) {
                   Navigator.pop(context);
@@ -209,7 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         onPressed: () {
                           showModalBottomSheet(
                             context: context,
-                            builder: (_) => const AuthRegisterTypeBottomSheet(),
+                            builder: (_) => const AuthRegisterTypeBottomSheet(socialType: 'g',),
                           );
                         },
                       ).symmetricPadding(horizontal: 27),
@@ -218,12 +229,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const CustomSizedBox(
                         height: 8,
                       ),
-                    if (token == null && Platform.isIOS)
+                    if (token == null)
                       SocialAuthButton(
-                        iconPath: SvgPath.appleLogo,
-                        title: "${LocaleKeys.continueUsing.tr()} Apple",
+                        iconPath: SvgPath.twitter,
+                        title: "${LocaleKeys.continueUsing.tr()} X-Twitter",
                         onPressed: () {
-                          sign();
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (_) => const AuthRegisterTypeBottomSheet(socialType: 't',),
+                          );
                         },
                       ).symmetricPadding(horizontal: 27),
                     if (token != null)

@@ -13,3 +13,13 @@ class GetAllPackagesErrorState extends PackagesState {
 
   GetAllPackagesErrorState({required this.error});
 }
+
+class SubscribePackageLoadingState extends PackagesState {}
+
+class SubscribePackageSuccessState extends PackagesState {}
+
+class SubscribePackageErrorState extends PackagesState {
+  final String error;
+
+  SubscribePackageErrorState({required this.error});
+}

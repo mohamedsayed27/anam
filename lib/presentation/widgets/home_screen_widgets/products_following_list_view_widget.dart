@@ -10,11 +10,11 @@ import '../shared_widget/custom_sized_box.dart';
 import '../shared_widget/product_item_component.dart';
 
 class ProductsFollowingListViewWidget extends StatelessWidget {
-  const ProductsFollowingListViewWidget({super.key});
+  final bool isGetAll;
+  const ProductsFollowingListViewWidget({super.key, required this.isGetAll});
 
   @override
   Widget build(BuildContext context) {
-    print("userFollowing");
     return BlocConsumer<ProductsCubit, ProductsState>(
       listener: (context, state) {
         // TODO: implement listener
@@ -28,7 +28,9 @@ class ProductsFollowingListViewWidget extends StatelessWidget {
                   if (scrollNotification is ScrollEndNotification) {
                     if (scrollNotification.metrics.pixels ==
                         scrollNotification.metrics.maxScrollExtent) {
-                      cubit.getUserFollowingProducts();
+                      if(isGetAll) {
+                        cubit.getUserFollowingProducts();
+                      }
                     }
                   }
                   return true;

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:anam/core/cache_helper/cache_keys.dart';
 import 'package:anam/core/cache_helper/shared_pref_methods.dart';
 import 'package:dio/dio.dart';
@@ -20,14 +22,14 @@ class DioHelper {
     required String url,
     Map<String, dynamic>? query,
     String? token,
-    String lang = 'en',
   }) async {
-    dio.options.headers = {
+     String? token = await CacheHelper.getData(key: CacheKeys.token);
+     dio.options.headers = {
       'Content-Type': 'application/json',
       // 'lang': '',
       if (token != null) "Authorization": "Bearer $token",
       'Accept': 'text/plain',
-      "Content-Language":CacheHelper.getData(key: CacheKeys.initialLocale)
+      "Content-Language":CacheHelper.getData(key: CacheKeys.initialLocale)??"ar"
     };
     return await dio.get(url, queryParameters: query,);
   }
@@ -36,12 +38,12 @@ class DioHelper {
     required String url,
     dynamic query,
     dynamic data,
-    String lang = 'ar',
     String? token,
   }) async {
+     token  = await CacheHelper.getData(key: CacheKeys.token);
     dio.options.headers = {
       'Content-Type': 'application/json',
-      'lang': '',
+      'lang': CacheHelper.getData(key:CacheKeys.initialLocale)??'ar',
       if (token != null) "Authorization": "Bearer $token",
       'Accept': 'text/plain',
     };

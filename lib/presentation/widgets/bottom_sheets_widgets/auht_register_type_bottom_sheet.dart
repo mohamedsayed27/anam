@@ -12,7 +12,8 @@ import '../shared_widget/custom_elevated_button.dart';
 import '../shared_widget/custom_sized_box.dart';
 
 class AuthRegisterTypeBottomSheet extends StatelessWidget {
-  const AuthRegisterTypeBottomSheet({super.key});
+  final String socialType;
+  const AuthRegisterTypeBottomSheet({super.key, required this.socialType});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class AuthRegisterTypeBottomSheet extends StatelessWidget {
               title: LocaleKeys.continueText.tr(),
               onPressed: cubit.selectedRole!=null? (){
                 Navigator.pop(context);
-                cubit.googleSignIn();
+                socialType=="g"?cubit.googleSignIn():cubit.twitterSignIn();
               }:null,
               buttonSize: Size(double.infinity, 40.h),
             );

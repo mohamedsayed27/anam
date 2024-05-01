@@ -28,7 +28,7 @@ class GetPaginatedProductResultModel extends PaginationModel {
   final List<ProductDataModel>? products;
 
   const GetPaginatedProductResultModel({
-    this.products,
+    this.products = const [],
     super.currentPage,
     super.lastPage,
     super.total,

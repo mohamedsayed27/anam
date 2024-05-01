@@ -40,7 +40,7 @@ class _ItemImageWidgetState extends State<ItemImageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print(userType);
+    print("productid:${widget.productDataModel.id}");
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -134,7 +134,7 @@ class _ItemImageWidgetState extends State<ItemImageWidget> {
           ),
         ),
         if (CacheHelper.getData(key: CacheKeys.token) != null &&
-            userType == UserTypeEnum.user.name)
+            CacheHelper.getData(key: CacheKeys.userType) == UserTypeEnum.user.name)
           PositionedDirectional(
             end: 18.w,
             top: 19.h,

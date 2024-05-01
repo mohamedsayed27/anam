@@ -17,6 +17,7 @@ static const register ='/register';
 static const login ='/login';
 static const packages ='/packages';
 static const socialLogin ='/user/social-login';
+static const subscribePackage ='/users/subscribe';
 static const profile ='/profile';
 static const vendorDetails ='/vendors';
 static const password ='/password';

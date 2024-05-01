@@ -14,7 +14,6 @@ import '../../../../core/cache_helper/cache_keys.dart';
 import '../../../../core/cache_helper/shared_pref_methods.dart';
 import '../../../../translations/locale_keys.g.dart';
 import '../../../widgets/bottom_sheets_widgets/chat_bottom.dart';
-import '../../../widgets/bottom_sheets_widgets/login_bottom_sheet.dart';
 import '../../../widgets/services_widgets/vet_services_images_widget.dart';
 import '../../../widgets/shared_widget/custom_sized_box.dart';
 import '../google_maps_screens/open_current_loctaion_screen.dart';

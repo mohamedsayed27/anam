@@ -35,6 +35,7 @@ class HomeTabBarWidget extends StatelessWidget {
         indicatorSize: TabBarIndicatorSize.tab,
         labelPadding: EdgeInsets.symmetric(horizontal: 11.w),
         dividerColor: Colors.transparent,
+
         labelStyle: CustomThemes.whiteColorTextTheme(context).copyWith(
           fontSize: 14.sp,
           fontWeight: FontWeight.w400,
