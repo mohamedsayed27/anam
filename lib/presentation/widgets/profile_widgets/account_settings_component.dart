@@ -13,6 +13,7 @@ import '../../../core/app_router/screens_name.dart';
 import '../../../core/assets_path/svg_path.dart';
 import '../../../core/constants/constants.dart';
 import '../../../core/enums/user_type_enum.dart';
+import '../../../domain/controllers/main_layout_cubit/main_layout_cubit.dart';
 import '../../../translations/locale_keys.g.dart';
 import 'account_seetings_item_widget.dart';
 
@@ -83,15 +84,16 @@ class AccountSettingsComponent extends StatelessWidget {
             iconPath: SvgPath.notification,
             title: LocaleKeys.notifications.tr(),
           ),
-        // AccountSettingItemWidget(
-        //   onPressed: () {},
-        //   iconPath: SvgPath.help,
-        //   title: "عن الشركة",
-        // ),
+        AccountSettingItemWidget(
+          onPressed: () {
+            Navigator.pushNamed(context, ScreenName.privacyPolicyScreen);
+          },
+          iconPath: SvgPath.help,
+          title: LocaleKeys.privacyPolicy.tr(),
+        ),
 
         AccountSettingItemWidget(
           onPressed: () {
-            showProgressIndicator(context);
             if(CacheHelper.getData(key: CacheKeys.initialLocale)=="ar"||CacheHelper.getData(key: CacheKeys.initialLocale)==null){
               EasyLocalization.of(context)?.setLocale(const Locale('en'));
               CacheHelper.saveData(key: CacheKeys.initialLocale, value: "en");
@@ -99,15 +101,8 @@ class AccountSettingsComponent extends StatelessWidget {
               EasyLocalization.of(context)?.setLocale(const Locale('ar'));
               CacheHelper.saveData(key: CacheKeys.initialLocale, value: "ar");
             }
-            Timer(
-              const Duration(seconds: 1),
-                  () async {
-                Navigator.pop(context);
-                    // MainLayoutCubit.get(context).handleAuthMethods();
-                    // Navigator.pushNamedAndRemoveUntil(
-                    //     context, ScreenName.splashScreen, (route) => false);
-              },
-            );
+            MainLayoutCubit.get(context).handleAuthMethods();
+            Phoenix.rebirth(context);
             // print(token);
           },
           iconPath: SvgPath.lang,
@@ -118,8 +113,6 @@ class AccountSettingsComponent extends StatelessWidget {
           AccountSettingItemWidget(
             onPressed: () {
               showProgressIndicator(context);
-
-
               Timer(
                 const Duration(seconds: 1),
                 () async {
@@ -137,7 +130,7 @@ class AccountSettingsComponent extends StatelessWidget {
             },
             iconPath: SvgPath.logout,
             isBordered: false,
-            title: LocaleKeys.logout,
+            title: LocaleKeys.logout.tr(),
           ),
       ],
     ).onlyDirectionalPadding(start: 29, end: 27);

@@ -38,15 +38,23 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
               cubit.mapLocation = state.mapLocation;
               cubit.mapCoordinates = state.coordinates;
             }
-            if(state is SendRequestErrorState){
+            if (state is SendRequestErrorState) {
               Navigator.pop(context);
-              showToast(errorType: 1, message: state.error,);
+              showToast(
+                errorType: 1,
+                message: state.error,
+              );
             }
-            if(state is SendRequestSuccessState){
+            if (state is SendRequestSuccessState) {
               print("object");
               print("objects");
               Navigator.pop(context);
               Navigator.pop(context);
+              cubit.address.clear();
+              cubit.chosenCity = null;
+              cubit.details.clear();
+              cubit.mapLocation = "";
+              cubit.notes.clear();
               cubit.previousRequestsPageNumber = 1;
               cubit.previousRequestList.clear();
               cubit.getPreviousRequests();
@@ -93,7 +101,7 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
                               .textTheme
                               .headlineMedium!
                               .copyWith(fontSize: 12.sp),
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.r),
                               borderSide: BorderSide(
@@ -174,7 +182,8 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
                       ),
                       controller:
                           TextEditingController(text: cubit.mapLocation),
-                      hintText: cubit.mapLocation ?? LocaleKeys.locationMustBeSelected.tr(),
+                      hintText: cubit.mapLocation ??
+                          LocaleKeys.locationMustBeSelected.tr(),
                       enabled: false,
                       height: 45,
                     ),
@@ -185,6 +194,7 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
                   CustomTextField(
                     hintText: LocaleKeys.priceInSaudiRiyals.tr(),
                     controller: cubit.price,
+                    keyboardType: TextInputType.phone,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return LocaleKeys.dataMustBeEntered.tr();
@@ -199,28 +209,32 @@ class _AddOrderBottomSheetState extends State<AddOrderBottomSheet> {
                   CustomElevatedButton(
                     title: LocaleKeys.continueText.tr(),
                     onPressed: () {
-                      if(formKey.currentState!.validate()){
-                        if(cubit.chosenCity==null){
-                          showToast(errorType: 1, message: LocaleKeys.chooseCountryCode.tr(),);
-                        }else if(cubit.mapLocation==null){
-                          showToast(errorType: 1, message: LocaleKeys.chooseCountry.tr(),);
-                        }
-                        else {
+                      if (formKey.currentState!.validate()) {
+                        if (cubit.chosenCity == null) {
+                          showToast(
+                            errorType: 1,
+                            message: LocaleKeys.chooseCountryCode.tr(),
+                          );
+                        } else if (cubit.mapLocation == null) {
+                          showToast(
+                            errorType: 1,
+                            message: LocaleKeys.chooseCountry.tr(),
+                          );
+                        } else {
                           cubit.sendRequest(
-                          requestParameters: RequestParameters(
-                            title: cubit.address.text,
-                            countryId: cubit.chosenCity!.id.toString(),
-                            coordinates: cubit.mapCoordinates,
-                            description: cubit.details.text,
-                            mapLocation: cubit.mapLocation,
-                            notes: cubit.notes.text,
-                            price: cubit.price.text,
-                          ),
-                        );
+                            requestParameters: RequestParameters(
+                              title: cubit.address.text,
+                              countryId: cubit.chosenCity!.id.toString(),
+                              coordinates: cubit.mapCoordinates,
+                              description: cubit.details.text,
+                              mapLocation: cubit.mapLocation,
+                              notes: cubit.notes.text,
+                              price: cubit.price.text,
+                            ),
+                          );
                           showProgressIndicator(context);
                         }
                       }
-
                     },
                     buttonSize: Size(double.infinity, 40.h),
                   ),

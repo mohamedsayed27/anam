@@ -145,7 +145,7 @@ class OrderComponent extends StatelessWidget {
                             Expanded(
                               child: Text(
                                 requestModel.mapLocation??"",
-                                maxLines: 2,
+                                maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme

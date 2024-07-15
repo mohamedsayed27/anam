@@ -37,7 +37,7 @@ class LaborersServiceDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  LocaleKeys.storeName.tr(),
+            laborerModel.name??"",
                   style: CustomThemes.darkGreyColorTextTheme(context).copyWith(
                     fontSize: 32.sp,
                     fontWeight: FontWeight.w400,

@@ -39,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
     _itemsTypeTabController = TabController(
       length: 2,
       vsync: this,
@@ -182,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             key: CacheKeys.userType) ==
                                         UserTypeEnum.user.name
                                 ?  ProductsFollowingListViewWidget(isGetAll: isFollowingTap,)
-                                :  AllProductsListViewWidget(isGetAll: !isFollowingTap,),
+                                :  AllProductsListViewWidget(isGetAll: isFollowingTap,),
                       )
                     ],
                   ),

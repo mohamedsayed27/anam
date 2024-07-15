@@ -151,8 +151,9 @@ class VetServicesRemoteDatasource
         ),
         token: token,
       );
+      print(response);
       return Right(
-        VetModel.fromJson(response.data),
+        VetModel.fromJson(response.data["result"]),
       );
     } catch (e) {
       if (e is DioException) {

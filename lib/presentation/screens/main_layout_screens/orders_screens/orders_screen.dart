@@ -29,12 +29,13 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  ScrollController previousScrollController  = ScrollController();
-  ScrollController scrollController  = ScrollController();
+  ScrollController previousScrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
-    if(widget.isPreviousOrders==false){
+    if (widget.isPreviousOrders == false) {
       RequestsCubit.get(context).getAllRequests();
       RequestsCubit.get(context).allRequestsPageNumber = 1;
     }
@@ -51,6 +52,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,39 +73,40 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         color: AppColors.blackColor,
                       ),
                 ),
-                if(userType==UserTypeEnum.user.name)CustomOutlinedButton(
-                  height: 40.h,
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (_) => AddOrderBottomSheet(),
-                    );
-                  },
-                  radius: 8.r,
-                  borderColor: AppColors.greyColor9D,
-                  padding: EdgeInsets.symmetric(horizontal: 14.w),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.add,
-                        color: AppColors.greyColor71,
-                        size: 18.r,
-                      ),
-                      const CustomSizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        LocaleKeys.addOrder.tr(),
-                        style:
-                            CustomThemes.grey7DColorTextTheme(context).copyWith(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
+                if (userType == UserTypeEnum.user.name)
+                  CustomOutlinedButton(
+                    height: 40.h,
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (_) => AddOrderBottomSheet(),
+                      );
+                    },
+                    radius: 8.r,
+                    borderColor: AppColors.greyColor9D,
+                    padding: EdgeInsets.symmetric(horizontal: 14.w),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.add,
+                          color: AppColors.greyColor71,
+                          size: 18.r,
                         ),
-                      ),
-                    ],
+                        const CustomSizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          LocaleKeys.addOrder.tr(),
+                          style: CustomThemes.grey7DColorTextTheme(context)
+                              .copyWith(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ],
             ).symmetricPadding(horizontal: 16),
             const CustomSizedBox(
@@ -125,7 +128,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         )
                       : widget.isPreviousOrders
                           ? ListView.separated(
-                    controller: previousScrollController,
+                              controller: previousScrollController,
                               padding: EdgeInsets.symmetric(
                                 horizontal: 16.w,
                                 vertical: 12.h,
@@ -159,7 +162,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                               },
                             )
                           : ListView.separated(
-                    controller: scrollController,
+                              controller: scrollController,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 16.w, vertical: 12.h),
                               separatorBuilder: (_, index) =>
@@ -171,7 +174,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
                                 return OrderComponent(
                                   onPressed: () {
                                     Navigator.pushNamed(
-                                        context, ScreenName.orderDetailsScreen,arguments: cubit.requestList[index]);
+                                        context, ScreenName.orderDetailsScreen,
+                                        arguments: cubit.requestList[index]);
                                   },
                                   titleFontSize: 16,
                                   cityFontSize: 14,

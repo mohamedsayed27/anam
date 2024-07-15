@@ -312,6 +312,7 @@ class ProductsRemoteDatasource {
   Future<Either<ErrorException, UploadOrUpdateProductModel>> uploadProduct({
     required ProductParameters productParameters,
   }) async {
+    print(await productParameters.toMap());
     try {
       final response = await dioHelper.postData(
         url: EndPoints.products,
@@ -320,6 +321,8 @@ class ProductsRemoteDatasource {
         ),
         token: token,
       );
+      print(response);
+
       return Right(
         UploadOrUpdateProductModel.fromJson(
           response.data,
@@ -327,6 +330,7 @@ class ProductsRemoteDatasource {
       );
     } catch (e) {
       if (e is DioException) {
+        print(e.response);
         return Left(
           ErrorException(
             baseErrorModel: BaseErrorModel.fromJson(

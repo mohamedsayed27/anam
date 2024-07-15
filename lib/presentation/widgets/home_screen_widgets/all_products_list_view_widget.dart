@@ -27,6 +27,7 @@ class AllProductsListViewWidget extends StatelessWidget {
                     if (notification.metrics.pixels ==
                         notification.metrics.maxScrollExtent) {
                       if(isGetAll&&cubit.allProductsPageNumber>1) {
+
                         cubit.getAllProducts();
                       }
                     }

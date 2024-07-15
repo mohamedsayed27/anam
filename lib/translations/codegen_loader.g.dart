@@ -46,6 +46,7 @@ class CodegenLoader extends AssetLoader{
   "loginOrSubscribe": "Login or subscribe",
   "welcome": "Welcome",
   "continueText": "Continue",
+  "privacyPolicy": "Privacy Policy",
   "orText": "Or",
   "continueUsing": "Continue using",
   "vendorSubscription": "Vendor Subscription",
@@ -196,7 +197,7 @@ static const Map<String,dynamic> ar = {
   "accountSettings": "اعدادات الحساب",
   "personalData": "البيانات الشخصية",
   "uploadYourOrder": "ارفع طلبك",
-  "uploadYourProduct": "ارفع ابمنتج",
+  "uploadYourProduct": "ارفع المنتج",
   "settings": "الاعدادات",
   "support": "الدعم والمساعدة",
   "logout": "تسجيل الخروج",
@@ -327,6 +328,7 @@ static const Map<String,dynamic> ar = {
   "livestockTransportation": "نقل المواشي",
   "veterinaryServices": "البيطرة",
   "attachedImages": "الصور المرفقة",
+  "privacyPolicy": "سياسة الخصوصية",
   "lang": "العربية"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en": en, "ar": ar};

@@ -22,7 +22,7 @@
   "accountSettings": "اعدادات الحساب",
   "personalData": "البيانات الشخصية",
   "uploadYourOrder": "ارفع طلبك",
-  "uploadYourProduct": "ارفع ابمنتج",
+  "uploadYourProduct": "ارفع المنتج",
   "settings": "الاعدادات",
   "support": "الدعم والمساعدة",
   "logout": "تسجيل الخروج",
@@ -153,5 +153,6 @@
   "livestockTransportation": "نقل المواشي",
   "veterinaryServices": "البيطرة",
   "attachedImages": "الصور المرفقة",
+  "privacyPolicy": "سياسة الخصوصية",
   "lang": "العربية"
 }

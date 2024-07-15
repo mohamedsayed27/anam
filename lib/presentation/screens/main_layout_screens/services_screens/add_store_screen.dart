@@ -85,6 +85,9 @@ class _AddStoreScreenState extends State<AddStoreScreen> {
               cubit.mapCoordinates = null;
               cubit.mapLocation = null;
               cubit.storeEmail.clear();
+              cubit.storesList.clear();
+              cubit.allStorePageNumber = 1;
+              cubit.getAllStore();
             }
             if (state is UploadStoreErrorState) {
               Navigator.pop(context);

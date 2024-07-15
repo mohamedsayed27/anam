@@ -39,7 +39,7 @@ class VetServiceDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  vetModel.vendor!.name??"",
+                  vetModel.name ?? "dummy",
                   style: CustomThemes.darkGreyColorTextTheme(context).copyWith(
                     fontSize: 32.sp,
                     fontWeight: FontWeight.w400,

@@ -32,6 +32,7 @@ abstract class  LocaleKeys {
   static const loginOrSubscribe = 'loginOrSubscribe';
   static const welcome = 'welcome';
   static const continueText = 'continueText';
+  static const privacyPolicy = 'privacyPolicy';
   static const orText = 'orText';
   static const continueUsing = 'continueUsing';
   static const vendorSubscription = 'vendorSubscription';

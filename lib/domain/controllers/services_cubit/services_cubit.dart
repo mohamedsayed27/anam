@@ -359,6 +359,8 @@ class ServicesCubit extends Cubit<ServicesState> {
 
   /// --------------------------------------> Vet Logic Methods <--------------------------------------
   void getAllVet() async {
+    print("allVetPageNumber");
+    print(allVetPageNumber);
     if (allVetPageNumber == 1) {
       emit(GetAllVetLoadingState());
     }
@@ -476,6 +478,7 @@ class ServicesCubit extends Cubit<ServicesState> {
         emit(UploadVetErrorState(error: baseErrorModel?.errors?[0] ?? ""));
       },
       (r) {
+        print(r);
         emit(UploadVetSuccessState());
       },
     );

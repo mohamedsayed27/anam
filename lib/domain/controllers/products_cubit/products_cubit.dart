@@ -459,7 +459,7 @@ class ProductsCubit extends Cubit<ProductsState> {
     response.fold(
       (l) {
         baseErrorModel = l.baseErrorModel;
-        emit(UploadProductErrorState(error: baseErrorModel?.errors?[0] ?? ""));
+        emit(UploadProductErrorState(error: baseErrorModel?.errors?[0] ?? baseErrorModel?.message??""));
       },
       (r) {
         emit(UploadProductSuccessState(updateProductModel: r));
@@ -695,4 +695,8 @@ class ProductsCubit extends Cubit<ProductsState> {
     handleLogout();
     return super.close();
   }
+
+
+
+
 }

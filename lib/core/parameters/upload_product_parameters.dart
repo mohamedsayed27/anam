@@ -79,7 +79,7 @@ class ProductParameters {
     data['map_location'] = mapLocation;
     data['youtube_link'] = youtubeLink;
     data['advantages_ar'] = advantagesAr;
-    data['_method'] = method;
+    if(method!=null)data['_method'] = method;
     data['advantages_en'] = advantagesEn;
     data['defects_ar'] = descriptionAr;
     data['defects_en'] = defectsEn;

@@ -85,6 +85,9 @@ class _AddLaborerScreenState extends State<AddLaborerScreen> {
               cubit.laborerEmail.clear();
               cubit.nationalityEn.clear();
               cubit.nationalityAr.clear();
+              cubit.laborersList.clear();
+              cubit.allLaborerPageNumber = 1;
+              cubit.getAllLaborer();
             }
             if (state is UploadLaborerErrorState) {
               Navigator.pop(context);

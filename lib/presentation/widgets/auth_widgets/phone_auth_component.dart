@@ -119,6 +119,7 @@ class _PhoneComponentState extends State<PhoneComponent> {
               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                     fontSize: 11.85.sp,
                   ),
+              keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 hintText: LocaleKeys.phone.tr(),
                 hintStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(

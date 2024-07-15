@@ -98,9 +98,7 @@ class RequestsCubit extends Cubit<RequestsState> {
             previousRequestsPageNumber++;
           }
 
-          if(previousRequestsPageNumber==1) {
-            getAllRequestsLoading = false;
-          }
+          getAllRequestsLoading = false;
           emit(GetPreviousRequestsSuccessState());
         }
       },

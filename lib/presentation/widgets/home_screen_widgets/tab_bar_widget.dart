@@ -9,9 +9,11 @@ import '../../../translations/locale_keys.g.dart';
 class HomeTabBarWidget extends StatelessWidget {
   final TabController tabController;
   final void Function(int)? onTap;
+
   const HomeTabBarWidget({
     super.key,
-    required this.tabController, this.onTap,
+    required this.tabController,
+    this.onTap,
   });
 
   @override
@@ -21,28 +23,27 @@ class HomeTabBarWidget extends StatelessWidget {
       height: 50.h,
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
       decoration: BoxDecoration(
-          color: AppColors.whiteColor,
-          borderRadius: BorderRadius.circular(12.r),
-          boxShadow: [
-            BoxShadow(
-                offset: Offset(0, 8.h),
-                color: AppColors.blackColor.withOpacity(0.08),
-                blurRadius: 32.r
-            ),
-          ],
+        color: AppColors.whiteColor,
+        borderRadius: BorderRadius.circular(12.r),
+        boxShadow: [
+          BoxShadow(
+              offset: Offset(0, 8.h),
+              color: AppColors.blackColor.withOpacity(0.08),
+              blurRadius: 32.r),
+        ],
       ),
       child: TabBar(
         indicatorSize: TabBarIndicatorSize.tab,
         labelPadding: EdgeInsets.symmetric(horizontal: 11.w),
         dividerColor: Colors.transparent,
-
         labelStyle: CustomThemes.whiteColorTextTheme(context).copyWith(
           fontSize: 14.sp,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w600,
         ),
-        unselectedLabelStyle: CustomThemes.greyD9ColorTextTheme(context).copyWith(
+        unselectedLabelStyle:
+            CustomThemes.greyD9ColorTextTheme(context).copyWith(
           fontSize: 14.sp,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w600,
         ),
         onTap: onTap,
         labelColor: AppColors.whiteColor,
@@ -64,3 +65,4 @@ class HomeTabBarWidget extends StatelessWidget {
     );
   }
 }
+

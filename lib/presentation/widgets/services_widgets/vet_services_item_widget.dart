@@ -108,7 +108,7 @@ class VetServicesWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              vetModel.vendor!.name ?? "dummy",
+              vetModel.name ?? "dummy",
               style: CustomThemes.greyColor34TextTheme(context).copyWith(
                 fontSize: 14.sp,
                 height: 1,

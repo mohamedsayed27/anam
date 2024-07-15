@@ -76,6 +76,9 @@ class _AddVetScreenState extends State<AddVetScreen> {
               cubit.chosenCity = null;
               cubit.qualificationsAr.clear();
               cubit.qualificationsEn.clear();
+              cubit.vetsList.clear();
+              cubit.allVetPageNumber = 1;
+              cubit.getAllVet();
               print("Uploadeddddd");
               // Navigator.pop(context);
             }

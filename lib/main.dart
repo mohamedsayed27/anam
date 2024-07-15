@@ -1,6 +1,7 @@
 import 'package:anam/bloc_observer.dart';
 import 'package:anam/core/cache_helper/cache_keys.dart';
 import 'package:anam/presentation/screens/main_layout_screens/payment_screen/package_subscriptions_screen.dart';
+import 'package:anam/presentation/screens/main_layout_screens/profile_screens/privacy_policy_screen.dart';
 import 'package:anam/translations/codegen_loader.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -39,21 +40,19 @@ void main() async {
   ServicesLocator().init();
   Bloc.observer = MyBlocObserver();
   runApp(
-    Phoenix(
-      child: EasyLocalization(
-        supportedLocales: const [
-          Locale(
-            'en',
-          ),
-          Locale(
-            'ar',
-          ),
-        ],
-        startLocale:  Locale(CacheHelper.getData(key: CacheKeys.initialLocale)??"ar"),
-        path: 'assets/translations',
-        assetLoader: const CodegenLoader(),
-        child: const MyApp(),
-      ),
+    EasyLocalization(
+      supportedLocales: const [
+        Locale(
+          'en',
+        ),
+        Locale(
+          'ar',
+        ),
+      ],
+      startLocale:  Locale(CacheHelper.getData(key: CacheKeys.initialLocale)??"ar"),
+      path: 'assets/translations',
+      assetLoader: const CodegenLoader(),
+      child: Phoenix(child: const MyApp()),
     ),
   );
 }
@@ -119,7 +118,7 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             onGenerateRoute: AppRouter.generateRoute,
             initialRoute: ScreenName.splashScreen,
-            // home: PackageSubscriptionsScreen(),
+            // home: PrivacyPolicyScreen(),
           ),
         );
       },

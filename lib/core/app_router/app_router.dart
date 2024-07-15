@@ -18,6 +18,7 @@ import '../../presentation/screens/main_layout_screens/followers_screen/follower
 import '../../presentation/screens/main_layout_screens/notification_screen/notification_screen.dart';
 import '../../presentation/screens/main_layout_screens/payment_screen/package_subscriptions_screen.dart';
 import '../../presentation/screens/main_layout_screens/profile_screens/personal_data_screen.dart';
+import '../../presentation/screens/main_layout_screens/profile_screens/privacy_policy_screen.dart';
 import '../../presentation/screens/main_layout_screens/profile_screens/products_screen.dart';
 
 class AppRouter {
@@ -45,6 +46,10 @@ class AppRouter {
         case ScreenName.productControlScreen:
           return SlideRightRoute(
             page: const ProductsScreen(),
+          );
+        case ScreenName.privacyPolicyScreen:
+          return SlideRightRoute(
+            page: const PrivacyPolicyScreen(),
           );
         case ScreenName.notificationsScreen:
           return SlideRightRoute(
